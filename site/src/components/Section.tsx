@@ -24,7 +24,7 @@ export function Section({ id, eyebrow, title, lede, children, className, wide }:
           transition={{ duration: 0.5, ease: "easeOut" }}
         >
           <p className="eyebrow">{eyebrow}</p>
-          <h2 className="mt-3 text-3xl font-semibold tracking-tight text-balance sm:text-4xl">{title}</h2>
+          <h2 className="mt-3 text-4xl tracking-tight text-balance sm:text-5xl">{title}</h2>
           {lede && <p className="prose-101 mt-4 text-lg">{lede}</p>}
         </motion.header>
         <div className="mt-12">{children}</div>

@@ -17,11 +17,10 @@ export function Hero() {
   const { t } = useI18n()
   return (
     <section className="relative overflow-hidden pt-16 sm:pt-24">
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-[60vh] bg-[radial-gradient(60%_50%_at_50%_0%,oklch(0.85_0.17_90_/_0.10),transparent_70%)]" />
       <div className="container-101 grid items-center gap-12 lg:grid-cols-[1.1fr_1fr]">
         <motion.div initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, ease: "easeOut" }}>
           <p className="eyebrow">{t.hero.eyebrow}</p>
-          <h1 className="mt-4 text-4xl font-semibold tracking-tight text-balance sm:text-6xl">{t.hero.title}</h1>
+          <h1 className="mt-4 text-5xl tracking-tight text-balance sm:text-7xl">{t.hero.title}</h1>
           <p className="prose-101 mt-6 max-w-xl text-lg">{t.hero.lede}</p>
           <div className="mt-8 flex items-center gap-4">
             <Button size="lg" nativeButton={false} render={<a href="#what" />}>{t.hero.cta}</Button>
