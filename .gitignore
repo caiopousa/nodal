@@ -1,0 +1,4 @@
+node_modules/
+dist/
+site/src/data/catalog.json
+.DS_Store
