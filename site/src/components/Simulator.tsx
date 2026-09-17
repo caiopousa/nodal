@@ -200,10 +200,9 @@ export function Simulator() {
   const { t, locale } = useI18n()
   const [sel, setSel] = useState<TypeId>("control")
   const [gesture, setGesture] = useState<Gesture>("vertical")
-  const [mode, setMode] = useState<"real" | "amp">("real")
   const [runId, setRunId] = useState(0)
   const [done, setDone] = useState(false)
-  const K = mode === "amp" ? 2 : 1
+  const K = 1
   const type = TYPES.find((x) => x.id === sel)!
   const fmt = (cm: number) => cm.toLocaleString(locale === "pt" ? "pt-BR" : "en-US", { maximumFractionDigits: 1, minimumFractionDigits: 1 })
   const results = useMemo(() => Object.fromEntries(TYPES.map((x) => [x.id, plan(x, gesture, K)])) as Record<TypeId, Plan>, [gesture, K])
@@ -250,12 +249,7 @@ export function Simulator() {
         <ToggleGroup value={[gesture]} onValueChange={(v) => { const g = v[0] as Gesture | undefined; if (g) { setGesture(g); reset() } }} variant="outline">
           {(Object.keys(GESTURES) as Gesture[]).map((g) => <ToggleGroupItem key={g} value={g}>{t.feel.gestures[g]}</ToggleGroupItem>)}
         </ToggleGroup>
-        <ToggleGroup value={[mode]} onValueChange={(v) => { const m = v[0] as "real" | "amp" | undefined; if (m) { setMode(m); reset() } }} variant="outline">
-          <ToggleGroupItem value="real">{t.feel.modes.real}</ToggleGroupItem>
-          <ToggleGroupItem value="amp">{t.feel.modes.amp}</ToggleGroupItem>
-        </ToggleGroup>
       </div>
-      <p className="mt-3 text-xs text-muted-foreground">{t.feel.modeNote[mode]}</p>
     </div>
   )
 }

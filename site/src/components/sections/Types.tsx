@@ -40,12 +40,11 @@ export function Types() {
       </div>
 
       <motion.div key={sel} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} className="mt-4 rounded-lg border bg-card p-6">
-        <div className="flex flex-wrap items-baseline justify-between gap-2">
+        <div>
           <h3 className="flex items-center gap-3 text-xl">
             {t.feel.types[sel].name}
             <span className="rounded-md border px-1.5 py-px font-mono text-[11px] font-normal text-muted-foreground">{t.feel.material[sel]}</span>
           </h3>
-          <span className="font-mono text-xs text-muted-foreground">μs {type.mus.toFixed(2)} · μk {type.muk.toFixed(2)}</span>
         </div>
         <p className="prose-101 mt-3 text-[15px]">{t.feel.types[sel].blurb}</p>
       </motion.div>
