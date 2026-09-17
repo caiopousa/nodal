@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react"
 import { motion } from "motion/react"
 import { Button } from "@/components/ui/button"
 import { Pad, type SurfaceKind } from "@/components/Pad"
@@ -15,9 +16,38 @@ const STRIP: { kind: SurfaceKind; color: string; w: number; ratio: number }[] = 
   { kind: "cloth", color: "#1f2d2d", w: 150, ratio: 1 },
 ]
 
+/**
+ * Curvatura da esteira: cada pad é escalado e elevado conforme a distância
+ * horizontal até o centro da tela (t = -1..1). Centro menor e mais baixo,
+ * bordas maiores e mais altas, como um anel visto de dentro.
+ */
+function useCurvedStrip(ref: React.RefObject<HTMLDivElement | null>) {
+  useEffect(() => {
+    const el = ref.current
+    if (!el) return
+    let raf = 0
+    const tick = () => {
+      const cx = window.innerWidth / 2
+      const half = window.innerWidth / 2
+      for (const child of Array.from(el.children) as HTMLElement[]) {
+        const r = child.getBoundingClientRect()
+        const t = Math.max(-1.2, Math.min(1.2, (r.left + r.width / 2 - cx) / half))
+        const k = t * t
+        const inner = child.firstElementChild as HTMLElement | null
+        if (inner) inner.style.transform = `translateY(${(-40 * k).toFixed(1)}px) scale(${(0.74 + 0.38 * k).toFixed(3)}) rotateY(${(-14 * t).toFixed(1)}deg)`
+      }
+      raf = requestAnimationFrame(tick)
+    }
+    raf = requestAnimationFrame(tick)
+    return () => cancelAnimationFrame(raf)
+  }, [ref])
+}
+
 export function Hero() {
   const { t } = useI18n()
   const items = [...STRIP, ...STRIP]
+  const strip = useRef<HTMLDivElement>(null)
+  useCurvedStrip(strip)
   return (
     <section className="pt-20 sm:pt-28">
       <motion.div
@@ -32,10 +62,12 @@ export function Hero() {
         <Button size="lg" className="mt-8" nativeButton={false} render={<a href="#what" />}>{t.hero.cta}</Button>
       </motion.div>
 
-      <div className="mt-16 overflow-hidden py-6" aria-hidden>
-        <div className="marquee items-end px-4">
+      <div className="mt-6 overflow-hidden pt-28 pb-6" aria-hidden style={{ perspective: "1200px" }}>
+        <div ref={strip} className="marquee items-end px-4">
           {items.map((p, i) => (
-            <Pad key={i} kind={p.kind} color={p.color} ratio={p.ratio} style={{ width: p.w }} className="shrink-0" />
+            <div key={i} className="shrink-0" style={{ width: p.w, transformStyle: "preserve-3d" }}>
+              <Pad kind={p.kind} color={p.color} ratio={p.ratio} style={{ transformOrigin: "50% 100%", willChange: "transform" }} />
+            </div>
           ))}
         </div>
       </div>
