@@ -9,7 +9,7 @@ export function Glossary() {
         {t.glossary.terms.map((g, i) => (
           <Reveal key={g.term} delay={(i % 3) * 0.05}>
             <dt className="font-medium">{g.term}</dt>
-            <dd className="mt-1 text-base leading-relaxed text-muted-foreground">{g.def}</dd>
+            <dd className="mt-1 text-base leading-6 text-muted-foreground">{g.def}</dd>
           </Reveal>
         ))}
       </dl>
