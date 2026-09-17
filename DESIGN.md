@@ -10,8 +10,8 @@ colors:
   surface: "#F3F1EC"
   on-primary: "#F3F1EC"
 typography:
-  display: { fontFamily: Inter, fontSize: 3.5rem, fontWeight: 500, letterSpacing: "-0.02em" }
-  h1: { fontFamily: Inter, fontSize: 1.9rem, fontWeight: 500 }
+  display: { fontFamily: Valley Sans, fontSize: 3.5rem, fontWeight: 500, letterSpacing: "-0.02em" }
+  h1: { fontFamily: Valley Sans, fontSize: 1.9rem, fontWeight: 500 }
   body: { fontFamily: Inter, fontSize: 0.95rem, lineHeight: 1.55 }
   label: { fontFamily: JetBrains Mono, fontSize: 0.72rem, letterSpacing: "0.08em" }
 rounded: { sm: 0px, md: 2px, lg: 4px }
@@ -32,5 +32,5 @@ tertiary → `--primary`; rounded.md → `--radius`. Fontes via Google Fonts em
   de resultado e rastros do simulador também usam ele, nada mais.
 - **Sem gradiente decorativo.** Fundo plano. Exceção declarada: as texturas
   procedurais dos pads são render de material, não decoração.
-- **Inter em tudo, peso 500 nos títulos.** Rótulos e números em JetBrains Mono. Cantos quase retos (2px).
+- **Valley Sans nos títulos (h1 a h3) e na marca, peso 500. Inter no corpo.** Rótulos e números em JetBrains Mono. Cantos quase retos (2px).
 - **Espaço negativo é parte da composição.** Não preencher por preencher.

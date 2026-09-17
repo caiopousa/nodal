@@ -6,7 +6,7 @@ export function Nav() {
     <header className="sticky top-0 z-40 border-b bg-background/70 backdrop-blur-md">
       <div className="container-wide flex h-14 items-center justify-between gap-4">
         <a href="#" className="text-[15px] font-medium tracking-tight" aria-label="everything.setup">
-          everything<span className="text-primary">.</span><span className="font-serif text-[19px] font-normal leading-none">setup</span>
+          everything<span className="text-primary">.</span><span className="font-heading text-[17px] leading-none">setup</span>
         </a>
 
         <div className="flex items-center gap-3">
