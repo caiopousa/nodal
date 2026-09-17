@@ -18,8 +18,8 @@ const STRIP: { kind: SurfaceKind; color: string }[] = [
 
 /**
  * Curvatura da esteira: cada pad é escalado e elevado conforme a distância
- * horizontal até o centro da tela (t = -1..1). Centro menor e mais alto,
- * bordas maiores e mais baixas: um arco pra cima.
+ * horizontal até o centro da tela (t = -1..1): desce nas bordas e gira
+ * no plano em direção ao centro, como cartas numa roda. Sem escala.
  */
 function useCurvedStrip(ref: React.RefObject<HTMLDivElement | null>) {
   useEffect(() => {
@@ -34,7 +34,7 @@ function useCurvedStrip(ref: React.RefObject<HTMLDivElement | null>) {
         const t = Math.max(-1.2, Math.min(1.2, (r.left + r.width / 2 - cx) / half))
         const k = t * t
         const inner = child.firstElementChild as HTMLElement | null
-        if (inner) inner.style.transform = `translateY(${(40 * k).toFixed(1)}px) scale(${(0.74 + 0.38 * k).toFixed(3)}) rotateY(${(-14 * t).toFixed(1)}deg)`
+        if (inner) inner.style.transform = `translateY(${(70 * k).toFixed(1)}px) rotate(${(22 * t).toFixed(1)}deg)`
       }
       raf = requestAnimationFrame(tick)
     }
@@ -62,11 +62,11 @@ export function Hero() {
         <Button size="lg" className="mt-8" nativeButton={false} render={<a href="#what" />}>{t.hero.cta}</Button>
       </motion.div>
 
-      <div className="mt-6 overflow-hidden pt-10 pb-16" aria-hidden style={{ perspective: "1200px" }}>
+      <div className="mt-6 overflow-hidden pt-10 pb-24" aria-hidden>
         <div ref={strip} className="marquee items-end px-4">
           {items.map((p, i) => (
-            <div key={i} className="w-40 shrink-0" style={{ transformStyle: "preserve-3d" }}>
-              <Pad kind={p.kind} color={p.color} ratio={1.25} style={{ transformOrigin: "50% 100%", willChange: "transform" }} />
+            <div key={i} className="w-44 shrink-0">
+              <Pad kind={p.kind} color={p.color} ratio={1.4} style={{ transformOrigin: "50% 50%", willChange: "transform" }} />
             </div>
           ))}
         </div>
