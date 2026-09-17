@@ -63,13 +63,13 @@ export function WhatIs() {
             >
               <div className="font-mono text-sm text-primary">0{i + 1}</div>
               <h3 className="mt-1 text-lg font-medium">{l.name} <span className="ml-2 text-xs font-normal text-muted-foreground">{l.tag}</span></h3>
-              <p className="prose-101 mt-2 text-[15px]">{l.desc}</p>
+              <p className="prose-101 mt-2 text-base">{l.desc}</p>
             </motion.div>
           </li>
         ))}
         <li className="border-t pt-8 sm:ml-[15rem]">
           <h3 className="text-lg font-medium">{t.what.edgeTitle}</h3>
-          <p className="prose-101 mt-2 text-[15px]">{t.what.edge}</p>
+          <p className="prose-101 mt-2 text-base">{t.what.edge}</p>
         </li>
       </ol>
     </Section>

@@ -34,7 +34,7 @@ function Visual({ k }: { k: string }) {
           {[2, 3, 4, 6].map((mm) => (
             <div key={mm} className="flex flex-col items-center gap-1">
               <div className="w-10 rounded-sm bg-gradient-to-b from-[#3a3f4a] to-[#141518]" style={{ height: mm * 5 }} />
-              <span className="text-[10px] text-muted-foreground">{mm} mm</span>
+              <span className="text-xs text-muted-foreground">{mm} mm</span>
             </div>
           ))}
         </div>
@@ -71,7 +71,7 @@ export function Choose() {
             <AccordionContent>
               <div className="grid gap-6 pb-7 pl-[3.5rem] sm:grid-cols-[1fr_auto] sm:items-start">
                 <div>
-                  <p className="prose-101 text-[15px]">{it.body}</p>
+                  <p className="prose-101 text-base">{it.body}</p>
                   <p className="mt-4 text-sm"><span className="text-primary">→</span> {it.tip}</p>
                 </div>
                 <div className="sm:pt-1"><Visual k={it.key} /></div>

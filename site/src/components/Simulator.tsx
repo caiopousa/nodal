@@ -326,7 +326,7 @@ export function Simulator() {
 
       <div className="mt-5 flex flex-wrap items-end justify-between gap-4 border-t pt-5">
         <div>
-          <div className="text-sm font-medium">{t.feel.types[sel].name} <span className="ml-2 rounded-md border px-1.5 py-px font-mono text-[11px] text-muted-foreground">{t.feel.material[sel]}</span></div>
+          <div className="text-sm font-medium">{t.feel.types[sel].name} <span className="ml-2 rounded-md border px-2 py-0 font-mono text-xs text-muted-foreground">{t.feel.material[sel]}</span></div>
           <div className="mt-2 text-xs text-muted-foreground">{t.feel.stoppingPower}</div>
           <div className={`font-mono text-3xl tabular-nums ${done ? "text-primary" : "text-muted-foreground/40"}`}>
             {done ? `${fmt(results[sel].dStopCm)} cm` : "— cm"}

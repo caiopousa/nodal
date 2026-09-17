@@ -9,7 +9,7 @@ function Bars({ title, rows, total }: { title: string; rows: Row[]; total: numbe
   return (
     <div className="rounded-lg border bg-card p-5 sm:p-6">
       <h3 className="text-sm font-medium">{title}</h3>
-      <ul className="mt-4 flex flex-col gap-2.5">
+      <ul className="mt-4 flex flex-col gap-2">
         {rows.map((r) => (
           <li key={r.label} className="grid grid-cols-[7rem_1fr_3rem] items-center gap-3 text-sm">
             <span className="truncate text-muted-foreground">{r.label}</span>
@@ -55,7 +55,7 @@ export function Market() {
               </div>
               <ul className="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-xs text-muted-foreground">
                 {edges.map((e, i) => (
-                  <li key={e.label} className="flex items-center gap-1.5">
+                  <li key={e.label} className="flex items-center gap-2">
                     <span className="size-2 rounded-full" style={{ background: `var(--chart-${i + 1})` }} />
                     {e.label} {Math.round((e.n / total) * 100)}%
                   </li>

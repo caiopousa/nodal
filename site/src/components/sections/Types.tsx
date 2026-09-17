@@ -32,7 +32,7 @@ export function Types() {
             role="tab"
             aria-selected={sel === x.id}
             onClick={() => setSel(x.id)}
-            className={`rounded-lg border px-3 py-1.5 text-sm transition-colors ${sel === x.id ? "border-primary bg-primary/10 text-foreground" : "text-muted-foreground hover:text-foreground"}`}
+            className={`rounded-lg border px-3 py-1 text-sm transition-colors ${sel === x.id ? "border-primary bg-primary/10 text-foreground" : "text-muted-foreground hover:text-foreground"}`}
           >
             {t.feel.types[x.id].name}
           </button>
@@ -43,13 +43,13 @@ export function Types() {
         <div>
           <h3 className="flex items-center gap-3 text-xl">
             {t.feel.types[sel].name}
-            <span className="rounded-md border px-1.5 py-px font-mono text-[11px] font-normal text-muted-foreground">{t.feel.material[sel]}</span>
+            <span className="rounded-md border px-2 py-0 font-mono text-xs font-normal text-muted-foreground">{t.feel.material[sel]}</span>
           </h3>
         </div>
-        <p className="prose-101 mt-3 text-[15px]">{t.feel.types[sel].blurb}</p>
+        <p className="prose-101 mt-3 text-base">{t.feel.types[sel].blurb}</p>
       </motion.div>
 
-      <p className="prose-101 mt-8 max-w-2xl text-[15px]"><span className="text-primary">→</span> {t.feel.takeaway}</p>
+      <p className="prose-101 mt-8 max-w-2xl text-base"><span className="text-primary">→</span> {t.feel.takeaway}</p>
     </Section>
   )
 }

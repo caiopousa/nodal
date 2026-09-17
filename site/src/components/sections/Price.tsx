@@ -12,8 +12,8 @@ export function Price() {
         {t.price.rows.map((r) => (
           <div key={r.aspect} className="grid gap-2 border-b px-6 py-5 last:border-b-0 md:grid-cols-[1fr_1.4fr_1.4fr] md:gap-6">
             <div className="font-medium">{r.aspect}</div>
-            <div className="text-[15px] text-muted-foreground"><span className="mr-2 text-xs uppercase tracking-wider md:hidden">{t.price.cols.cheap} · </span>{r.cheap}</div>
-            <div className="text-[15px]"><span className="mr-2 text-xs uppercase tracking-wider text-primary md:hidden">{t.price.cols.premium} · </span>{r.premium}</div>
+            <div className="text-base text-muted-foreground"><span className="mr-2 text-xs uppercase tracking-wider md:hidden">{t.price.cols.cheap} · </span>{r.cheap}</div>
+            <div className="text-base"><span className="mr-2 text-xs uppercase tracking-wider text-primary md:hidden">{t.price.cols.premium} · </span>{r.premium}</div>
           </div>
         ))}
       </Reveal>

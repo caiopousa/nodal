@@ -9,12 +9,13 @@ colors:
   neutral: "#E7E5E1"
   surface: "#F3F1EC"
   on-primary: "#F3F1EC"
+grid: 4px            # todo tamanho, espaço e fonte em múltiplos de 4
 typography:
   display: { fontFamily: Valley Sans, fontSize: 3.5rem, fontWeight: 500, letterSpacing: "-0.02em" }
   h1: { fontFamily: Valley Sans, fontSize: 1.9rem, fontWeight: 500 }
-  body: { fontFamily: Inter, fontSize: 0.95rem, lineHeight: 1.55 }
-  label: { fontFamily: JetBrains Mono, fontSize: 0.72rem, letterSpacing: "0.08em" }
-rounded: { sm: 0px, md: 2px, lg: 4px }
+  body: { fontFamily: Inter, fontSize: 16px, lineHeight: 24px }
+  label: { fontFamily: JetBrains Mono, fontSize: 12px, lineHeight: 16px, letterSpacing: "0.08em" }
+rounded: { sm: 0px, md: 4px, lg: 4px }
 spacing: { sm: 8px, md: 16px, lg: 32px }
 ---
 
@@ -27,6 +28,8 @@ tertiary → `--primary`; rounded.md → `--radius`. Fontes via Google Fonts em
 `--font-heading` / `--font-sans` / `--font-mono`.
 
 ## Regras
+
+- **Grid de 4.** Tamanhos de fonte, entrelinhas, espaçamentos e alturas só em múltiplos de 4px. A escala tipográfica está no `@theme` do CSS: 12, 16, 20, 24, 32, 40, 48, 56, 64.
 
 - **Tertiary é o único acento.** Uma ação por tela; rótulos de seção, números
   de resultado e rastros do simulador também usam ele, nada mais.
