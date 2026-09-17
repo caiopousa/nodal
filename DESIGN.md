@@ -1,20 +1,20 @@
 ---
 version: alpha
 name: Mousepad 101
-description: Baseado no "Dream Engine" (designdotmd.directory/d/midjourney-dream). Obsidiana, violeta como único acento.
+description: Baseado no "Braun / dieter-grid" (designdotmd.directory/d/dieter-grid). Cinza concreto, laranja utilitário como único acento.
 colors:
-  primary: "#F1EDF9"
-  secondary: "#8C87A2"
-  tertiary: "#C18CFF"
-  neutral: "#0B0A13"
-  surface: "#15131F"
-  on-primary: "#0B0A13"
+  primary: "#0F1113"
+  secondary: "#6B6F74"
+  tertiary: "#D95600"
+  neutral: "#E7E5E1"
+  surface: "#F3F1EC"
+  on-primary: "#F3F1EC"
 typography:
-  display: { fontFamily: Instrument Serif, fontSize: 5rem, fontWeight: 400, letterSpacing: "-0.02em" }
-  h1: { fontFamily: Instrument Serif, fontSize: 2.6rem, fontWeight: 400 }
-  body: { fontFamily: Inter, fontSize: 0.95rem, lineHeight: 1.6 }
-  label: { fontFamily: JetBrains Mono, fontSize: 0.72rem, letterSpacing: "0.06em" }
-rounded: { sm: 6px, md: 12px, lg: 20px }
+  display: { fontFamily: Inter, fontSize: 3.5rem, fontWeight: 500, letterSpacing: "-0.02em" }
+  h1: { fontFamily: Inter, fontSize: 1.9rem, fontWeight: 500 }
+  body: { fontFamily: Inter, fontSize: 0.95rem, lineHeight: 1.55 }
+  label: { fontFamily: JetBrains Mono, fontSize: 0.72rem, letterSpacing: "0.08em" }
+rounded: { sm: 0px, md: 2px, lg: 4px }
 spacing: { sm: 8px, md: 16px, lg: 32px }
 ---
 
@@ -32,5 +32,5 @@ tertiary → `--primary`; rounded.md → `--radius`. Fontes via Google Fonts em
   de resultado e rastros do simulador também usam ele, nada mais.
 - **Sem gradiente decorativo.** Fundo plano. Exceção declarada: as texturas
   procedurais dos pads são render de material, não decoração.
-- **Serif só em h1/h2.** Corpo em Inter, rótulos e números em JetBrains Mono.
+- **Inter em tudo, peso 500 nos títulos.** Rótulos e números em JetBrains Mono. Cantos quase retos (2px).
 - **Espaço negativo é parte da composição.** Não preencher por preencher.

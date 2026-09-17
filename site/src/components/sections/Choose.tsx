@@ -59,9 +59,9 @@ export function Choose() {
   const { t } = useI18n()
   return (
     <Section id="choose" eyebrow={t.choose.eyebrow} title={t.choose.title} lede={t.choose.lede}>
-      <ol className="grid gap-5 md:grid-cols-2">
+      <ol className="grid gap-5">
         {t.choose.items.map((it, i) => (
-          <Reveal key={it.key} delay={(i % 2) * 0.08}>
+          <Reveal key={it.key}>
             <li className="flex h-full flex-col rounded-lg border bg-card p-6 sm:p-7">
               <div className="flex items-start justify-between gap-4">
                 <div>

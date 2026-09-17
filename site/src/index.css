@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Instrument+Serif&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap");
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
@@ -128,45 +128,45 @@
     @apply font-sans;
     }
 }
-/* ---------- Mousepad 101: tokens (ver DESIGN.md na raiz) ---------- */
+/* ---------- Mousepad 101: tokens (ver DESIGN.md na raiz) — Braun / dieter-grid ---------- */
 .dark {
-    --background: #0B0A13;          /* neutral */
-    --foreground: #F1EDF9;          /* primary */
-    --card: #15131F;                /* surface */
-    --card-foreground: #F1EDF9;
-    --popover: #15131F;
-    --popover-foreground: #F1EDF9;
-    --secondary: #1d1a2a;
-    --secondary-foreground: #F1EDF9;
-    --muted: #1d1a2a;
-    --muted-foreground: #8C87A2;    /* secondary */
-    --accent: #1d1a2a;
-    --accent-foreground: #F1EDF9;
-    --primary: #C18CFF;             /* tertiary: o único acento */
-    --primary-foreground: #0B0A13;  /* on-primary */
-    --border: rgb(140 135 162 / 22%);
-    --input: rgb(140 135 162 / 28%);
-    --ring: rgb(193 140 255 / 60%);
-    --chart-1: #C18CFF;
-    --chart-2: #9a6fd6;
-    --chart-3: #7455a8;
-    --chart-4: #513c78;
-    --chart-5: #33264d;
-    --radius: 12px;                 /* rounded.md */
+    --background: #E7E5E1;          /* neutral */
+    --foreground: #0F1113;          /* primary */
+    --card: #F3F1EC;                /* surface */
+    --card-foreground: #0F1113;
+    --popover: #F3F1EC;
+    --popover-foreground: #0F1113;
+    --secondary: #DAD7D1;
+    --secondary-foreground: #0F1113;
+    --muted: #DAD7D1;
+    --muted-foreground: #6B6F74;    /* secondary */
+    --accent: #DAD7D1;
+    --accent-foreground: #0F1113;
+    --primary: #D95600;             /* tertiary: o único acento */
+    --primary-foreground: #F3F1EC;  /* on-primary */
+    --border: rgb(107 111 116 / 35%);
+    --input: rgb(107 111 116 / 45%);
+    --ring: rgb(217 86 0 / 50%);
+    --chart-1: #D95600;
+    --chart-2: #E7823F;
+    --chart-3: #6B6F74;
+    --chart-4: #9EA1A5;
+    --chart-5: #C9C7C2;
+    --radius: 2px;                  /* rounded.md */
 }
 @theme inline {
     --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
-    --font-heading: "Instrument Serif", ui-serif, Georgia, serif;
+    --font-heading: "Inter", ui-sans-serif, system-ui, sans-serif;
     --font-mono: "JetBrains Mono", ui-monospace, monospace;
 }
-h1, h2, .font-heading { font-family: var(--font-heading); font-weight: 400; letter-spacing: -0.02em; }
+h1, h2, .font-heading { font-family: var(--font-heading); font-weight: 500; letter-spacing: -0.02em; }
 
 html { scroll-behavior: smooth; }
 body { -webkit-font-smoothing: antialiased; }
 
 .container-101 { @apply mx-auto w-full max-w-3xl px-4 sm:px-6; }
 .container-wide { @apply mx-auto w-full max-w-6xl px-4 sm:px-6; }
-.eyebrow { @apply font-mono text-[0.72rem] uppercase tracking-[0.06em] text-primary; }
+.eyebrow { @apply font-mono text-[0.72rem] uppercase tracking-[0.08em] text-primary; }
 .prose-101 { @apply text-base leading-relaxed text-muted-foreground; }
 .prose-101 strong { @apply text-foreground font-medium; }
 
