@@ -16,12 +16,12 @@ const LAYERS = [
  */
 function Layer({ i, offset, progress }: { i: number; offset: number; progress: MotionValue<number> }) {
   const l = LAYERS[i]
-  const y = useTransform(progress, [0, 1], [-offset + i * 10, 0])
+  const y = useTransform(progress, [0, 1], [-offset + i * 7, 0])
   return (
-    <div className="relative hidden h-28 sm:block" style={{ perspective: "900px" }}>
+    <div className="relative hidden h-28 sm:block" style={{ perspective: "900px", zIndex: 3 - i }}>
       <motion.div
         className={`absolute left-1/2 top-1/2 h-24 w-40 -translate-x-1/2 -translate-y-1/2 ${l.cls}`}
-        style={{ y, background: l.color, ["--pad-color" as string]: l.color, rotateX: 60, rotateZ: -35, zIndex: 3 - i, boxShadow: "0 24px 30px -16px rgba(0,0,0,.9)" }}
+        style={{ y, background: l.color, ["--pad-color" as string]: l.color, rotateX: 60, rotateZ: -35, boxShadow: "0 24px 30px -16px rgba(0,0,0,.9)" }}
       />
     </div>
   )
@@ -40,8 +40,10 @@ export function WhatIs() {
       setOffsets(tops.map((top) => top - tops[0]))
     }
     measure()
+    const t1 = setTimeout(measure, 300)
+    document.fonts?.ready.then(measure)
     window.addEventListener("resize", measure)
-    return () => window.removeEventListener("resize", measure)
+    return () => { clearTimeout(t1); window.removeEventListener("resize", measure) }
   }, [t])
 
   // 0 = lista entrando na tela (pilha fechada) → 1 = lista no meio (camadas nos tópicos)
@@ -51,7 +53,7 @@ export function WhatIs() {
     <Section id="what" eyebrow={t.what.eyebrow} title={t.what.title} lede={t.what.lede}>
       <ol ref={listRef} className="flex flex-col gap-12">
         {t.what.layers.map((l, i) => (
-          <li key={l.name} ref={(el) => { rowRefs.current[i] = el }} className="grid items-center gap-8 sm:grid-cols-[13rem_1fr]">
+          <li key={l.name} ref={(el) => { rowRefs.current[i] = el }} className="relative grid items-center gap-8 sm:grid-cols-[13rem_1fr]" style={{ zIndex: 3 - i }}>
             <Layer i={i} offset={offsets[i]} progress={scrollYProgress} />
             <motion.div
               initial={{ opacity: 0, y: 16 }}
