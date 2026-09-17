@@ -18,7 +18,7 @@ function Layer({ i, offset, progress }: { i: number; offset: number; progress: M
   const l = LAYERS[i]
   const y = useTransform(progress, [0, 1], [-offset + i * 7, 0])
   return (
-    <div className="relative hidden h-28 sm:block" style={{ perspective: "900px", zIndex: 3 - i }}>
+    <div className="relative hidden h-28 sm:block" style={{ zIndex: 3 - i }}>
       <motion.div
         className={`absolute left-1/2 top-1/2 h-24 w-40 -translate-x-1/2 -translate-y-1/2 ${l.cls}`}
         style={{ y, background: l.color, ["--pad-color" as string]: l.color, rotateX: 60, rotateZ: -35, boxShadow: "0 24px 30px -16px rgba(0,0,0,.9)" }}
