@@ -1,4 +1,5 @@
-import { Section, Reveal } from "@/components/Section"
+import { Section } from "@/components/Section"
+import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/motion-primitives/accordion"
 import { Pad } from "@/components/Pad"
 import { useI18n } from "@/lib/i18n"
 
@@ -59,23 +60,26 @@ export function Choose() {
   const { t } = useI18n()
   return (
     <Section id="choose" eyebrow={t.choose.eyebrow} title={t.choose.title} lede={t.choose.lede}>
-      <ol className="grid gap-5">
+      <Accordion className="border-t" expandedValue={undefined}>
         {t.choose.items.map((it, i) => (
-          <Reveal key={it.key}>
-            <li className="flex h-full flex-col rounded-lg border bg-card p-6 sm:p-7">
-              <div className="flex items-start justify-between gap-4">
+          <AccordionItem key={it.key} value={it.key} className="border-b">
+            <AccordionTrigger className="grid grid-cols-[2.5rem_1fr_auto] items-center gap-4 py-5 transition-colors hover:text-foreground">
+              <span className="font-mono text-sm text-primary">0{i + 1}</span>
+              <span className="text-lg font-medium">{it.title}</span>
+              <span className="text-muted-foreground transition-transform duration-300 group-data-[expanded]:rotate-45" aria-hidden>+</span>
+            </AccordionTrigger>
+            <AccordionContent>
+              <div className="grid gap-6 pb-7 pl-[3.5rem] sm:grid-cols-[1fr_auto] sm:items-start">
                 <div>
-                  <span className="font-mono text-sm text-primary">0{i + 1}</span>
-                  <h3 className="mt-1 text-xl font-medium">{it.title}</h3>
+                  <p className="prose-101 text-[15px]">{it.body}</p>
+                  <p className="mt-4 text-sm"><span className="text-primary">→</span> {it.tip}</p>
                 </div>
-                <div className="shrink-0 pt-1"><Visual k={it.key} /></div>
+                <div className="sm:pt-1"><Visual k={it.key} /></div>
               </div>
-              <p className="prose-101 mt-4 text-[15px]">{it.body}</p>
-              <p className="mt-auto pt-5 text-sm text-foreground"><span className="text-primary">→</span> {it.tip}</p>
-            </li>
-          </Reveal>
+            </AccordionContent>
+          </AccordionItem>
         ))}
-      </ol>
+      </Accordion>
     </Section>
   )
 }
