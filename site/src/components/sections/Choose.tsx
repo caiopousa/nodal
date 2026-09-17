@@ -60,7 +60,7 @@ export function Choose() {
   const { t } = useI18n()
   return (
     <Section id="choose" eyebrow={t.choose.eyebrow} title={t.choose.title} lede={t.choose.lede}>
-      <Accordion className="border-t" expandedValue={undefined}>
+      <Accordion className="border-t" transition={{ type: "spring", stiffness: 260, damping: 30 }}>
         {t.choose.items.map((it, i) => (
           <AccordionItem key={it.key} value={it.key} className="border-b">
             <AccordionTrigger className="grid grid-cols-[2.5rem_1fr_auto] items-center gap-4 py-5 transition-colors hover:text-foreground">
