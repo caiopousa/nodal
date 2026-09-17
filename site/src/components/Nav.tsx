@@ -5,9 +5,8 @@ export function Nav() {
   return (
     <header className="sticky top-0 z-40 border-b bg-background/70 backdrop-blur-md">
       <div className="container-wide flex h-14 items-center justify-between gap-4">
-        <a href="#" className="flex items-center gap-2 text-sm font-medium tracking-tight">
-          <span className="inline-block h-3 w-4 rounded-[2px] bg-primary" aria-hidden />
-          {t.nav.brand}
+        <a href="#" className="text-[15px] font-medium tracking-tight" aria-label="everything.setup">
+          everything<span className="text-primary">.</span><span className="font-serif text-[19px] font-normal leading-none">setup</span>
         </a>
 
         <div className="flex items-center gap-3">

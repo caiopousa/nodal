@@ -1,6 +1,6 @@
 export const en = {
   nav: {
-    brand: "Mousepad 101",
+    brand: "everything.setup",
     items: [
       { id: "what", label: "What it is" },
       { id: "feel", label: "Speed vs. Control" },
@@ -43,7 +43,8 @@ export const en = {
     stoppingHint: "Distance the mouse would travel on its own",
     lede: "Nobody actually lets go. But that distance is the most honest way to see the difference between surfaces, because it comes straight from friction. Pick a gesture, release, and watch five surface types stop on their own.",
     howRead: "The number under each pad is the stopping distance, computed from real friction coefficients and real gravity. The animation is just a way to look at it.",
-    gestures: { vertical: "Vertical", diagonal: "Diagonal", flick: "Flick" },
+    gestures: { vertical: "Vertical", diagonal: "Diagonal", flick: "Flick", custom: "Custom" },
+    dragHint: "Or drag the mouse yourself and let go.",
     modes: { real: "Realistic", amp: "Braking ×2" },
     modeNote: { real: "Nothing amplified. Differences are subtle, because that is how they are. Shown in slow motion (0.4×); the numbers do not depend on playback.", amp: "Braking doubled so every surface stops inside the pad. Friction values are untouched and the ratio between surfaces is the same." },
     release: "Release",

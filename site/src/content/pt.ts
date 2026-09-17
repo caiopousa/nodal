@@ -1,6 +1,6 @@
 export const pt = {
   nav: {
-    brand: "Mousepad 101",
+    brand: "everything.setup",
     items: [
       { id: "what", label: "O que é" },
       { id: "feel", label: "Speed vs. Control" },
@@ -43,7 +43,8 @@ export const pt = {
     stoppingHint: "Distância que o mouse andaria sozinho",
     lede: "Ninguém solta o mouse de verdade. Mas essa distância é o jeito mais honesto de ver a diferença entre superfícies, porque ela vem direto do atrito. Escolha um gesto, solte, e veja cinco tipos de superfície pararem sozinhos.",
     howRead: "O número embaixo de cada pad é a distância de frenagem, calculada com coeficientes de atrito reais e gravidade real. A animação é só uma forma de olhar pra isso.",
-    gestures: { vertical: "Vertical", diagonal: "Diagonal", flick: "Flick" },
+    gestures: { vertical: "Vertical", diagonal: "Diagonal", flick: "Flick", custom: "Livre" },
+    dragHint: "Ou arraste o mouse você mesmo e solte.",
     modes: { real: "Realista", amp: "Frenagem ×2" },
     modeNote: { real: "Nada ampliado. As diferenças são sutis, porque é assim que elas são. Exibido em câmera lenta (0,4×); os números não dependem da reprodução.", amp: "Frenagem dobrada pra toda superfície parar dentro do pad. Os valores de atrito não mudam e a proporção entre superfícies é a mesma." },
     release: "Soltar",
