@@ -241,6 +241,6 @@ body { -webkit-font-smoothing: antialiased; }
 
 /* ---------- Esteira de pads (hero) ---------- */
 @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-.marquee { display: flex; width: max-content; gap: 1.25rem; animation: marquee 40s linear infinite; }
+.marquee { display: flex; width: max-content; gap: 0.5rem; animation: marquee 40s linear infinite; }
 .marquee:hover { animation-play-state: paused; }
 @media (prefers-reduced-motion: reduce) { .marquee { animation: none; } }
