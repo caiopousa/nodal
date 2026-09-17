@@ -2,6 +2,7 @@ import { I18nProvider, useI18n } from "@/lib/i18n"
 import { Nav } from "@/components/Nav"
 import { Hero } from "@/components/sections/Hero"
 import { WhatIs } from "@/components/sections/WhatIs"
+import { Types } from "@/components/sections/Types"
 import { Feel } from "@/components/sections/Feel"
 import { Choose } from "@/components/sections/Choose"
 import { Price } from "@/components/sections/Price"
@@ -27,6 +28,7 @@ export default function App() {
       <main>
         <Hero />
         <WhatIs />
+        <Types />
         <Feel />
         <Choose />
         <Price />

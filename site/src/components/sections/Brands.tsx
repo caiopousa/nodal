@@ -10,7 +10,7 @@ export function Brands() {
   const { t } = useI18n()
   return (
     <Section id="brands" eyebrow={t.brands.eyebrow} title={t.brands.title} lede={t.brands.lede} wide>
-      <div className="flex gap-5 overflow-x-auto px-4 pb-6 sm:px-6 [scrollbar-width:thin]" style={{ scrollSnapType: "x proximity" }}>
+      <div className="container-wide flex gap-5 overflow-x-auto pb-6 [scrollbar-width:thin]" style={{ scrollSnapType: "x proximity" }}>
         {SAMPLE.map((m, i) => (
           <motion.figure
             key={m.brand + m.model}

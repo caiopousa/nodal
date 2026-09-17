@@ -10,6 +10,7 @@ export const pt = {
       { id: "glossary", label: "Glossário" },
     ],
     lang: { en: "EN", pt: "PT" },
+    products: { mousepads: "Mousepads", keyboards: "Teclados", soon: "em breve" },
   },
   hero: {
     eyebrow: "Um guia de campo",
@@ -19,8 +20,8 @@ export const pt = {
     rackNote: "Tire um do cabide",
   },
   what: {
-    eyebrow: "01 — O que é",
-    title: "Três camadas, uma função.",
+    eyebrow: "01",
+    title: "Estrutura",
     lede: "Um mousepad é uma superfície com uma quantidade controlada de atrito, colada em algo que a mantém plana e parada. Toda spec que você vai ler descreve uma dessas três partes.",
     layers: [
       { name: "Superfície", desc: "A parte que os skates do mouse tocam. Cloth (tecido) é o padrão; vidro e plástico são as alternativas rígidas e rápidas. Essa camada decide speed, control e o quanto o glide é consistente ao longo do pad inteiro.", tag: "decide a sensação" },
@@ -31,11 +32,18 @@ export const pt = {
     edge: "Bordas costuradas (stitched) são o único detalhe em que todas as fontes concordam. A costura impede o tecido de desfiar e a superfície de descolar. Bordas flat ou arredondadas parecem mais limpas, mas costumam desgastar primeiro.",
   },
   feel: {
-    eyebrow: "02 — Speed vs. Control",
-    title: "Se você soltasse o mouse, quanto ele andaria?",
+    eyebrow: "03",
+    title: "Experimente",
+    question: "Se você soltasse o mouse, quanto ele andaria?",
+    typesEyebrow: "02",
+    typesTitle: "Tipos",
+    typesLede: "Cinco famílias de superfície cobrem quase tudo o que existe no mercado. Escolha uma pra ver do que é feita e como se comporta.",
+    material: { control: "Cloth", balanced: "Cloth", speed: "Cloth", hybrid: "Cloth revestido", glass: "Glass" },
+    stoppingPower: "Stopping power",
+    stoppingHint: "Distância que o mouse andaria sozinho",
     lede: "Ninguém solta o mouse de verdade. Mas essa distância é o jeito mais honesto de ver a diferença entre superfícies, porque ela vem direto do atrito. Escolha um gesto, solte, e veja cinco tipos de superfície pararem sozinhos.",
     howRead: "O número embaixo de cada pad é a distância de frenagem, calculada com coeficientes de atrito reais e gravidade real. A animação é só uma forma de olhar pra isso.",
-    gestures: { vertical: "Arrasto lento", diagonal: "Varredura", flick: "Flick de mira" },
+    gestures: { vertical: "Vertical", diagonal: "Diagonal", flick: "Flick" },
     modes: { real: "Realista", amp: "Frenagem ×2" },
     modeNote: { real: "Nada ampliado. As diferenças são sutis, porque é assim que elas são. Exibido em câmera lenta (0,4×); os números não dependem da reprodução.", amp: "Frenagem dobrada pra toda superfície parar dentro do pad. Os valores de atrito não mudam e a proporção entre superfícies é a mesma." },
     release: "Soltar",
@@ -51,8 +59,8 @@ export const pt = {
     takeaway: "Control não é melhor que speed. Pad control facilita parar; pad speed facilita começar. Qual você quer depende dos movimentos que você mais faz.",
   },
   choose: {
-    eyebrow: "03 — Como escolher",
-    title: "Seis coisas pra olhar, nesta ordem.",
+    eyebrow: "04",
+    title: "Como escolher",
     lede: "Esses critérios aparecem em todo guia de compra, de fabricante, varejo especializado e comunidade. O resto é gosto.",
     items: [
       { key: "feel", title: "Speed ou control", body: "Responda três perguntas antes. Qual é a sua sensibilidade? DPI alto significa menos movimento físico e menos necessidade de glide. Você mira com o braço ou com o pulso? Quem usa o braço varre mais e se beneficia de speed; quem usa o pulso faz micro-ajustes e se beneficia de control. Está competindo ou relaxando? Jogo competitivo pede consistência; casual pode priorizar conforto.", tip: "Na dúvida: Balanced. O nome existe por um motivo." },
@@ -64,8 +72,8 @@ export const pt = {
     ],
   },
   price: {
-    eyebrow: "04 — Barato vs. caro",
-    title: "Pelo que você paga de verdade.",
+    eyebrow: "05",
+    title: "Barato vs. caro",
     lede: "Um pad barato e um caro podem ter o mesmo nome de material. A diferença está no que o nome não diz.",
     cols: { aspect: "O que muda", cheap: "Pad de entrada", premium: "Pad premium" },
     rows: [
@@ -79,13 +87,13 @@ export const pt = {
     note: "Caro não significa melhor pra você. Significa mais consistente e mais durável. Um pad cloth Balanced de entrada continua sendo o primeiro pad certo pra maioria das pessoas.",
   },
   brands: {
-    eyebrow: "05 — Quem faz",
-    title: "Os nomes que você vai continuar vendo.",
+    eyebrow: "06",
+    title: "Marcas",
     lede: "Uma amostra decorativa: um modelo real de cada uma das marcas mais ativas do catálogo, desenhado a partir das specs declaradas.",
   },
   market: {
-    eyebrow: "06 — O mercado em números",
-    title: "Como 470 modelos ficam juntos.",
+    eyebrow: "07",
+    title: "O mercado em números",
     lede: "Agregados de todos os modelos do catálogo. Não é ranking; é um retrato do que o mercado fabrica.",
     surface: "Material da superfície",
     speed: "Speed declarado",
@@ -96,8 +104,8 @@ export const pt = {
     source: "Specs declaradas via EloShapes. Testes independentes de atrito via ProSettings em 13 modelos.",
   },
   glossary: {
-    eyebrow: "07 — Glossário",
-    title: "As palavras que o mercado usa.",
+    eyebrow: "08",
+    title: "Glossário",
     terms: [
       { term: "Speed / Control", def: "As duas pontas da escala de atrito. Pad speed tem atrito baixo e continua deslizando; pad control tem atrito alto e para rápido." },
       { term: "Balanced", def: "Atalho de marketing pra um pad no meio da escala de atrito." },

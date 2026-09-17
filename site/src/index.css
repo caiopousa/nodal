@@ -164,7 +164,8 @@ h1, h2, .font-heading { font-family: var(--font-heading); font-weight: 400; lett
 html { scroll-behavior: smooth; }
 body { -webkit-font-smoothing: antialiased; }
 
-.container-101 { @apply mx-auto w-full max-w-5xl px-4 sm:px-6; }
+.container-101 { @apply mx-auto w-full max-w-3xl px-4 sm:px-6; }
+.container-wide { @apply mx-auto w-full max-w-6xl px-4 sm:px-6; }
 .eyebrow { @apply font-mono text-[0.72rem] uppercase tracking-[0.06em] text-primary; }
 .prose-101 { @apply text-base leading-relaxed text-muted-foreground; }
 .prose-101 strong { @apply text-foreground font-medium; }
@@ -237,3 +238,9 @@ body { -webkit-font-smoothing: antialiased; }
 /* ---------- Números do mercado ---------- */
 .bar { @apply h-2 rounded-full bg-primary/80; }
 @media (max-width: 640px) { .rack .pad-label { display: none; } }
+
+/* ---------- Esteira de pads (hero) ---------- */
+@keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+.marquee { display: flex; width: max-content; gap: 1.25rem; animation: marquee 40s linear infinite; }
+.marquee:hover { animation-play-state: paused; }
+@media (prefers-reduced-motion: reduce) { .marquee { animation: none; } }

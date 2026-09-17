@@ -10,6 +10,7 @@ export const en = {
       { id: "glossary", label: "Glossary" },
     ],
     lang: { en: "EN", pt: "PT" },
+    products: { mousepads: "Mousepads", keyboards: "Keyboards", soon: "soon" },
   },
   hero: {
     eyebrow: "A field guide",
@@ -19,8 +20,8 @@ export const en = {
     rackNote: "Pick one off the rack",
   },
   what: {
-    eyebrow: "01 — What it is",
-    title: "Three layers, one job.",
+    eyebrow: "01",
+    title: "Structure",
     lede: "A mousepad is a surface with a controlled amount of friction, glued to something that keeps it flat and still. Every spec you will ever read describes one of these three parts.",
     layers: [
       { name: "Surface", desc: "The part your mouse skates touch. Cloth is the default; glass and plastic are the fast, rigid alternatives. This layer decides speed, control and how consistent the glide feels across the whole pad.", tag: "decides the feel" },
@@ -31,11 +32,18 @@ export const en = {
     edge: "Stitched edges are the one detail every source agrees on. The stitching stops the cloth from fraying and the surface from peeling. Flat or rounded edges look cleaner but tend to wear first.",
   },
   feel: {
-    eyebrow: "02 — Speed vs. Control",
-    title: "If you let go of the mouse, how far would it travel?",
+    eyebrow: "03",
+    title: "Try it",
+    question: "If you let go of the mouse, how far would it travel?",
+    typesEyebrow: "02",
+    typesTitle: "Types",
+    typesLede: "Five surface families cover almost everything on the market. Pick one to see what it is made of and how it behaves.",
+    material: { control: "Cloth", balanced: "Cloth", speed: "Cloth", hybrid: "Coated cloth", glass: "Glass" },
+    stoppingPower: "Stopping power",
+    stoppingHint: "Distance the mouse would travel on its own",
     lede: "Nobody actually lets go. But that distance is the most honest way to see the difference between surfaces, because it comes straight from friction. Pick a gesture, release, and watch five surface types stop on their own.",
     howRead: "The number under each pad is the stopping distance, computed from real friction coefficients and real gravity. The animation is just a way to look at it.",
-    gestures: { vertical: "Slow drag", diagonal: "Sweep", flick: "Aim flick" },
+    gestures: { vertical: "Vertical", diagonal: "Diagonal", flick: "Flick" },
     modes: { real: "Realistic", amp: "Braking ×2" },
     modeNote: { real: "Nothing amplified. Differences are subtle, because that is how they are. Shown in slow motion (0.4×); the numbers do not depend on playback.", amp: "Braking doubled so every surface stops inside the pad. Friction values are untouched and the ratio between surfaces is the same." },
     release: "Release",
@@ -51,8 +59,8 @@ export const en = {
     takeaway: "Control is not better than speed. Control pads make stopping easy; speed pads make starting easy. Which one you want depends on the moves you make most.",
   },
   choose: {
-    eyebrow: "03 — How to choose",
-    title: "Six things to look at, in order.",
+    eyebrow: "04",
+    title: "How to choose",
     lede: "These criteria show up in every buying guide from manufacturers, specialist retailers and the community. Everything else is taste.",
     items: [
       { key: "feel", title: "Speed or control", body: "Answer three questions first. What is your sensitivity? High DPI means less physical movement and less need for glide. Do you aim with the arm or the wrist? Arm players sweep more and benefit from speed; wrist players micro-adjust and benefit from control. Are you competing or relaxing? Competitive play rewards consistency; casual play can prioritise comfort.", tip: "Unsure: Balanced. It is called that for a reason." },
@@ -64,8 +72,8 @@ export const en = {
     ],
   },
   price: {
-    eyebrow: "04 — Cheap vs. expensive",
-    title: "What you actually pay for.",
+    eyebrow: "05",
+    title: "Cheap vs. expensive",
     lede: "A cheap pad and an expensive one can share the same material name. The difference is in what the name does not say.",
     cols: { aspect: "What changes", cheap: "Budget pad", premium: "Premium pad" },
     rows: [
@@ -79,13 +87,13 @@ export const en = {
     note: "Expensive does not mean better for you. It means more consistent and more durable. A budget Balanced cloth pad is still the right first pad for most people.",
   },
   brands: {
-    eyebrow: "05 — Who makes them",
-    title: "The names you will keep seeing.",
+    eyebrow: "06",
+    title: "Brands",
     lede: "A decorative sample: one real model from each of the most active brands in the catalog, drawn from their declared specs.",
   },
   market: {
-    eyebrow: "06 — The market in numbers",
-    title: "What 470 models look like together.",
+    eyebrow: "07",
+    title: "The market in numbers",
     lede: "Aggregates from every model in the catalog. Not a ranking; a picture of what the market builds.",
     surface: "Surface material",
     speed: "Declared speed",
@@ -96,8 +104,8 @@ export const en = {
     source: "Declared specs via EloShapes. Independent friction tests via ProSettings on 13 models.",
   },
   glossary: {
-    eyebrow: "07 — Glossary",
-    title: "Words the market uses.",
+    eyebrow: "08",
+    title: "Glossary",
     terms: [
       { term: "Speed / Control", def: "The two ends of the friction scale. Speed pads have low friction and keep gliding; control pads have high friction and stop fast." },
       { term: "Balanced", def: "Marketing shorthand for a pad in the middle of the friction scale." },

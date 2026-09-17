@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react"
+import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { Button } from "@/components/ui/button"
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 import { useI18n } from "@/lib/i18n"
@@ -167,13 +167,11 @@ function roundRect(ctx: CanvasRenderingContext2D, x: number, y: number, w: numbe
   ctx.closePath()
 }
 
-/* ---------- Uma raia por tipo ---------- */
-function Lane({ type, gesture, K, runId }: { type: (typeof TYPES)[number]; gesture: Gesture; K: number; runId: number }) {
-  const { t, locale } = useI18n()
+/* ---------- Canvas do tipo selecionado ---------- */
+function Lane({ type, gesture, K, runId, onDone }: { type: (typeof TYPES)[number]; gesture: Gesture; K: number; runId: number; onDone: () => void }) {
   const ref = useRef<HTMLCanvasElement>(null)
   const bg = useMemo(() => makeBackground(type), [type])
   const p = useMemo(() => plan(type, gesture, K), [type, gesture, K])
-  const [done, setDone] = useState(false)
 
   useEffect(() => {
     const canvas = ref.current
@@ -182,72 +180,82 @@ function Lane({ type, gesture, K, runId }: { type: (typeof TYPES)[number]; gestu
     canvas.width = W * dpr; canvas.height = H * dpr
     const ctx = canvas.getContext("2d")!
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
-    setDone(false)
     if (runId === 0) { draw(ctx, bg, p, 0); return }
     const start = performance.now()
     let raf = 0
     const loop = (now: number) => {
       const elapsed = (now - start) * SLOWMO
       draw(ctx, bg, p, elapsed)
-      if (elapsed >= p.total) { setDone(true); return }
+      if (elapsed >= p.total) { onDone(); return }
       raf = requestAnimationFrame(loop)
     }
     raf = requestAnimationFrame(loop)
     return () => cancelAnimationFrame(raf)
-  }, [runId, p, bg])
+  }, [runId, p, bg, onDone])
 
-  const cm = p.dStopCm.toLocaleString(locale === "pt" ? "pt-BR" : "en-US", { maximumFractionDigits: 1, minimumFractionDigits: 1 })
-  const info = t.feel.types[type.id]
-
-  return (
-    <figure className="flex flex-col gap-3">
-      <canvas ref={ref} style={{ width: "100%", aspectRatio: `${W} / ${H}` }} className="rounded-md" />
-      <figcaption className="flex items-baseline justify-between gap-2">
-        <div className="min-w-0">
-          <div className="text-sm font-medium">{info.name}</div>
-          <div className="text-xs text-muted-foreground">μs {type.mus.toFixed(2)} · μk {type.muk.toFixed(2)}</div>
-        </div>
-        <div className="text-right">
-          <div className={`font-mono text-lg tabular-nums transition-opacity ${done ? "text-primary" : "text-muted-foreground/40"}`}>{done ? `${cm} cm` : "— cm"}</div>
-          {done && p.beyond && <div className="text-[11px] text-muted-foreground">{t.feel.beyond}</div>}
-        </div>
-      </figcaption>
-    </figure>
-  )
+  return <canvas ref={ref} style={{ width: "100%", aspectRatio: `${W} / ${H}` }} className="rounded-md" />
 }
 
 export function Simulator() {
-  const { t } = useI18n()
+  const { t, locale } = useI18n()
+  const [sel, setSel] = useState<TypeId>("control")
   const [gesture, setGesture] = useState<Gesture>("vertical")
   const [mode, setMode] = useState<"real" | "amp">("real")
   const [runId, setRunId] = useState(0)
+  const [done, setDone] = useState(false)
   const K = mode === "amp" ? 2 : 1
+  const type = TYPES.find((x) => x.id === sel)!
+  const fmt = (cm: number) => cm.toLocaleString(locale === "pt" ? "pt-BR" : "en-US", { maximumFractionDigits: 1, minimumFractionDigits: 1 })
+  const results = useMemo(() => Object.fromEntries(TYPES.map((x) => [x.id, plan(x, gesture, K)])) as Record<TypeId, Plan>, [gesture, K])
+  const reset = () => { setRunId(0); setDone(false) }
+  const onDone = useCallback(() => setDone(true), [])
 
   return (
-    <div className="flex flex-col gap-6">
-      <div className="flex flex-wrap items-center gap-3">
-        <ToggleGroup value={[gesture]} onValueChange={(v) => { const g = v[0] as Gesture | undefined; if (g) { setGesture(g); setRunId(0) } }} variant="outline">
-          {(Object.keys(GESTURES) as Gesture[]).map((g) => (
-            <ToggleGroupItem key={g} value={g}>{t.feel.gestures[g]}</ToggleGroupItem>
-          ))}
+    <div className="rounded-xl border bg-card p-4 sm:p-6">
+      <div className="grid gap-5 sm:grid-cols-[1fr_12rem]">
+        <Lane type={type} gesture={gesture} K={K} runId={runId} onDone={onDone} />
+        <ul className="flex flex-col gap-1" role="tablist">
+          {TYPES.map((x) => {
+            const r = results[x.id]
+            const active = sel === x.id
+            return (
+              <li key={x.id}>
+                <button
+                  role="tab" aria-selected={active}
+                  onClick={() => { setSel(x.id); reset() }}
+                  className={`flex w-full items-baseline justify-between gap-2 rounded-md px-3 py-2 text-left text-sm transition-colors ${active ? "bg-primary/10 text-foreground" : "text-muted-foreground hover:bg-muted hover:text-foreground"}`}
+                >
+                  <span>{t.feel.types[x.id].name}</span>
+                  <span className={`font-mono text-xs tabular-nums ${done ? "text-primary" : "text-muted-foreground/40"}`}>{done ? `${fmt(r.dStopCm)}` : "—"}</span>
+                </button>
+              </li>
+            )
+          })}
+        </ul>
+      </div>
+
+      <div className="mt-5 flex flex-wrap items-end justify-between gap-4 border-t pt-5">
+        <div>
+          <div className="text-sm font-medium">{t.feel.types[sel].name} <span className="ml-2 rounded-md border px-1.5 py-px font-mono text-[11px] text-muted-foreground">{t.feel.material[sel]}</span></div>
+          <div className="mt-2 text-xs text-muted-foreground">{t.feel.stoppingPower}</div>
+          <div className={`font-mono text-3xl tabular-nums ${done ? "text-primary" : "text-muted-foreground/40"}`}>
+            {done ? `${fmt(results[sel].dStopCm)} cm` : "— cm"}
+            {done && results[sel].beyond && <span className="ml-2 font-sans text-xs text-muted-foreground">{t.feel.beyond}</span>}
+          </div>
+        </div>
+        <Button size="lg" onClick={() => { setDone(false); setRunId((n) => n + 1) }}>{runId === 0 ? t.feel.release : t.feel.replay}</Button>
+      </div>
+
+      <div className="mt-5 flex flex-wrap items-center gap-3">
+        <ToggleGroup value={[gesture]} onValueChange={(v) => { const g = v[0] as Gesture | undefined; if (g) { setGesture(g); reset() } }} variant="outline">
+          {(Object.keys(GESTURES) as Gesture[]).map((g) => <ToggleGroupItem key={g} value={g}>{t.feel.gestures[g]}</ToggleGroupItem>)}
         </ToggleGroup>
-        <ToggleGroup value={[mode]} onValueChange={(v) => { const m = v[0] as "real" | "amp" | undefined; if (m) { setMode(m); setRunId(0) } }} variant="outline">
+        <ToggleGroup value={[mode]} onValueChange={(v) => { const m = v[0] as "real" | "amp" | undefined; if (m) { setMode(m); reset() } }} variant="outline">
           <ToggleGroupItem value="real">{t.feel.modes.real}</ToggleGroupItem>
           <ToggleGroupItem value="amp">{t.feel.modes.amp}</ToggleGroupItem>
         </ToggleGroup>
-        <Button size="lg" className="ml-auto" onClick={() => setRunId((n) => n + 1)}>
-          {runId === 0 ? t.feel.release : t.feel.replay}
-        </Button>
       </div>
-      <p className="text-xs text-muted-foreground">{t.feel.modeNote[mode]}</p>
-      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {TYPES.map((type) => (
-          <Lane key={type.id} type={type} gesture={gesture} K={K} runId={runId} />
-        ))}
-        <div className="hidden lg:flex flex-col justify-end gap-2 rounded-md border border-dashed p-5 text-sm text-muted-foreground">
-          <p>{t.feel.howRead}</p>
-        </div>
-      </div>
+      <p className="mt-3 text-xs text-muted-foreground">{t.feel.modeNote[mode]}</p>
     </div>
   )
 }
