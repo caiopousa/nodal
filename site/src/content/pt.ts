@@ -50,9 +50,9 @@ export const pt = {
     replay: "Repetir",
     beyond: "além do pad",
     types: {
-      control: { name: "Cloth · Control", blurb: "Segura mais antes de sair do lugar e freia rápido. Micro-ajustes precisos, mais esforço em movimentos amplos." },
-      balanced: { name: "Cloth · Balanced", blurb: "O meio-termo e a escolha mais comum pra um primeiro pad." },
-      speed: { name: "Cloth · Speed", blurb: "Descola fácil e continua indo. Tracking sem esforço, mais difícil de parar exatamente onde quer." },
+      control: { name: "Control", blurb: "Segura mais antes de sair do lugar e freia rápido. Micro-ajustes precisos, mais esforço em movimentos amplos." },
+      balanced: { name: "Balanced", blurb: "O meio-termo e a escolha mais comum pra um primeiro pad." },
+      speed: { name: "Speed", blurb: "Descola fácil e continua indo. Tracking sem esforço, mais difícil de parar exatamente onde quer." },
       hybrid: { name: "Hybrid", blurb: "Tecido com revestimento ou mistura: conforto de cloth com glide mais próximo de superfície rígida." },
       glass: { name: "Glass", blurb: "Quase nenhuma aderência inicial, quase nenhuma frenagem. A superfície mais rápida e consistente, e a que menos perdoa." },
     },

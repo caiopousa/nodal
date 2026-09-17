@@ -50,9 +50,9 @@ export const en = {
     replay: "Replay",
     beyond: "past the pad",
     types: {
-      control: { name: "Cloth · Control", blurb: "Grabs harder before moving and brakes fast. Precise micro-adjustments, more effort on big sweeps." },
-      balanced: { name: "Cloth · Balanced", blurb: "The middle of the road and the most common pick for a first pad." },
-      speed: { name: "Cloth · Speed", blurb: "Releases easily and keeps going. Effortless tracking, harder to stop exactly where you want." },
+      control: { name: "Control", blurb: "Grabs harder before moving and brakes fast. Precise micro-adjustments, more effort on big sweeps." },
+      balanced: { name: "Balanced", blurb: "The middle of the road and the most common pick for a first pad." },
+      speed: { name: "Speed", blurb: "Releases easily and keeps going. Effortless tracking, harder to stop exactly where you want." },
       hybrid: { name: "Hybrid", blurb: "A coated cloth or fabric blend: cloth comfort with a glide closer to hard surfaces." },
       glass: { name: "Glass", blurb: "Almost no static grip, almost no braking. The fastest, most consistent surface, and the least forgiving." },
     },
