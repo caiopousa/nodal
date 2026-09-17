@@ -16,7 +16,7 @@ const LAYERS = [
  */
 function Layer({ i, offset, progress }: { i: number; offset: number; progress: MotionValue<number> }) {
   const l = LAYERS[i]
-  const y = useTransform(progress, [0, 1], [-offset + i * 7, 0])
+  const y = useTransform(progress, [0, 1], [-offset, 0])
   return (
     <div className="relative hidden h-28 sm:block" style={{ zIndex: 3 - i }}>
       <motion.div
