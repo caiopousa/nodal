@@ -65,8 +65,8 @@ export function Hero() {
       <div className="mt-6 overflow-hidden pt-10 pb-24" aria-hidden>
         <div ref={strip} className="marquee items-end px-4">
           {items.map((p, i) => (
-            <div key={i} className="w-44 shrink-0">
-              <Pad kind={p.kind} color={p.color} ratio={1.4} style={{ transformOrigin: "50% 50%", willChange: "transform" }} />
+            <div key={i} className="w-36 shrink-0">
+              <Pad kind={p.kind} color={p.color} ratio={0.78} style={{ transformOrigin: "50% 50%", willChange: "transform" }} />
             </div>
           ))}
         </div>
