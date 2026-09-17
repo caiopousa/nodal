@@ -63,7 +63,7 @@ export function Choose() {
       <Accordion className="border-t" transition={{ type: "spring", stiffness: 260, damping: 30 }}>
         {t.choose.items.map((it, i) => (
           <AccordionItem key={it.key} value={it.key} className="border-b">
-            <AccordionTrigger className="grid grid-cols-[2.5rem_1fr_auto] items-center gap-4 py-5 transition-colors hover:text-foreground">
+            <AccordionTrigger className="grid w-full grid-cols-[2.5rem_1fr_auto] text-left items-center gap-4 py-5 transition-colors hover:text-foreground">
               <span className="font-mono text-sm text-primary">0{i + 1}</span>
               <span className="text-lg font-medium">{it.title}</span>
               <span className="text-muted-foreground transition-transform duration-300 group-data-[expanded]:rotate-45" aria-hidden>+</span>
