@@ -31,6 +31,9 @@ export const TYPES: { id: TypeId; mus: number; muk: number; color: string; weave
 const BALANCED_MUK = TYPES.find((x) => x.id === "balanced")!.muk
 const relative = (muk: number) => muk / BALANCED_MUK - 1          // +0.25 = freia 25% mais
 const MAX_MUK = Math.max(...TYPES.map((x) => x.muk))
+const MIN_MUK = Math.min(...TYPES.map((x) => x.muk))
+/** Frenagem em 5 quadrados: mínimo (Glass) = 1, máximo (Control) = 5, linear entre eles. */
+const squares = (muk: number) => Math.round(1 + (4 * (muk - MIN_MUK)) / (MAX_MUK - MIN_MUK))
 
 const GESTURES: Record<Exclude<Gesture, "custom">, { pts: V[]; v0: number }> = {
   vertical: { pts: [{ x: 0.5, y: 0.14 }, { x: 0.5, y: 0.55 }], v0: 0.7 },
@@ -349,7 +352,9 @@ export function Simulator() {
                 >
                   <span className="flex-1">
                     <span className="block">{t.feel.types[x.id].name}</span>
-                    <span className="mt-2 block h-1 w-full rounded-full bg-muted"><span className="bar block h-1" style={{ width: `${(x.muk / MAX_MUK) * 100}%` }} /></span>
+                    <span className="mt-2 flex gap-1" aria-label={`${squares(x.muk)}/5`}>
+                      {[1, 2, 3, 4, 5].map((n) => <span key={n} className={`block size-2 rounded-[2px] ${n <= squares(x.muk) ? "bg-primary" : "bg-muted"}`} />)}
+                    </span>
                   </span>
                 </button>
               </li>
