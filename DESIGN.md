@@ -37,5 +37,5 @@ tertiary → `--primary`; rounded.md → `--radius`. Fontes via Google Fonts em
   procedurais dos pads são render de material, e a base da roda do hero usa
   uma máscara de transparência pra não terminar numa linha reta.
 - **Valley Sans nos títulos e na marca; Figtree no corpo e nos rótulos.** Display (h1) em 400; h2 e h3 em 500; rótulos em 600. Números em JetBrains Mono. Cantos em múltiplos de 8: 16 no padrão (botões, cards, listas), 8 nos itens internos (abas, badges).
-- **Acento roxo #8B5A3C com texto branco.**
+- **Acento #8B5A3C com texto branco.** Vale também pra seleção de texto e pra barra de rolagem.
 - **Espaço negativo é parte da composição.** Não preencher por preencher.
