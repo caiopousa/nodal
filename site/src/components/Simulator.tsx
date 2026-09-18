@@ -26,6 +26,11 @@ export const TYPES: { id: TypeId; mus: number; muk: number; color: string; weave
   { id: "glass", mus: 0.14, muk: 0.12, color: "#0f1216", weave: "glass" },
 ]
 
+/** Frenagem relativa ao Balanced: razão dos μk, independente de gesto, velocidade e caixa. */
+const BALANCED_MUK = TYPES.find((x) => x.id === "balanced")!.muk
+const relative = (muk: number) => muk / BALANCED_MUK - 1          // +0.25 = freia 25% mais
+const MAX_MUK = Math.max(...TYPES.map((x) => x.muk))
+
 const GESTURES: Record<Exclude<Gesture, "custom">, { pts: V[]; v0: number }> = {
   vertical: { pts: [{ x: 0.5, y: 0.14 }, { x: 0.5, y: 0.55 }], v0: 0.7 },
   diagonal: { pts: [{ x: 0.08, y: 0.14 }, { x: 0.70, y: 0.65 }], v0: 1.0 },
@@ -76,7 +81,7 @@ function plan(type: (typeof TYPES)[number], gesture: Gesture, K: number, custom?
   else if (dir.y < 0) dEdge = Math.min(dEdge, (b.ymin - R.y) / dir.y)
   const beyond = dEdge < dStop
   const tEnd = beyond ? (v0 - Math.sqrt(Math.max(0, v0 * v0 - 2 * a * dEdge))) / a : tStop
-  return { pts, v0, dir, T, tStick, a, dStop, dStopCm: dStop / S, tEnd, beyond, R, total: tStick + T + tEnd }
+  return { pts, v0, dir, T, tStick, a, dStop, dStopCm: dStop / S, tStop, tEnd, beyond, R, total: tStick + T + tEnd }
 }
 
 type Phase = "stick" | "windup" | "brake" | "done"
@@ -316,7 +321,10 @@ export function Simulator() {
   const [custom, setCustom] = useState<Custom | null>(null)
   const K = 1
   const type = TYPES.find((x) => x.id === sel)!
-  const fmt = (cm: number) => cm.toLocaleString(locale === "pt" ? "pt-BR" : "en-US", { maximumFractionDigits: 1, minimumFractionDigits: 1 })
+  const loc = locale === "pt" ? "pt-BR" : "en-US"
+  const fmt = (cm: number) => cm.toLocaleString(loc, { maximumFractionDigits: 1, minimumFractionDigits: 1 })
+  const fmtS = (ms: number) => (ms / 1000).toLocaleString(loc, { maximumFractionDigits: 2, minimumFractionDigits: 2 }) + " s"
+  const fmtRel = (r: number) => (r === 0 ? "0%" : (r > 0 ? "+" : "−") + Math.round(Math.abs(r) * 100) + "%")
   const results = useMemo(() => Object.fromEntries(TYPES.map((x) => [x.id, plan(x, gesture, K, custom)])) as Record<TypeId, Plan>, [gesture, K, custom])
   const reset = () => { setRunId(0); setDone(false) }
   const onDone = useCallback(() => setDone(true), [])
@@ -337,10 +345,16 @@ export function Simulator() {
                 <button
                   role="tab" aria-selected={active}
                   onClick={() => { setSel(x.id); reset() }}
-                  className={`flex w-full items-baseline justify-between gap-2 rounded-md px-3 py-2 text-left text-sm transition-colors ${active ? "bg-primary/10 text-foreground" : "text-muted-foreground hover:bg-muted hover:text-foreground"}`}
+                  className={`flex w-full items-baseline gap-2 rounded-md px-3 py-2 text-left text-sm transition-colors ${active ? "bg-primary/10 text-foreground" : "text-muted-foreground hover:bg-muted hover:text-foreground"}`}
                 >
-                  <span>{t.feel.types[x.id].name}</span>
-                  <span className={`font-mono text-xs tabular-nums ${done ? "text-primary" : "text-muted-foreground/40"}`}>{done ? `${fmt(r.dStopCm)}` : "—"}</span>
+                  <span className="flex-1">
+                    <span className="flex items-baseline justify-between gap-2">
+                      <span>{t.feel.types[x.id].name}</span>
+                      <span className="font-mono text-xs tabular-nums text-muted-foreground">{fmtRel(relative(x.muk))}</span>
+                    </span>
+                    <span className="mt-1 block h-1 w-full rounded-full bg-muted"><span className="bar block h-1" style={{ width: `${(x.muk / MAX_MUK) * 100}%` }} /></span>
+                    {done && <span className="mt-1 block font-mono text-xs tabular-nums text-muted-foreground">{fmt(r.dStopCm)} cm · {fmtS(r.tStop)}</span>}
+                  </span>
                 </button>
               </li>
             )
@@ -351,10 +365,11 @@ export function Simulator() {
       <div className="mt-5 flex flex-wrap items-end justify-between gap-4 border-t pt-5">
         <div>
           <div className="text-sm font-medium">{t.feel.types[sel].name} <span className="ml-2 rounded-md border px-2 py-0 font-mono text-xs text-muted-foreground">{t.feel.material[sel]}</span></div>
-          <div className="mt-2 text-xs text-muted-foreground">{t.feel.stoppingPower}</div>
-          <div className={`font-mono text-3xl tabular-nums ${done ? "text-primary" : "text-muted-foreground/40"}`}>
-            {done ? `${fmt(results[sel].dStopCm)} cm` : "— cm"}
-            {done && results[sel].beyond && <span className="ml-2 font-sans text-xs text-muted-foreground">{t.feel.beyond}</span>}
+          <div className="mt-2 text-xs text-muted-foreground">{t.feel.stoppingPower} <span className="text-muted-foreground/70">· {t.feel.vsBalanced}</span></div>
+          <div className="font-mono text-3xl tabular-nums text-primary">{fmtRel(relative(type.muk))}</div>
+          <div className={`mt-1 font-mono text-xs tabular-nums ${done ? "text-muted-foreground" : "text-muted-foreground/40"}`}>
+            {done ? `${fmt(results[sel].dStopCm)} cm · ${fmtS(results[sel].tStop)}` : "— cm · — s"}
+            {done && results[sel].beyond && <span className="ml-2 font-sans">· {t.feel.stoppedByEdge}</span>}
           </div>
         </div>
         <Button size="lg" disabled={!canRelease} onClick={() => { setDone(false); setRunId((n) => n + 1) }}>{runId === 0 ? t.feel.release : t.feel.replay}</Button>
