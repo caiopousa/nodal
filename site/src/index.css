@@ -154,15 +154,15 @@
     --chart-5: #CFD7DF;
     --radius: 16px;                 /* base; escala derivada fixada em múltiplos de 8 abaixo */
 }
-/* Raios em múltiplos de 8 (o shadcn deriva por fração; aqui é fixo) */
+/* Raios em múltiplos de 4. Regra de aninhamento: raio externo = raio interno + padding */
 @theme {
-    --radius-sm: 8px;
+    --radius-sm: 4px;
     --radius-md: 8px;
     --radius-lg: 16px;
-    --radius-xl: 16px;
-    --radius-2xl: 24px;
-    --radius-3xl: 32px;
-    --radius-4xl: 40px;
+    --radius-xl: 24px;
+    --radius-2xl: 32px;
+    --radius-3xl: 40px;
+    --radius-4xl: 48px;
 }
 /* Escala tipográfica em múltiplos de 4 (tamanho / entrelinha) */
 @theme {
@@ -198,7 +198,7 @@ body { -webkit-font-smoothing: antialiased; }
 /* ---------- Pad procedural: texturas por material ---------- */
 .pad {
     position: relative;
-    border-radius: 6px;
+    border-radius: 8px;
     background-color: var(--pad-color, #1c1c1f);
     box-shadow:
         0 1px 0 rgb(255 255 255 / 6%) inset,

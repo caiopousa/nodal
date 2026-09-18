@@ -15,7 +15,7 @@ typography:
   h1: { fontFamily: Valley Sans, fontSize: 40px, fontWeight: 500, letterSpacing: "-0.02em" }
   body: { fontFamily: Figtree, fontSize: 16px, lineHeight: 24px }
   label: { fontFamily: Figtree, fontSize: 12px, fontWeight: 600, lineHeight: 16px, letterSpacing: "0.02em" }
-rounded: { sm: 8px, md: 8px, lg: 16px, xl: 16px, 2xl: 24px }   # múltiplos de 8
+rounded: { sm: 4px, md: 8px, lg: 16px, xl: 24px, 2xl: 32px }
 spacing: { sm: 8px, md: 16px, lg: 32px }
 ---
 

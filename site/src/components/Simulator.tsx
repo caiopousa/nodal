@@ -391,7 +391,7 @@ export function Simulator() {
   const canRelease = gesture !== "custom" || custom !== null
 
   return (
-    <div className="rounded-xl border bg-card p-4 sm:p-6">
+    <div className="rounded-xl border bg-card p-4 sm:rounded-2xl sm:p-6">
       <div className="mb-5 flex items-center justify-between">
         <h3 className="text-lg">{t.feel.playground}</h3>
         <Popover>
