@@ -161,10 +161,10 @@ function draw(ctx: CanvasRenderingContext2D, bg: HTMLCanvasElement, p: Plan, t: 
 
   // rastro de frenagem
   if (phase === "brake" || phase === "done") {
-    ctx.strokeStyle = "rgba(137, 87, 229, 0.95)"
+    ctx.strokeStyle = "rgba(139, 90, 60, 0.95)"
     ctx.lineWidth = 2
     ctx.beginPath(); ctx.moveTo(p.R.x, p.R.y); ctx.lineTo(pos.x, pos.y); ctx.stroke()
-    ctx.fillStyle = "rgba(137, 87, 229, 0.95)"
+    ctx.fillStyle = "rgba(139, 90, 60, 0.95)"
     ctx.beginPath(); ctx.arc(p.R.x, p.R.y, 3, 0, Math.PI * 2); ctx.fill()
   }
 
