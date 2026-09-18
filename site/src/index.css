@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Valley+Sans:ital,wght@0,100..900;1,100..900&family=JetBrains+Mono:wght@400;500&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap");
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
@@ -128,31 +128,31 @@
     @apply font-sans;
     }
 }
-/* ---------- Mousepad 101: tokens (ver DESIGN.md na raiz) — Braun / dieter-grid ---------- */
+/* ---------- Mousepad 101: tokens (ver DESIGN.md na raiz) — Stripe ---------- */
 .dark {
-    --background: #E7E5E1;          /* neutral */
-    --foreground: #0F1113;          /* primary */
-    --card: #F3F1EC;                /* surface */
-    --card-foreground: #0F1113;
-    --popover: #F3F1EC;
-    --popover-foreground: #0F1113;
-    --secondary: #DAD7D1;
-    --secondary-foreground: #0F1113;
-    --muted: #DAD7D1;
-    --muted-foreground: #6B6F74;    /* secondary */
-    --accent: #DAD7D1;
-    --accent-foreground: #0F1113;
-    --primary: #D95600;             /* tertiary: o único acento */
-    --primary-foreground: #F3F1EC;  /* on-primary */
-    --border: rgb(107 111 116 / 35%);
-    --input: rgb(107 111 116 / 45%);
-    --ring: rgb(217 86 0 / 50%);
-    --chart-1: #D95600;
-    --chart-2: #E7823F;
-    --chart-3: #6B6F74;
-    --chart-4: #9EA1A5;
-    --chart-5: #C9C7C2;
-    --radius: 4px;                  /* rounded.lg do DESIGN.md; tudo em múltiplos de 4 */
+    --background: #F6F9FC;          /* neutral */
+    --foreground: #0A2540;          /* primary */
+    --card: #FFFFFF;                /* surface */
+    --card-foreground: #0A2540;
+    --popover: #FFFFFF;
+    --popover-foreground: #0A2540;
+    --secondary: #E6EBF1;
+    --secondary-foreground: #0A2540;
+    --muted: #E6EBF1;
+    --muted-foreground: #425466;    /* secondary */
+    --accent: #E6EBF1;
+    --accent-foreground: #0A2540;
+    --primary: #635BFF;             /* tertiary: o único acento */
+    --primary-foreground: #FFFFFF;  /* on-primary */
+    --border: rgb(66 84 102 / 20%);
+    --input: rgb(66 84 102 / 28%);
+    --ring: rgb(99 91 255 / 50%);
+    --chart-1: #635BFF;
+    --chart-2: #8C86FF;
+    --chart-3: #425466;
+    --chart-4: #8898AA;
+    --chart-5: #CFD7DF;
+    --radius: 8px;                  /* rounded.md (10 no Stripe, 8 no grid de 4) */
 }
 /* Escala tipográfica em múltiplos de 4 (tamanho / entrelinha) */
 @theme {
@@ -170,17 +170,18 @@
 }
 @theme inline {
     --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
-    --font-heading: "Valley Sans", "Inter", ui-sans-serif, system-ui, sans-serif;
+    --font-heading: "Inter", ui-sans-serif, system-ui, sans-serif;
     --font-mono: "JetBrains Mono", ui-monospace, monospace;
 }
-h1, h2, h3, .font-heading { font-family: var(--font-heading); font-weight: 500; letter-spacing: -0.02em; }
+h2, h3, .font-heading { font-family: var(--font-heading); font-weight: 500; letter-spacing: -0.02em; }
+h1 { font-family: var(--font-heading); font-weight: 300; letter-spacing: -0.04em; }   /* display */
 
 html { scroll-behavior: smooth; }
 body { -webkit-font-smoothing: antialiased; }
 
 .container-101 { @apply mx-auto w-full max-w-3xl px-4 sm:px-6; }
 .container-wide { @apply mx-auto w-full max-w-6xl px-4 sm:px-6; }
-.eyebrow { @apply font-mono text-xs uppercase tracking-[0.08em] text-primary; }
+.eyebrow { @apply text-xs font-semibold uppercase tracking-[0.02em] text-primary; }
 .prose-101 { @apply text-base leading-6 text-muted-foreground; }
 .prose-101 strong { @apply text-foreground font-medium; }
 

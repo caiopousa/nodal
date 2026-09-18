@@ -1,21 +1,21 @@
 ---
 version: alpha
 name: Mousepad 101
-description: Baseado no "Braun / dieter-grid" (designdotmd.directory/d/dieter-grid). Cinza concreto, laranja utilitário como único acento.
+description: Baseado no "Stripe" (designdotmd.directory/d/stripe). Azul-marinho no texto, fundo cinza-azulado, roxo como único acento.
 colors:
-  primary: "#0F1113"
-  secondary: "#6B6F74"
-  tertiary: "#D95600"
-  neutral: "#E7E5E1"
-  surface: "#F3F1EC"
-  on-primary: "#F3F1EC"
+  primary: "#0A2540"
+  secondary: "#425466"
+  tertiary: "#635BFF"
+  neutral: "#F6F9FC"
+  surface: "#FFFFFF"
+  on-primary: "#FFFFFF"
 grid: 4px            # todo tamanho, espaço e fonte em múltiplos de 4
 typography:
-  display: { fontFamily: Valley Sans, fontSize: 3.5rem, fontWeight: 500, letterSpacing: "-0.02em" }
-  h1: { fontFamily: Valley Sans, fontSize: 1.9rem, fontWeight: 500 }
+  display: { fontFamily: Inter, fontSize: 56px, fontWeight: 300, letterSpacing: "-0.04em" }
+  h1: { fontFamily: Inter, fontSize: 40px, fontWeight: 500, letterSpacing: "-0.02em" }
   body: { fontFamily: Inter, fontSize: 16px, lineHeight: 24px }
-  label: { fontFamily: JetBrains Mono, fontSize: 12px, lineHeight: 16px, letterSpacing: "0.08em" }
-rounded: { sm: 0px, md: 4px, lg: 4px }
+  label: { fontFamily: Inter, fontSize: 12px, fontWeight: 600, lineHeight: 16px, letterSpacing: "0.02em" }
+rounded: { sm: 4px, md: 8px, lg: 16px }
 spacing: { sm: 8px, md: 16px, lg: 32px }
 ---
 
@@ -35,5 +35,5 @@ tertiary → `--primary`; rounded.md → `--radius`. Fontes via Google Fonts em
   de resultado e rastros do simulador também usam ele, nada mais.
 - **Sem gradiente decorativo.** Fundo plano. Exceção declarada: as texturas
   procedurais dos pads são render de material, não decoração.
-- **Valley Sans nos títulos (h1 a h3) e na marca, peso 500. Inter no corpo.** Rótulos e números em JetBrains Mono. Cantos quase retos (2px).
+- **Inter em tudo.** Display (h1) em peso 300; h2 e h3 em 500; rótulos em 600. Números em JetBrains Mono. Cantos de 8px, cards em 16px.
 - **Espaço negativo é parte da composição.** Não preencher por preencher.
