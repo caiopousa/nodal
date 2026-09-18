@@ -8,6 +8,8 @@ const alertVariants = cva(
     variants: {
       variant: {
         default: "bg-card text-card-foreground",
+        /* callout neutro: mesmo token de fundo das abas (muted), sem borda */
+        muted: "border-transparent bg-muted text-foreground *:data-[slot=alert-description]:text-foreground/80",
         destructive:
           "bg-card text-destructive *:data-[slot=alert-description]:text-destructive/90 *:[svg]:text-current",
       },
