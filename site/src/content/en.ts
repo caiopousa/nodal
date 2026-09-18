@@ -54,7 +54,7 @@ export const en = {
     dragHint: "Or drag the mouse yourself and let go.",
     modes: { real: "Realistic", amp: "Braking ×2" },
     modeNote: { real: "Nothing amplified. Differences are subtle, because that is how they are. Shown in slow motion (0.4×); the numbers do not depend on playback.", amp: "Braking doubled so every surface stops inside the pad. Friction values are untouched and the ratio between surfaces is the same." },
-    release: "Release",
+    release: "Test",
     replay: "Replay",
     beyond: "past the pad",
     types: {

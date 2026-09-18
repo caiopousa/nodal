@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
 import { Popover, PopoverTrigger, PopoverContent } from "@/components/ui/popover"
 import { InfoIcon } from "lucide-react"
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
@@ -29,9 +28,6 @@ export const TYPES: { id: TypeId; mus: number; muk: number; color: string; weave
   { id: "glass", mus: 0.14, muk: 0.12, color: "#0f1216", weave: "glass" },
 ]
 
-/** Frenagem relativa ao Balanced: razão dos μk, independente de gesto, velocidade e caixa. */
-const BALANCED_MUK = TYPES.find((x) => x.id === "balanced")!.muk
-const relative = (muk: number) => muk / BALANCED_MUK - 1          // +0.25 = freia 25% mais
 const MAX_MUK = Math.max(...TYPES.map((x) => x.muk))
 const MIN_MUK = Math.min(...TYPES.map((x) => x.muk))
 /** Frenagem em 5 quadrados: mínimo (Glass) = 1, máximo (Control) = 5, linear entre eles. */
@@ -327,23 +323,17 @@ function Lane({ type, gesture, K, runId, custom, onDone, onDragStart, onDragEnd 
 }
 
 export function Simulator() {
-  const { t, locale } = useI18n()
+  const { t } = useI18n()
   const [sel, setSel] = useState<TypeId>("control")
   const [gesture, setGesture] = useState<Gesture>("vertical")
   const [runId, setRunId] = useState(0)
-  const [done, setDone] = useState(false)
   const [custom, setCustom] = useState<Custom | null>(null)
   const K = 1
   const type = TYPES.find((x) => x.id === sel)!
-  const loc = locale === "pt" ? "pt-BR" : "en-US"
-  const fmt = (cm: number) => cm.toLocaleString(loc, { maximumFractionDigits: 1, minimumFractionDigits: 1 })
-  const fmtS = (ms: number) => (ms / 1000).toLocaleString(loc, { maximumFractionDigits: 2, minimumFractionDigits: 2 }) + " s"
-  const fmtRel = (r: number) => (r === 0 ? "0%" : (r > 0 ? "+" : "−") + Math.round(Math.abs(r) * 100) + "%")
-  const results = useMemo(() => Object.fromEntries(TYPES.map((x) => [x.id, plan(x, gesture, K, custom)])) as Record<TypeId, Plan>, [gesture, K, custom])
-  const reset = () => { setRunId(0); setDone(false) }
-  const onDone = useCallback(() => setDone(true), [])
-  const onDragStart = useCallback(() => { setGesture("custom"); setDone(false); setRunId(0) }, [])
-  const onDragEnd = useCallback((c: Custom) => { setCustom(c); setDone(false); setRunId((n) => n + 1) }, [])
+  const reset = () => setRunId(0)
+  const onDone = useCallback(() => {}, [])
+  const onDragStart = useCallback(() => { setGesture("custom"); setRunId(0) }, [])
+  const onDragEnd = useCallback((c: Custom) => { setCustom(c); setRunId((n) => n + 1) }, [])
   const canRelease = gesture !== "custom" || custom !== null
 
   return (
@@ -405,25 +395,13 @@ export function Simulator() {
         </div>
       </div>
 
-      <div className="mt-5 flex flex-wrap items-end justify-between gap-4 border-t pt-5">
-        <div>
-          <div className="flex items-center gap-2 text-sm font-medium">{t.feel.types[sel].name} <Badge variant="outline">{t.feel.material[sel]}</Badge></div>
-          <div className="mt-2 text-xs text-muted-foreground">{t.feel.stoppingPower} <span className="text-muted-foreground/70">· {t.feel.vsBalanced}</span></div>
-          <div className="font-mono text-3xl tabular-nums text-primary">{fmtRel(relative(type.muk))}</div>
-          <div className={`mt-1 font-mono text-xs tabular-nums ${done ? "text-muted-foreground" : "text-muted-foreground/40"}`}>
-            {done ? `${fmt(results[sel].dStopCm)} cm · ${fmtS(results[sel].tStop)}` : "— cm · — s"}
-            {done && results[sel].beyond && <span className="ml-2 font-sans">· {t.feel.stoppedByEdge}</span>}
-          </div>
-        </div>
-        <Button size="lg" disabled={!canRelease} onClick={() => { setDone(false); setRunId((n) => n + 1) }}>{runId === 0 ? t.feel.release : t.feel.replay}</Button>
-      </div>
-
-      <div className="mt-5 flex flex-wrap items-center gap-3">
+      <div className="mt-5 flex flex-wrap items-center justify-between gap-3 border-t pt-5">
         <Tabs value={gesture} onValueChange={(v) => { setGesture(v as Gesture); reset() }}>
           <TabsList size="lg">
             {([...Object.keys(GESTURES), "custom"] as Gesture[]).map((g) => <TabsTrigger key={g} value={g}>{t.feel.gestures[g]}</TabsTrigger>)}
           </TabsList>
         </Tabs>
+        <Button size="lg" disabled={!canRelease} onClick={() => { setRunId((n) => n + 1) }}>{t.feel.release}</Button>
       </div>
     </div>
   )

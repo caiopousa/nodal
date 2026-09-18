@@ -28,7 +28,7 @@ export function Types() {
       </div>
 
       <Tabs value={sel} onValueChange={(v) => setSel(v as TypeId)} className="mt-10 items-center">
-        <TabsList>
+        <TabsList size="lg">
           {TYPES.map((x) => <TabsTrigger key={x.id} value={x.id}>{t.feel.types[x.id].name}</TabsTrigger>)}
         </TabsList>
       </Tabs>

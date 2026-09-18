@@ -54,7 +54,7 @@ export const pt = {
     dragHint: "Ou arraste o mouse você mesmo e solte.",
     modes: { real: "Realista", amp: "Frenagem ×2" },
     modeNote: { real: "Nada ampliado. As diferenças são sutis, porque é assim que elas são. Exibido em câmera lenta (0,4×); os números não dependem da reprodução.", amp: "Frenagem dobrada pra toda superfície parar dentro do pad. Os valores de atrito não mudam e a proporção entre superfícies é a mesma." },
-    release: "Soltar",
+    release: "Testar",
     replay: "Repetir",
     beyond: "além do pad",
     types: {
