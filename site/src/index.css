@@ -187,7 +187,7 @@ h2, h3, .font-heading { font-family: var(--font-heading); font-weight: 500; lett
 h1 { font-family: var(--font-heading); font-weight: 400; letter-spacing: -0.04em; }   /* display */
 
 html { scroll-behavior: smooth; }
-body { -webkit-font-smoothing: antialiased; }
+body { -webkit-font-smoothing: antialiased; overflow-x: clip; }   /* seções inclinadas em perspectiva não podem gerar scroll lateral */
 
 .container-101 { @apply mx-auto w-full max-w-3xl px-4 sm:px-6; }
 .container-wide { @apply mx-auto w-full max-w-6xl px-4 sm:px-6; }

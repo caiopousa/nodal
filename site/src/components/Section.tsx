@@ -1,5 +1,5 @@
-import type { ReactNode } from "react"
-import { motion } from "motion/react"
+import { useRef, type ReactNode } from "react"
+import { motion, useScroll, useSpring, useTransform } from "motion/react"
 import { cn } from "cn"
 
 type Props = {
@@ -13,9 +13,29 @@ type Props = {
   wide?: boolean
 }
 
+/**
+ * "Bend" em CSS: a seção inclina levemente em perspectiva ao entrar pela borda
+ * de baixo e ao sair pela de cima, e fica plana no meio da tela. Aproximação do
+ * Bend do Canvas UI, que precisa de flag experimental do Chrome.
+ */
+function useBend() {
+  const ref = useRef<HTMLElement>(null)
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] })
+  const raw = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [-4, 0, 0, 4])
+  const rotateX = useSpring(raw, { stiffness: 90, damping: 26, mass: 0.6 })
+  const opacity = useSpring(useTransform(scrollYProgress, [0, 0.15, 0.85, 1], [0.6, 1, 1, 0.6]), { stiffness: 90, damping: 26 })
+  return { ref, rotateX, opacity }
+}
+
 export function Section({ id, eyebrow, title, lede, children, className, wide }: Props) {
+  const bend = useBend()
   return (
-    <section id={id} className={cn("scroll-mt-24 py-20 sm:py-28", className)}>
+    <motion.section
+      id={id}
+      ref={bend.ref}
+      className={cn("scroll-mt-24 py-20 sm:py-28", className)}
+      style={{ rotateX: bend.rotateX, opacity: bend.opacity, transformPerspective: 1400, transformOrigin: "50% 50%" }}
+    >
       <motion.header
         className="container-101"
         initial={{ opacity: 0, y: 16 }}
@@ -30,7 +50,7 @@ export function Section({ id, eyebrow, title, lede, children, className, wide }:
         {lede && <p className="prose-101 mt-4 max-w-2xl">{lede}</p>}
       </motion.header>
       <div className={cn("mt-10", !wide && "container-101")}>{children}</div>
-    </section>
+    </motion.section>
   )
 }
 
