@@ -1,6 +1,8 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
+import { Popover, PopoverTrigger, PopoverContent } from "@/components/ui/popover"
+import { InfoIcon } from "lucide-react"
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 import { useI18n } from "@/lib/i18n"
 
@@ -339,6 +341,36 @@ export function Simulator() {
 
   return (
     <div className="rounded-xl border bg-card p-4 sm:p-6">
+      <div className="mb-5 flex items-center justify-between">
+        <h3 className="text-lg">{t.feel.playground}</h3>
+        <Popover>
+          <PopoverTrigger render={<Button variant="ghost" size="icon" aria-label={t.feel.infoTitle} />}>
+            <InfoIcon />
+          </PopoverTrigger>
+          <PopoverContent align="end" className="w-80">
+            <div className="flex flex-col gap-3 p-1">
+              <h4 className="text-base font-medium">{t.feel.infoTitle}</h4>
+              <p className="text-xs leading-4 text-muted-foreground">{t.feel.howRead}</p>
+              <div className="border-t pt-3">
+                <div className="mb-2 text-xs font-medium">{t.feel.legendTitle}</div>
+                <ul className="flex flex-col gap-2">
+                  {[...TYPES].sort((a, b) => a.muk - b.muk).map((x) => (
+                    <li key={x.id} className="flex items-center gap-3 text-xs">
+                      <span className="flex gap-1">
+                        {[1, 2, 3, 4, 5].map((n) => <span key={n} className={`block size-2 rounded-[2px] ${n <= squares(x.muk) ? "bg-primary" : "bg-muted"}`} />)}
+                      </span>
+                      <span className="text-muted-foreground">{t.feel.types[x.id].name}</span>
+                    </li>
+                  ))}
+                </ul>
+                <div className="mt-2 flex justify-between text-xs text-muted-foreground/70">
+                  <span>{t.feel.legendLess}</span><span>{t.feel.legendMore}</span>
+                </div>
+              </div>
+            </div>
+          </PopoverContent>
+        </Popover>
+      </div>
       <div className="grid gap-x-5 gap-y-2 sm:grid-cols-[1fr_12rem]">
         <Lane type={type} gesture={gesture} K={K} runId={runId} custom={custom} onDone={onDone} onDragStart={onDragStart} onDragEnd={onDragEnd} />
         <div className="relative">
@@ -364,10 +396,6 @@ export function Simulator() {
           })}
         </ul>
         </div>
-        <p className="px-3 text-xs leading-4 text-muted-foreground sm:col-start-2">
-          <span className="mr-1 inline-block size-2 rounded-[2px] bg-primary align-middle" aria-hidden />
-          {t.feel.legend}
-        </p>
       </div>
 
       <div className="mt-5 flex flex-wrap items-end justify-between gap-4 border-t pt-5">

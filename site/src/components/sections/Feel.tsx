@@ -7,7 +7,6 @@ export function Feel() {
   return (
     <Section id="feel" eyebrow={t.feel.eyebrow} title={t.feel.title} lede={t.feel.question + " " + t.feel.lede}>
       <Reveal><Simulator /></Reveal>
-      <p className="mt-6 text-xs text-muted-foreground">{t.feel.howRead}</p>
     </Section>
   )
 }
