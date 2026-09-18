@@ -26,7 +26,7 @@ export function HoverPreview({ href, icon, children }: { href: string; icon: str
       href={href}
       target="_blank"
       rel="noreferrer noopener"
-      className="relative inline-flex items-center gap-1 whitespace-nowrap text-foreground underline decoration-primary/40 decoration-1 underline-offset-4 transition-colors hover:decoration-primary"
+      className="link-select relative inline-flex items-center gap-1 whitespace-nowrap px-0.5 text-foreground"
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
       onMouseMove={follow}

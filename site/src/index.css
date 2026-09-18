@@ -340,6 +340,18 @@ body { -webkit-font-smoothing: antialiased; overflow-x: clip; }   /* seções in
     .keycap-tile { transition: none; }
 }
 
+/* Link externo: o hover pinta a palavra como se estivesse selecionada */
+.link-select {
+    border-radius: 2px;
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
+    background: transparent;
+    transition: background-color 120ms ease;
+}
+.link-select:hover, .link-select:focus-visible {
+    background: color-mix(in oklab, var(--primary) 28%, transparent);
+}
+
 /* ---------- Seleção de texto e barra de rolagem no acento ---------- */
 ::selection {
     background: color-mix(in oklab, var(--primary) 28%, transparent);
