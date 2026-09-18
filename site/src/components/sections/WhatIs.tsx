@@ -18,7 +18,7 @@ function Layer({ i, offset, progress }: { i: number; offset: number; progress: M
   const l = LAYERS[i]
   const y = useTransform(progress, [0, 1], [-offset, 0])
   return (
-    <div className="relative hidden h-28 sm:block" style={{ zIndex: 3 - i }}>
+    <div data-layer className="relative hidden h-28 sm:block" style={{ zIndex: 3 - i }}>
       <motion.div
         className={`absolute left-1/2 top-1/2 h-24 w-40 -translate-x-1/2 -translate-y-1/2 ${l.cls}`}
         style={{ y, background: l.color, ["--pad-color" as string]: l.color, rotateX: 60, rotateZ: -35, boxShadow: "0 24px 30px -16px rgba(0,0,0,.9)" }}
@@ -30,14 +30,14 @@ function Layer({ i, offset, progress }: { i: number; offset: number; progress: M
 export function WhatIs() {
   const { t } = useI18n()
   const listRef = useRef<HTMLOListElement>(null)
-  const rowRefs = useRef<(HTMLLIElement | null)[]>([])
   const [offsets, setOffsets] = useState([0, 0, 0])
 
-  // distância de cada linha até a primeira, medida no DOM
+  // distância de cada camada até a primeira, medida nos próprios contêineres das camadas
   useLayoutEffect(() => {
     const measure = () => {
-      const tops = rowRefs.current.map((el) => el?.offsetTop ?? 0)
-      setOffsets(tops.map((top) => top - tops[0]))
+      const els = Array.from(listRef.current?.querySelectorAll<HTMLElement>("[data-layer]") ?? [])
+      const tops = els.map((el) => el.getBoundingClientRect().top)
+      if (tops.length) setOffsets(tops.map((top) => top - tops[0]))
     }
     measure()
     const t1 = setTimeout(measure, 300)
@@ -53,7 +53,7 @@ export function WhatIs() {
     <Section id="what" eyebrow={t.what.eyebrow} title={t.what.title} lede={t.what.lede}>
       <ol ref={listRef} className="flex flex-col gap-12">
         {t.what.layers.map((l, i) => (
-          <li key={l.name} ref={(el) => { rowRefs.current[i] = el }} className="relative grid items-center gap-8 sm:grid-cols-[13rem_1fr]" style={{ zIndex: 3 - i }}>
+          <li key={l.name} className="relative grid items-center gap-8 sm:grid-cols-[13rem_1fr]" style={{ zIndex: 3 - i }}>
             <Layer i={i} offset={offsets[i]} progress={scrollYProgress} />
             <motion.div
               initial={{ opacity: 0, y: 16 }}
