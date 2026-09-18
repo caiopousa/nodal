@@ -13,7 +13,7 @@ export function Types() {
   const type = TYPES.find((x) => x.id === sel)!
   const ref = useRef<HTMLDivElement>(null)
   // pad plano → tombado em perspectiva conforme entra na tela
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start 90%", "start 35%"] })
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start 62%", "start 22%"] })
   const rotateX = useTransform(scrollYProgress, [0, 1], [0, 55])
   const scale = useTransform(scrollYProgress, [0, 1], [0.8, 1])
 
