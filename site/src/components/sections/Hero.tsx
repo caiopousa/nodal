@@ -15,7 +15,7 @@ const STRIP: { kind: SurfaceKind; color: string }[] = [
   { kind: "cloth", color: "#1f2d2d" },
 ]
 const CARDS = [...STRIP, ...STRIP]          // 16 cartas na roda
-const CARD_W = 144, CARD_H = 184, GAP = 8    // px, múltiplos de 4
+const CARD_W = 144, CARD_H = 184, GAP = 24   // px, múltiplos de 4
 const SPEED = 0.05                           // rad/s
 
 /**
@@ -33,18 +33,53 @@ function useWheel(ref: React.RefObject<HTMLDivElement | null>) {
     let last = performance.now()
     let theta = 0
     let raf = 0
+    let radius = 800
+    // arrasto: velocidade angular herdada do gesto, com atrito
+    let drag: { x: number; t: number; v: number } | null = null
+    let momentum = 0
     const onEnter = () => { paused = true }
     const onLeave = () => { paused = false }
+    const onDown = (e: PointerEvent) => {
+      el.setPointerCapture(e.pointerId)
+      drag = { x: e.clientX, t: performance.now(), v: 0 }
+      momentum = 0
+    }
+    const onMove = (e: PointerEvent) => {
+      if (!drag) return
+      const now = performance.now()
+      const dx = e.clientX - drag.x
+      const dTheta = dx / radius                     // deslocamento na borda da roda
+      theta += dTheta
+      drag.v = dTheta / Math.max(1, now - drag.t) * 1000
+      drag.x = e.clientX; drag.t = now
+    }
+    const onUp = () => {
+      if (!drag) return
+      momentum = Math.max(-3, Math.min(3, drag.v))
+      drag = null
+    }
     el.addEventListener("pointerenter", onEnter)
     el.addEventListener("pointerleave", onLeave)
+    el.addEventListener("pointerdown", onDown)
+    el.addEventListener("pointermove", onMove)
+    el.addEventListener("pointerup", onUp)
+    el.addEventListener("pointercancel", onUp)
 
     const tick = (now: number) => {
       const dt = (now - last) / 1000
       last = now
-      if (!paused && !reduce) theta += SPEED * dt
+      if (drag) {
+        // a mão manda
+      } else if (Math.abs(momentum) > 0.01) {
+        theta += momentum * dt
+        momentum *= Math.exp(-3 * dt)                // atrito: para em ~1 s
+      } else if (!paused && !reduce) {
+        theta += SPEED * dt
+      }
 
       const W = el.clientWidth
       const R = Math.max(800, W * 0.9)                 // raio: quanto maior, mais reto o arco
+      radius = R
       const step = (CARD_W + GAP) / R                  // ângulo entre cartas
       const span = cards.length * step                 // faixa angular que as cartas ocupam
       const cx = W / 2
@@ -66,6 +101,10 @@ function useWheel(ref: React.RefObject<HTMLDivElement | null>) {
       cancelAnimationFrame(raf)
       el.removeEventListener("pointerenter", onEnter)
       el.removeEventListener("pointerleave", onLeave)
+      el.removeEventListener("pointerdown", onDown)
+      el.removeEventListener("pointermove", onMove)
+      el.removeEventListener("pointerup", onUp)
+      el.removeEventListener("pointercancel", onUp)
     }
   }, [ref])
 }
@@ -88,7 +127,7 @@ export function Hero() {
         <Button size="lg" className="mt-8" nativeButton={false} render={<a href="#what" />}>{t.hero.cta}</Button>
       </motion.div>
 
-      <div ref={wheel} className="relative mt-12 h-[400px] w-full overflow-hidden" aria-hidden>
+      <div ref={wheel} className="relative mt-12 h-[400px] w-full cursor-grab overflow-hidden select-none active:cursor-grabbing" style={{ touchAction: "pan-y" }} aria-hidden>
         {CARDS.map((p, i) => (
           <div key={i} className="absolute left-0 top-0" style={{ width: CARD_W, height: CARD_H, transformOrigin: "50% 0%", willChange: "transform" }}>
             <Pad kind={p.kind} color={p.color} ratio={CARD_W / CARD_H} />
