@@ -104,7 +104,7 @@ function stateAt(p: Plan, t: number): { pos: V; phase: Phase } {
 }
 
 /* ---------- Desenho ---------- */
-function makeBackground(type: (typeof TYPES)[number]) {
+function makeBackground(type: (typeof TYPES)[number], label: string) {
   const c = document.createElement("canvas")
   c.width = W; c.height = H
   const ctx = c.getContext("2d")!
@@ -137,6 +137,12 @@ function makeBackground(type: (typeof TYPES)[number]) {
   light.addColorStop(1, "rgba(0,0,0,0.18)")
   ctx.fillStyle = light
   ctx.fillRect(0, 0, W, H)
+  // nome do tipo no canto inferior direito, como no pad das outras seções
+  ctx.font = "500 9px Inter, ui-sans-serif, system-ui, sans-serif"
+  ctx.letterSpacing = "1px"
+  ctx.textAlign = "right"; ctx.textBaseline = "alphabetic"
+  ctx.fillStyle = "rgba(255,255,255,0.55)"
+  ctx.fillText(label.toUpperCase(), W - 16, H - 14)
   return c
 }
 
@@ -241,7 +247,8 @@ type LaneProps = {
 }
 function Lane({ type, gesture, K, runId, custom, onDone, onDragStart, onDragEnd }: LaneProps) {
   const ref = useRef<HTMLCanvasElement>(null)
-  const bg = useMemo(() => makeBackground(type), [type])
+  const { t } = useI18n()
+  const bg = useMemo(() => makeBackground(type, t.feel.types[type.id].name), [type, t])
   const p = useMemo(() => plan(type, gesture, K, custom), [type, gesture, K, custom])
   const drag = useRef<{ samples: { x: number; y: number; t: number }[] } | null>(null)
 
