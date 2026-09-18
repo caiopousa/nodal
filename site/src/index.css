@@ -301,3 +301,41 @@ body { -webkit-font-smoothing: antialiased; overflow-x: clip; }   /* seções in
     box-shadow: 0 8px 24px -12px rgb(10 37 64 / 20%), 0 1px 0 rgb(255 255 255 / 60%) inset;
 }
 @media (prefers-reduced-motion: reduce) { .nav-shell, .nav-bar { transition: none; } }
+
+/* ---------- Símbolo da marca: quadrado em ângulo (ver Keycap.tsx) ---------- */
+.keycap {
+    display: inline-grid;
+    place-items: center;
+    width: 40px; height: 40px;
+    perspective: 180px;
+    cursor: pointer;
+}
+.keycap-tile {
+    display: grid;
+    place-items: center;
+    width: 32px; height: 32px;
+    border-radius: var(--radius-md);
+    font-family: var(--font-heading);
+    font-size: 18px; font-weight: 600; line-height: 1;
+    color: var(--primary-foreground);
+    background:
+        linear-gradient(145deg,
+            color-mix(in oklab, var(--primary) 78%, #fff) 0%,
+            var(--primary) 45%,
+            color-mix(in oklab, var(--primary) 72%, #000) 100%);
+    box-shadow:
+        inset 0 1px 0 rgb(255 255 255 / 45%),
+        inset 0 -1px 0 rgb(0 0 0 / 20%),
+        0 6px 10px -4px rgb(137 87 229 / 45%);
+    transition: transform 320ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 320ms ease;
+    will-change: transform;
+}
+.keycap:hover .keycap-tile {
+    box-shadow:
+        inset 0 1px 0 rgb(255 255 255 / 55%),
+        inset 0 -1px 0 rgb(0 0 0 / 20%),
+        0 10px 16px -6px rgb(137 87 229 / 55%);
+}
+@media (prefers-reduced-motion: reduce) {
+    .keycap-tile { transition: none; }
+}

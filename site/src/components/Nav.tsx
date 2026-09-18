@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+import { Keycap } from "@/components/Keycap"
 import { useI18n } from "@/lib/i18n"
 
 /**
@@ -19,7 +20,7 @@ export function Nav() {
     <header className={`nav-shell sticky top-0 z-40 ${scrolled ? "pt-4" : "pt-0"}`}>
       <div className={`nav-bar mx-auto flex h-14 items-center justify-between gap-4 border px-6 ${scrolled ? "nav-bar--pill" : ""}`}>
         <a href="#" className="flex items-center gap-2" aria-label="nodal/setup">
-          <img src="/logo.png" alt="" width={40} height={40} className="size-10 shrink-0 object-contain" />
+          <Keycap />
           <span className="leading-none">
             <span className="font-heading text-[15px] text-primary">nodal</span>
             <span className="text-base font-medium text-foreground">/setup</span>
