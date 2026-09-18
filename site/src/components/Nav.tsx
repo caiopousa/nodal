@@ -1,10 +1,27 @@
+import { useEffect, useState } from "react"
 import { useI18n } from "@/lib/i18n"
 
+/**
+ * No topo da página a nav é uma barra de largura total. Ao rolar, ela se
+ * recolhe pra uma pílula centralizada na largura do conteúdo (ref:
+ * componentes.design). Raio 32 = controles internos 8 + padding 24.
+ */
 export function Nav() {
   const { t, locale, setLocale } = useI18n()
+  const [scrolled, setScrolled] = useState(false)
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 8)
+    onScroll()
+    window.addEventListener("scroll", onScroll, { passive: true })
+    return () => window.removeEventListener("scroll", onScroll)
+  }, [])
   return (
-    <header className="sticky top-0 z-40 border-b bg-background/70 backdrop-blur-md">
-      <div className="container-wide flex h-14 items-center justify-between gap-4">
+    <header className={`sticky top-0 z-40 transition-[padding] duration-300 ${scrolled ? "pt-4" : "pt-0"}`}>
+      <div
+        className={`mx-auto flex h-14 items-center justify-between gap-4 border bg-background/80 px-6 backdrop-blur-md transition-[max-width,border-radius,border-color,box-shadow] duration-300 ${
+          scrolled ? "max-w-3xl rounded-2xl border-border shadow-md" : "max-w-none rounded-none border-transparent border-b-border"
+        }`}
+      >
         <a href="#" className="text-base font-medium tracking-tight" aria-label="everything.setup">
           everything<span className="text-primary">.</span><span className="font-heading text-base leading-none text-primary">setup</span>
         </a>
