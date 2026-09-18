@@ -152,7 +152,17 @@
     --chart-3: #425466;
     --chart-4: #8898AA;
     --chart-5: #CFD7DF;
-    --radius: 0.625rem;             /* padrão do shadcn (10px); derivados sm/md/lg/xl vêm dele */
+    --radius: 16px;                 /* base; escala derivada fixada em múltiplos de 8 abaixo */
+}
+/* Raios em múltiplos de 8 (o shadcn deriva por fração; aqui é fixo) */
+@theme {
+    --radius-sm: 8px;
+    --radius-md: 8px;
+    --radius-lg: 16px;
+    --radius-xl: 16px;
+    --radius-2xl: 24px;
+    --radius-3xl: 32px;
+    --radius-4xl: 40px;
 }
 /* Escala tipográfica em múltiplos de 4 (tamanho / entrelinha) */
 @theme {
