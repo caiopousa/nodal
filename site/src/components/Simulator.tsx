@@ -7,7 +7,7 @@ import { useI18n } from "@/lib/i18n"
 const W = 340, H = 230              // px ≈ 38 × 26 cm
 const S = 9                          // px por cm
 const G = (981 / 1e6) * S            // 9,81 m/s² em px/ms²
-const MOUSE = { w: 26, h: 50 }       // proporção do GPRO Superlight (63,5 × 125 mm ≈ 0,51)
+const MOUSE = { w: 26, h: 46 }       // proporção do GPRO Superlight (63,5 × 125 mm ≈ 0,51)
 const RAMP = 250                     // ms da rampa de força da mão
 const SLOWMO = 0.4                   // só a reprodução; nenhum número depende disto
 
@@ -197,18 +197,18 @@ function mouseShape(ctx: CanvasRenderingContext2D) {
   const w = MOUSE.w, h = MOUSE.h
   const P = (x: number, y: number): [number, number] => [x * w, y * h]
   ctx.beginPath()
-  ctx.moveTo(...P(-0.30, -0.46))
-  ctx.bezierCurveTo(...P(-0.16, -0.54), ...P(0.16, -0.54), ...P(0.30, -0.46))     // frente, convexa
-  ctx.bezierCurveTo(...P(0.42, -0.40), ...P(0.47, -0.32), ...P(0.46, -0.22))      // ombro direito
-  ctx.bezierCurveTo(...P(0.45, -0.10), ...P(0.44, -0.02), ...P(0.46, 0.10))       // cintura
+  ctx.moveTo(...P(-0.34, -0.46))
+  ctx.bezierCurveTo(...P(-0.18, -0.54), ...P(0.18, -0.54), ...P(0.34, -0.46))     // frente, convexa
+  ctx.bezierCurveTo(...P(0.46, -0.40), ...P(0.50, -0.32), ...P(0.49, -0.22))      // ombro direito, mais largo
+  ctx.bezierCurveTo(...P(0.475, -0.10), ...P(0.46, -0.02), ...P(0.46, 0.10))      // cintura
   // lombo + traseira: um semicírculo de raio = meia largura, tangente às laterais
   const r = 0.48 * w
   const yc = 0.5 * h - r
   ctx.bezierCurveTo(...P(0.475, 0.16), ...P(0.48, yc / h - 0.04), r, yc)          // lateral chega tangente ao arco
   ctx.arc(0, yc, r, 0, Math.PI)                                                    // traseira circular
   ctx.bezierCurveTo(...P(-0.48, yc / h - 0.04), ...P(-0.475, 0.16), ...P(-0.46, 0.10))
-  ctx.bezierCurveTo(...P(-0.44, -0.02), ...P(-0.45, -0.10), ...P(-0.46, -0.22))
-  ctx.bezierCurveTo(...P(-0.47, -0.32), ...P(-0.42, -0.40), ...P(-0.30, -0.46))
+  ctx.bezierCurveTo(...P(-0.46, -0.02), ...P(-0.475, -0.10), ...P(-0.49, -0.22))
+  ctx.bezierCurveTo(...P(-0.50, -0.32), ...P(-0.46, -0.40), ...P(-0.34, -0.46))
   ctx.closePath()
 }
 function roundRect(ctx: CanvasRenderingContext2D, x: number, y: number, w: number, h: number, r: number) {
