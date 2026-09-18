@@ -12,6 +12,8 @@ export const pt = {
     lang: { en: "EN", pt: "PT" },
     products: { mousepads: "Mousepads", keyboards: "Teclados", soon: "em breve" },
     contents: "Conteúdo",
+    copyLink: "Copiar link desta seção",
+    copied: "Copiado",
   },
   hero: {
     eyebrow: "Um guia de campo",
