@@ -128,7 +128,7 @@
     @apply font-sans;
     }
 }
-/* ---------- Mousepad 101: tokens (ver DESIGN.md na raiz) — Stripe ---------- */
+/* ---------- nodal: tokens (ver DESIGN.md na raiz) — Stripe ---------- */
 .dark {
     --background: #F6F9FC;          /* neutral */
     --foreground: #0A2540;          /* primary */

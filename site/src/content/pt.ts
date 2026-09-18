@@ -1,6 +1,6 @@
 export const pt = {
   nav: {
-    brand: "everything.setup",
+    brand: "nodal",
     items: [
       { id: "what", label: "O que é" },
       { id: "feel", label: "Speed vs. Control" },
@@ -132,6 +132,6 @@ export const pt = {
     ],
   },
   footer: {
-    text: "Mousepad 101 é um projeto paralelo. As specs vêm do EloShapes, os testes de atrito do ProSettings. Nada aqui está à venda e ninguém é pago pra recomendar nada.",
+    text: "nodal é um projeto paralelo. As specs vêm do EloShapes, os testes de atrito do ProSettings. Nada aqui está à venda e ninguém é pago pra recomendar nada.",
   },
 }

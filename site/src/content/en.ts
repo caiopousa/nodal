@@ -1,6 +1,6 @@
 export const en = {
   nav: {
-    brand: "everything.setup",
+    brand: "nodal",
     items: [
       { id: "what", label: "What it is" },
       { id: "feel", label: "Speed vs. Control" },
@@ -132,6 +132,6 @@ export const en = {
     ],
   },
   footer: {
-    text: "Mousepad 101 is a side project. Specs come from EloShapes, friction tests from ProSettings. Nothing here is for sale and nobody is paid to recommend anything.",
+    text: "nodal is a side project. Specs come from EloShapes, friction tests from ProSettings. Nothing here is for sale and nobody is paid to recommend anything.",
   },
 }

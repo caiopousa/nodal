@@ -1,6 +1,6 @@
 ---
 version: alpha
-name: Mousepad 101
+name: nodal
 description: Base "Stripe" (designdotmd.directory/d/stripe) com ajustes: acento roxo #8957E5, Valley Sans nos títulos, Figtree no corpo.
 colors:
   primary: "#0A2540"

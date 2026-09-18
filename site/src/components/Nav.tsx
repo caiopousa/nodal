@@ -18,8 +18,9 @@ export function Nav() {
   return (
     <header className={`nav-shell sticky top-0 z-40 ${scrolled ? "pt-4" : "pt-0"}`}>
       <div className={`nav-bar mx-auto flex h-14 items-center justify-between gap-4 border px-6 ${scrolled ? "nav-bar--pill" : ""}`}>
-        <a href="#" className="text-base font-medium tracking-tight" aria-label="everything.setup">
-          everything<span className="text-primary">.</span><span className="font-heading text-base leading-none text-primary">setup</span>
+        <a href="#" className="flex items-center gap-2" aria-label="nodal">
+          <img src="/logo.png" alt="" width={40} height={40} className="size-10 shrink-0 object-contain" />
+          <span className="font-heading text-2xl leading-none text-primary">nodal</span>
         </a>
 
         <div className="flex items-center gap-3">
