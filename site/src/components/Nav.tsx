@@ -20,9 +20,9 @@ export function Nav() {
       <div className={`nav-bar mx-auto flex h-14 items-center justify-between gap-4 border px-6 ${scrolled ? "nav-bar--pill" : ""}`}>
         <a href="#" className="flex items-center gap-2" aria-label="nodal/setup">
           <img src="/logo.png" alt="" width={40} height={40} className="size-10 shrink-0 object-contain" />
-          <span className="text-base leading-none">
-            <span className="font-heading text-primary">nodal</span>
-            <span className="text-lg font-medium text-foreground">/setup</span>
+          <span className="leading-none">
+            <span className="font-heading text-xs text-primary">nodal</span>
+            <span className="text-base font-medium text-foreground">/setup</span>
           </span>
         </a>
 
