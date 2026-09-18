@@ -132,6 +132,8 @@ export const pt = {
     ],
   },
   footer: {
-    text: "nodal é um projeto paralelo. As specs vêm do EloShapes, os testes de atrito do ProSettings. Nada aqui está à venda e ninguém é pago pra recomendar nada.",
+    intro: "nodal é um projeto paralelo. As specs vêm do",
+    mid: ", os testes de atrito do",
+    outro: ". Nada aqui está à venda e ninguém é pago pra recomendar nada.",
   },
 }

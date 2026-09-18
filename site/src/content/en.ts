@@ -132,6 +132,8 @@ export const en = {
     ],
   },
   footer: {
-    text: "nodal is a side project. Specs come from EloShapes, friction tests from ProSettings. Nothing here is for sale and nobody is paid to recommend anything.",
+    intro: "nodal is a side project. Specs come from",
+    mid: ", friction tests from",
+    outro: ". Nothing here is for sale and nobody is paid to recommend anything.",
   },
 }
