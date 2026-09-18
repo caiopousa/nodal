@@ -22,7 +22,7 @@ export function Nav() {
           <img src="/logo.png" alt="" width={40} height={40} className="size-10 shrink-0 object-contain" />
           <span className="text-base leading-none">
             <span className="font-heading text-primary">nodal</span>
-            <span className="font-medium text-foreground">/setup</span>
+            <span className="text-lg font-medium text-foreground">/setup</span>
           </span>
         </a>
 
