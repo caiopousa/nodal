@@ -201,9 +201,12 @@ function mouseShape(ctx: CanvasRenderingContext2D) {
   ctx.bezierCurveTo(...P(-0.16, -0.54), ...P(0.16, -0.54), ...P(0.30, -0.46))     // frente, convexa
   ctx.bezierCurveTo(...P(0.42, -0.40), ...P(0.47, -0.32), ...P(0.46, -0.22))      // ombro direito
   ctx.bezierCurveTo(...P(0.45, -0.10), ...P(0.44, -0.02), ...P(0.46, 0.10))       // cintura
-  ctx.bezierCurveTo(...P(0.50, 0.24), ...P(0.51, 0.38), ...P(0.38, 0.47))         // lombo
-  ctx.bezierCurveTo(...P(0.22, 0.525), ...P(-0.22, 0.525), ...P(-0.38, 0.47))     // traseira, curva suave
-  ctx.bezierCurveTo(...P(-0.51, 0.38), ...P(-0.50, 0.24), ...P(-0.46, 0.10))
+  // lombo + traseira: um semicírculo de raio = meia largura, tangente às laterais
+  const r = 0.48 * w
+  const yc = 0.5 * h - r
+  ctx.bezierCurveTo(...P(0.475, 0.16), ...P(0.48, yc / h - 0.04), r, yc)          // lateral chega tangente ao arco
+  ctx.arc(0, yc, r, 0, Math.PI)                                                    // traseira circular
+  ctx.bezierCurveTo(...P(-0.48, yc / h - 0.04), ...P(-0.475, 0.16), ...P(-0.46, 0.10))
   ctx.bezierCurveTo(...P(-0.44, -0.02), ...P(-0.45, -0.10), ...P(-0.46, -0.22))
   ctx.bezierCurveTo(...P(-0.47, -0.32), ...P(-0.42, -0.40), ...P(-0.30, -0.46))
   ctx.closePath()
