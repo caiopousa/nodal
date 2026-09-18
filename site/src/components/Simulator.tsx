@@ -9,6 +9,7 @@ const S = 9                          // px por cm
 const G = (981 / 1e6) * S            // 9,81 m/s² em px/ms²
 const MOUSE = { w: 26, h: 46 }       // proporção do GPRO Superlight (63,5 × 125 mm ≈ 0,51)
 const RAMP = 250                     // ms da rampa de força da mão
+const PAD = 8                        // folga entre o mouse e a borda da caixa
 const SLOWMO = 0.4                   // só a reprodução; nenhum número depende disto
 
 type V = { x: number; y: number }
@@ -67,7 +68,7 @@ function plan(type: (typeof TYPES)[number], gesture: Gesture, K: number, custom?
   const dStop = (v0 * v0) / (2 * a)
   const tStop = v0 / a
   const R = pts[pts.length - 1]
-  const b = { xmin: MOUSE.w / 2, xmax: W - MOUSE.w / 2, ymin: MOUSE.h / 2, ymax: H - MOUSE.h / 2 }
+  const b = { xmin: MOUSE.w / 2 + PAD, xmax: W - MOUSE.w / 2 - PAD, ymin: MOUSE.h / 2 + PAD, ymax: H - MOUSE.h / 2 - PAD }
   let dEdge = Infinity
   if (dir.x > 0) dEdge = Math.min(dEdge, (b.xmax - R.x) / dir.x)
   else if (dir.x < 0) dEdge = Math.min(dEdge, (b.xmin - R.x) / dir.x)
@@ -263,7 +264,7 @@ function Lane({ type, gesture, K, runId, custom, onDone, onDragStart, onDragEnd 
     const r = e.currentTarget.getBoundingClientRect()
     const x = ((e.clientX - r.left) / r.width) * W
     const y = ((e.clientY - r.top) / r.height) * H
-    return { x: Math.max(MOUSE.w / 2, Math.min(W - MOUSE.w / 2, x)), y: Math.max(MOUSE.h / 2, Math.min(H - MOUSE.h / 2, y)) }
+    return { x: Math.max(MOUSE.w / 2 + PAD, Math.min(W - MOUSE.w / 2 - PAD, x)), y: Math.max(MOUSE.h / 2 + PAD, Math.min(H - MOUSE.h / 2 - PAD, y)) }
   }
 
   const onPointerDown = (e: React.PointerEvent<HTMLCanvasElement>) => {
