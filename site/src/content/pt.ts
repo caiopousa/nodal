@@ -43,6 +43,7 @@ export const pt = {
     stoppingHint: "Distância que o mouse andaria sozinho",
     vsBalanced: "vs. Balanced",
     stoppedByEdge: "freado pela borda",
+    legend: "Stopping power, de Glass (1) a Control (5)",
     lede: "Ninguém solta o mouse de verdade. Mas essa distância é o jeito mais honesto de ver a diferença entre superfícies, porque ela vem direto do atrito. Escolha um gesto, solte, e veja cinco tipos de superfície pararem sozinhos.",
     howRead: "O índice compara cada superfície com um pad cloth Balanced, direto dos coeficientes de atrito reais, então vale pra qualquer gesto e qualquer velocidade. Distância e tempo vêm da gravidade real. A animação é só uma forma de olhar pra isso.",
     gestures: { vertical: "Vertical", diagonal: "Diagonal", flick: "Flick", custom: "Livre" },

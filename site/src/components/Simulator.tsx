@@ -362,6 +362,10 @@ export function Simulator() {
               </li>
             )
           })}
+          <li className="px-3 pt-2 text-xs leading-4 text-muted-foreground" role="presentation">
+            <span className="mr-1 inline-block size-2 rounded-[2px] bg-primary align-middle" aria-hidden />
+            {t.feel.legend}
+          </li>
         </ul>
         </div>
       </div>

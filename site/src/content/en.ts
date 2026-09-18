@@ -43,6 +43,7 @@ export const en = {
     stoppingHint: "Distance the mouse would travel on its own",
     vsBalanced: "vs. Balanced",
     stoppedByEdge: "stopped by the edge",
+    legend: "Stopping power, from Glass (1) to Control (5)",
     lede: "Nobody actually lets go. But that distance is the most honest way to see the difference between surfaces, because it comes straight from friction. Pick a gesture, release, and watch five surface types stop on their own.",
     howRead: "The index compares each surface with a Balanced cloth pad, straight from real friction coefficients, so it holds for any gesture and any speed. Distance and time come from real gravity. The animation is just a way to look at it.",
     gestures: { vertical: "Vertical", diagonal: "Diagonal", flick: "Flick", custom: "Custom" },
