@@ -334,9 +334,9 @@ export function Simulator() {
 
   return (
     <div className="rounded-xl border bg-card p-4 sm:p-6">
-      <div className="grid gap-5 sm:grid-cols-[1fr_12rem]">
+      <div className="grid items-stretch gap-5 sm:grid-cols-[1fr_12rem]">
         <Lane type={type} gesture={gesture} K={K} runId={runId} custom={custom} onDone={onDone} onDragStart={onDragStart} onDragEnd={onDragEnd} />
-        <ul className="flex flex-col gap-1" role="tablist">
+        <ul className="flex h-full flex-col justify-between gap-1" role="tablist">
           {TYPES.map((x) => {
             const active = sel === x.id
             return (
