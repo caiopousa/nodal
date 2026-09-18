@@ -21,7 +21,7 @@ type Props = {
 function useBend() {
   const ref = useRef<HTMLElement>(null)
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] })
-  const raw = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [-4, 0, 0, 4])
+  const raw = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [-10, 0, 0, 10])
   const rotateX = useSpring(raw, { stiffness: 90, damping: 26, mass: 0.6 })
   const opacity = useSpring(useTransform(scrollYProgress, [0, 0.15, 0.85, 1], [0.6, 1, 1, 0.6]), { stiffness: 90, damping: 26 })
   return { ref, rotateX, opacity }
@@ -34,7 +34,7 @@ export function Section({ id, eyebrow, title, lede, children, className, wide }:
       id={id}
       ref={bend.ref}
       className={cn("scroll-mt-24 py-20 sm:py-28", className)}
-      style={{ rotateX: bend.rotateX, opacity: bend.opacity, transformPerspective: 1400, transformOrigin: "50% 50%" }}
+      style={{ rotateX: bend.rotateX, opacity: bend.opacity, transformPerspective: 1200, transformOrigin: "50% 50%" }}
     >
       <motion.header
         className="container-101"
