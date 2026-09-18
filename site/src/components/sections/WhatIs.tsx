@@ -1,6 +1,7 @@
 import { useLayoutEffect, useRef, useState } from "react"
 import { motion, useScroll, useTransform, type MotionValue } from "motion/react"
 import { Section } from "@/components/Section"
+import { Badge } from "@/components/ui/badge"
 import { useI18n } from "@/lib/i18n"
 
 const LAYERS = [
@@ -62,7 +63,7 @@ export function WhatIs() {
               transition={{ duration: 0.5, delay: 0.15 }}
             >
               <div className="font-mono text-sm text-primary">0{i + 1}</div>
-              <h3 className="mt-1 text-lg font-medium">{l.name} <span className="ml-2 text-xs font-normal text-muted-foreground">{l.tag}</span></h3>
+              <h3 className="mt-1 flex items-center gap-3 text-lg font-medium">{l.name} <Badge variant="outline">{l.tag}</Badge></h3>
               <p className="prose-101 mt-2 text-base">{l.desc}</p>
             </motion.div>
           </li>
