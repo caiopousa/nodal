@@ -253,3 +253,11 @@ body { -webkit-font-smoothing: antialiased; }
 .bar { @apply h-2 rounded-full bg-primary/80; }
 @media (max-width: 640px) { .rack .pad-label { display: none; } }
 
+
+/* Interativos sempre com pointer; desabilitados, não */
+@layer base {
+  button, a[href], [role="button"], [role="tab"], label[for], select, summary {
+    cursor: pointer;
+  }
+  button:disabled, [aria-disabled="true"] { cursor: not-allowed; }
+}
