@@ -3,6 +3,7 @@ import { motion, useScroll, useTransform } from "motion/react"
 import { Section } from "@/components/Section"
 import { Pad, type SurfaceKind } from "@/components/Pad"
 import { TYPES, type TypeId } from "@/components/Simulator"
+import { Badge } from "@/components/ui/badge"
 import { useI18n } from "@/lib/i18n"
 
 const KIND: Record<TypeId, SurfaceKind> = { control: "cloth", balanced: "cloth", speed: "polyester", hybrid: "hybrid", glass: "glass" }
@@ -43,7 +44,7 @@ export function Types() {
         <div>
           <h3 className="flex items-center gap-3 text-xl">
             {t.feel.types[sel].name}
-            <span className="rounded-md border px-2 py-0 font-mono text-xs font-normal text-muted-foreground">{t.feel.material[sel]}</span>
+            <Badge variant="outline">{t.feel.material[sel]}</Badge>
           </h3>
         </div>
         <p className="prose-101 mt-3 text-base">{t.feel.types[sel].blurb}</p>
