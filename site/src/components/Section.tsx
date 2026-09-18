@@ -19,11 +19,11 @@ function CopyLink({ id }: { id: string }) {
   }
   return (
     <Button
-      variant="ghost" size="icon-sm" onClick={copy}
+      variant="ghost" size="icon-lg" onClick={copy}
       aria-label={copied ? t.nav.copied : t.nav.copyLink} title={copied ? t.nav.copied : t.nav.copyLink}
-      className={cn("shrink-0 self-center text-muted-foreground transition-opacity group-hover/h2:opacity-100 focus-visible:opacity-100", copied ? "text-primary opacity-100" : "opacity-0")}
+      className={cn("shrink-0 self-center text-muted-foreground", copied && "text-primary")}
     >
-      <HugeiconsIcon icon={copied ? Tick02Icon : Link01Icon} size={16} strokeWidth={1.5} />
+      <HugeiconsIcon icon={copied ? Tick02Icon : Link01Icon} size={20} strokeWidth={1.5} />
     </Button>
   )
 }
