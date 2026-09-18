@@ -174,13 +174,13 @@ function draw(ctx: CanvasRenderingContext2D, bg: HTMLCanvasElement, p: Plan, t: 
   ctx.fillStyle = g; ctx.fillRect(-w, -h, w * 2, h * 2)
   // linhas dos botões: divisão central e recorte inferior côncavo
   ctx.strokeStyle = "rgba(0,0,0,0.28)"; ctx.lineWidth = 0.8
-  ctx.beginPath(); ctx.moveTo(0, -h * 0.52); ctx.lineTo(0, h * 0.04); ctx.stroke()
-  ctx.beginPath(); ctx.moveTo(-w * 0.47, h * 0.02); ctx.quadraticCurveTo(0, h * 0.08, w * 0.47, h * 0.02); ctx.stroke()
+  ctx.beginPath(); ctx.moveTo(0, -h * 0.52); ctx.lineTo(0, -h * 0.08); ctx.stroke()
+  ctx.beginPath(); ctx.moveTo(-w * 0.46, -h * 0.10); ctx.quadraticCurveTo(0, -h * 0.05, w * 0.46, -h * 0.10); ctx.stroke()
   // roda alongada
   ctx.fillStyle = "rgba(0,0,0,0.55)"
-  roundRect(ctx, -w * 0.08, -h * 0.34, w * 0.16, h * 0.2, w * 0.08); ctx.fill()
+  roundRect(ctx, -w * 0.08, -h * 0.40, w * 0.16, h * 0.18, w * 0.08); ctx.fill()
   // ponto de status
-  ctx.fillStyle = "#3b82f6"; ctx.beginPath(); ctx.arc(0, h * 0.14, 0.7, 0, Math.PI * 2); ctx.fill()
+  ctx.fillStyle = "#3b82f6"; ctx.beginPath(); ctx.arc(0, h * 0.02, 0.7, 0, Math.PI * 2); ctx.fill()
   ctx.restore()
   // botões laterais (lado esquerdo), fora do clip
   ctx.fillStyle = "rgba(0,0,0,0.18)"
@@ -201,9 +201,9 @@ function mouseShape(ctx: CanvasRenderingContext2D) {
   ctx.bezierCurveTo(...P(-0.16, -0.54), ...P(0.16, -0.54), ...P(0.30, -0.46))     // frente, convexa
   ctx.bezierCurveTo(...P(0.42, -0.40), ...P(0.47, -0.32), ...P(0.46, -0.22))      // ombro direito
   ctx.bezierCurveTo(...P(0.45, -0.10), ...P(0.44, -0.02), ...P(0.46, 0.10))       // cintura
-  ctx.bezierCurveTo(...P(0.50, 0.24), ...P(0.51, 0.36), ...P(0.40, 0.46))         // lombo
-  ctx.bezierCurveTo(...P(0.26, 0.56), ...P(-0.26, 0.56), ...P(-0.40, 0.46))       // traseira, convexa
-  ctx.bezierCurveTo(...P(-0.51, 0.36), ...P(-0.50, 0.24), ...P(-0.46, 0.10))
+  ctx.bezierCurveTo(...P(0.50, 0.24), ...P(0.51, 0.38), ...P(0.38, 0.47))         // lombo
+  ctx.bezierCurveTo(...P(0.22, 0.525), ...P(-0.22, 0.525), ...P(-0.38, 0.47))     // traseira, curva suave
+  ctx.bezierCurveTo(...P(-0.51, 0.38), ...P(-0.50, 0.24), ...P(-0.46, 0.10))
   ctx.bezierCurveTo(...P(-0.44, -0.02), ...P(-0.45, -0.10), ...P(-0.46, -0.22))
   ctx.bezierCurveTo(...P(-0.47, -0.32), ...P(-0.42, -0.40), ...P(-0.30, -0.46))
   ctx.closePath()
