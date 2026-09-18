@@ -33,15 +33,26 @@ export function Types() {
         </TabsList>
       </Tabs>
 
-      <motion.div key={sel} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} className="mt-4 rounded-lg border bg-card p-6">
-        <div>
-          <h3 className="flex items-center gap-3 text-xl">
-            {t.feel.types[sel].name}
-            <Badge variant="outline">{t.feel.material[sel]}</Badge>
-          </h3>
-        </div>
-        <p className="prose-101 mt-3 text-base">{t.feel.types[sel].blurb}</p>
-      </motion.div>
+      {/* os cinco cards ocupam a mesma célula: a altura é sempre a do texto mais longo */}
+      <div className="mt-4 grid">
+        {TYPES.map((x) => (
+          <motion.div
+            key={x.id}
+            className="rounded-lg border bg-card p-6 [grid-area:1/1]"
+            initial={false}
+            animate={{ opacity: sel === x.id ? 1 : 0, y: sel === x.id ? 0 : 8 }}
+            transition={{ duration: 0.2 }}
+            style={{ pointerEvents: sel === x.id ? "auto" : "none" }}
+            aria-hidden={sel !== x.id}
+          >
+            <h3 className="flex items-center gap-3 text-xl">
+              {t.feel.types[x.id].name}
+              <Badge variant="outline">{t.feel.material[x.id]}</Badge>
+            </h3>
+            <p className="prose-101 mt-3 text-base">{t.feel.types[x.id].blurb}</p>
+          </motion.div>
+        ))}
+      </div>
 
       <p className="prose-101 mt-8 max-w-2xl text-base"><span className="text-primary">→</span> {t.feel.takeaway}</p>
     </Section>
