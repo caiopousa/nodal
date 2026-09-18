@@ -7,7 +7,7 @@ import { useI18n } from "@/lib/i18n"
 const W = 340, H = 230              // px ≈ 38 × 26 cm
 const S = 9                          // px por cm
 const G = (981 / 1e6) * S            // 9,81 m/s² em px/ms²
-const MOUSE = { w: 22, h: 32 }
+const MOUSE = { w: 20, h: 38 }       // proporção do GPRO Superlight (63,5 × 125 mm ≈ 0,51)
 const RAMP = 250                     // ms da rampa de força da mão
 const SLOWMO = 0.4                   // só a reprodução; nenhum número depende disto
 
@@ -162,30 +162,50 @@ function draw(ctx: CanvasRenderingContext2D, bg: HTMLCanvasElement, p: Plan, t: 
   ctx.translate(pos.x, pos.y)
   ctx.scale(1, squash)
   ctx.shadowColor = "rgba(0,0,0,0.6)"; ctx.shadowBlur = 10; ctx.shadowOffsetY = 4
-  ctx.fillStyle = "#e6e6ea"
+  ctx.fillStyle = "#ececef"
   mouseShape(ctx)
   ctx.fill()
   ctx.shadowColor = "transparent"
-  // divisão dos botões e roda
-  ctx.strokeStyle = "rgba(0,0,0,0.22)"; ctx.lineWidth = 1
-  ctx.beginPath(); ctx.moveTo(0, -MOUSE.h / 2 + 2); ctx.lineTo(0, -3); ctx.stroke()
-  ctx.beginPath(); ctx.moveTo(-MOUSE.w / 2 + 1.5, -5); ctx.quadraticCurveTo(0, -1, MOUSE.w / 2 - 1.5, -5); ctx.stroke()
-  ctx.fillStyle = "rgba(0,0,0,0.35)"
-  roundRect(ctx, -1.6, -MOUSE.h / 2 + 6, 3.2, 6, 1.6); ctx.fill()
+  ctx.save(); mouseShape(ctx); ctx.clip()
+  const w = MOUSE.w, h = MOUSE.h
+  // sombra suave no lombo, pra dar volume
+  const g = ctx.createLinearGradient(-w / 2, 0, w / 2, 0)
+  g.addColorStop(0, "rgba(0,0,0,0.10)"); g.addColorStop(0.5, "rgba(255,255,255,0.10)"); g.addColorStop(1, "rgba(0,0,0,0.12)")
+  ctx.fillStyle = g; ctx.fillRect(-w, -h, w * 2, h * 2)
+  // linhas dos botões: divisão central e recorte inferior côncavo
+  ctx.strokeStyle = "rgba(0,0,0,0.28)"; ctx.lineWidth = 0.8
+  ctx.beginPath(); ctx.moveTo(0, -h * 0.5); ctx.lineTo(0, h * 0.04); ctx.stroke()
+  ctx.beginPath(); ctx.moveTo(-w * 0.47, h * 0.02); ctx.quadraticCurveTo(0, h * 0.08, w * 0.47, h * 0.02); ctx.stroke()
+  // roda alongada
+  ctx.fillStyle = "rgba(0,0,0,0.55)"
+  roundRect(ctx, -w * 0.08, -h * 0.34, w * 0.16, h * 0.2, w * 0.08); ctx.fill()
+  // ponto de status
+  ctx.fillStyle = "#3b82f6"; ctx.beginPath(); ctx.arc(0, h * 0.14, 0.7, 0, Math.PI * 2); ctx.fill()
+  ctx.restore()
+  // botões laterais (lado esquerdo), fora do clip
+  ctx.fillStyle = "rgba(0,0,0,0.18)"
+  roundRect(ctx, -w * 0.5 - 0.8, -h * 0.06, 1.4, h * 0.09, 0.7); ctx.fill()
+  roundRect(ctx, -w * 0.5 - 0.8, h * 0.05, 1.4, h * 0.09, 0.7); ctx.fill()
   ctx.restore()
 }
-/** Vista de cima de um mouse simétrico tipo GPRO Superlight: frente estreita, lombo largo, traseira arredondada. */
+/**
+ * Vista de cima do GPRO Superlight: frente quase reta, ombros logo abaixo,
+ * cintura suave, lombo largo perto da traseira e traseira arredondada.
+ * Coordenadas normalizadas: x em [-0.5, 0.5]·w, y em [-0.5, 0.5]·h (topo negativo).
+ */
 function mouseShape(ctx: CanvasRenderingContext2D) {
   const w = MOUSE.w, h = MOUSE.h
-  const top = -h / 2, bot = h / 2
+  const P = (x: number, y: number): [number, number] => [x * w, y * h]
   ctx.beginPath()
-  ctx.moveTo(0, top)
-  ctx.bezierCurveTo(w * 0.34, top, w * 0.47, top + h * 0.22, w * 0.46, top + h * 0.42)
-  ctx.bezierCurveTo(w * 0.45, top + h * 0.6, w * 0.52, top + h * 0.72, w * 0.5, top + h * 0.86)
-  ctx.bezierCurveTo(w * 0.48, bot, w * 0.2, bot, 0, bot)
-  ctx.bezierCurveTo(-w * 0.2, bot, -w * 0.48, bot, -w * 0.5, top + h * 0.86)
-  ctx.bezierCurveTo(-w * 0.52, top + h * 0.72, -w * 0.45, top + h * 0.6, -w * 0.46, top + h * 0.42)
-  ctx.bezierCurveTo(-w * 0.47, top + h * 0.22, -w * 0.34, top, 0, top)
+  ctx.moveTo(...P(-0.36, -0.49))
+  ctx.bezierCurveTo(...P(-0.14, -0.515), ...P(0.14, -0.515), ...P(0.36, -0.49))   // frente
+  ctx.bezierCurveTo(...P(0.45, -0.46), ...P(0.47, -0.36), ...P(0.46, -0.24))      // ombro direito
+  ctx.bezierCurveTo(...P(0.455, -0.12), ...P(0.44, -0.02), ...P(0.46, 0.10))      // cintura
+  ctx.bezierCurveTo(...P(0.5, 0.26), ...P(0.5, 0.36), ...P(0.4, 0.45))            // lombo
+  ctx.bezierCurveTo(...P(0.3, 0.505), ...P(-0.3, 0.505), ...P(-0.4, 0.45))        // traseira
+  ctx.bezierCurveTo(...P(-0.5, 0.36), ...P(-0.5, 0.26), ...P(-0.46, 0.10))
+  ctx.bezierCurveTo(...P(-0.44, -0.02), ...P(-0.455, -0.12), ...P(-0.46, -0.24))
+  ctx.bezierCurveTo(...P(-0.47, -0.36), ...P(-0.45, -0.46), ...P(-0.36, -0.49))
   ctx.closePath()
 }
 function roundRect(ctx: CanvasRenderingContext2D, x: number, y: number, w: number, h: number, r: number) {
