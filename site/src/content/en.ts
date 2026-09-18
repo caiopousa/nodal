@@ -64,7 +64,7 @@ export const en = {
       hybrid: { name: "Hybrid", blurb: "A coated cloth or fabric blend: cloth comfort with a glide closer to hard surfaces." },
       glass: { name: "Glass", blurb: "Almost no static grip, almost no braking. The fastest, most consistent surface, and the least forgiving." },
     },
-    takeaway: "Control is not better than speed. Control pads make stopping easy; speed pads make starting easy. Which one you want depends on the moves you make most.",
+    takeaway: "Example: Control is not better than speed. Control pads make stopping easy; speed pads make starting easy. Which one you want depends on the moves you make most.",
   },
   choose: {
     eyebrow: "04",

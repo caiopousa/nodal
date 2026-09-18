@@ -64,7 +64,7 @@ export const pt = {
       hybrid: { name: "Hybrid", blurb: "Tecido com revestimento ou mistura: conforto de cloth com glide mais próximo de superfície rígida." },
       glass: { name: "Glass", blurb: "Quase nenhuma aderência inicial, quase nenhuma frenagem. A superfície mais rápida e consistente, e a que menos perdoa." },
     },
-    takeaway: "Control não é melhor que speed. Pad control facilita parar; pad speed facilita começar. Qual você quer depende dos movimentos que você mais faz.",
+    takeaway: "Exemplo: Control não é melhor que speed. Pad control facilita parar; pad speed facilita começar. Qual você quer depende dos movimentos que você mais faz.",
   },
   choose: {
     eyebrow: "04",
