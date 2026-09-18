@@ -127,7 +127,17 @@ export function Hero() {
         <Button size="lg" className="mt-8" nativeButton={false} render={<a href="#what" />}>{t.hero.cta}</Button>
       </motion.div>
 
-      <div ref={wheel} className="relative mt-12 h-[400px] w-full cursor-grab overflow-hidden select-none active:cursor-grabbing" style={{ touchAction: "pan-y" }} aria-hidden>
+      <div
+        ref={wheel}
+        className="relative mt-12 h-[400px] w-full cursor-grab overflow-hidden select-none active:cursor-grabbing"
+        style={{
+          touchAction: "pan-y",
+          // a base da roda se dissolve no fundo em vez de ser cortada numa linha
+          maskImage: "linear-gradient(to bottom, black 55%, transparent 100%)",
+          WebkitMaskImage: "linear-gradient(to bottom, black 55%, transparent 100%)",
+        }}
+        aria-hidden
+      >
         {CARDS.map((p, i) => (
           <div key={i} className="absolute left-0 top-0" style={{ width: CARD_W, height: CARD_H, transformOrigin: "50% 0%", willChange: "transform" }}>
             <Pad kind={p.kind} color={p.color} ratio={CARD_W / CARD_H} />

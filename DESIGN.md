@@ -33,8 +33,9 @@ tertiary → `--primary`; rounded.md → `--radius`. Fontes via Google Fonts em
 
 - **Tertiary é o único acento.** Uma ação por tela; rótulos de seção, números
   de resultado e rastros do simulador também usam ele, nada mais.
-- **Sem gradiente decorativo.** Fundo plano. Exceção declarada: as texturas
-  procedurais dos pads são render de material, não decoração.
+- **Sem gradiente decorativo.** Fundo plano. Exceções declaradas: as texturas
+  procedurais dos pads são render de material, e a base da roda do hero usa
+  uma máscara de transparência pra não terminar numa linha reta.
 - **Valley Sans nos títulos e na marca; Figtree no corpo e nos rótulos.** Display (h1) em 400; h2 e h3 em 500; rótulos em 600. Números em JetBrains Mono. Cantos em múltiplos de 8: 16 no padrão (botões, cards, listas), 8 nos itens internos (abas, badges).
 - **Acento roxo #A259FF com texto branco.**
 - **Espaço negativo é parte da composição.** Não preencher por preencher.
