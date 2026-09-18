@@ -91,15 +91,16 @@ export function BounceSidebar({
     if (delta === 0) return;
 
     const distance = Math.abs(delta);
+    // arco largo e um pouco de overshoot: o ponto "salta" entre os itens
     const path = arc({
-      strength: Math.min(0.8, 14 / distance),
+      strength: Math.min(1.4, 56 / distance),
       direction: delta > 0 ? "ccw" : "cw",
     });
 
     animate(
       dot.current,
       { x: 0, y: toY },
-      { duration: 0.25, ease: "easeOut", path },
+      { duration: 0.55, ease: [0.34, 1.4, 0.64, 1], path },
     );
   }, [activeIndex, animate, dot, dotSize]);
 
