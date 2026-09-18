@@ -4,6 +4,9 @@ import { Section } from "@/components/Section"
 import { Pad, type SurfaceKind } from "@/components/Pad"
 import { TYPES, type TypeId } from "@/components/Simulator"
 import { Badge } from "@/components/ui/badge"
+import { Alert, AlertDescription } from "@/components/ui/alert"
+import { HugeiconsIcon } from "@hugeicons/react"
+import { InformationCircleIcon } from "@hugeicons/core-free-icons"
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { useI18n } from "@/lib/i18n"
 
@@ -54,7 +57,10 @@ export function Types() {
         ))}
       </div>
 
-      <p className="prose-101 mt-8 max-w-2xl text-base"><span className="text-primary">→</span> {t.feel.takeaway}</p>
+      <Alert className="mt-8">
+        <HugeiconsIcon icon={InformationCircleIcon} size={16} strokeWidth={1.5} />
+        <AlertDescription>{t.feel.takeaway}</AlertDescription>
+      </Alert>
     </Section>
   )
 }
