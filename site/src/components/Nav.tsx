@@ -18,7 +18,7 @@ export function Nav() {
   }, [])
   return (
     <header className={`nav-shell sticky top-0 z-40 ${scrolled ? "pt-4" : "pt-0"}`}>
-      <div className={`nav-bar mx-auto flex h-14 items-center justify-between gap-4 border px-6 ${scrolled ? "nav-bar--pill" : ""}`}>
+      <div className={`nav-bar mx-auto flex h-14 items-center justify-between gap-3 border px-4 sm:px-6 ${scrolled ? "nav-bar--pill" : ""}`}>
         <a href="#" className="flex items-center gap-2" aria-label="nodal/setup">
           <Keycap />
           <span className="leading-none">
@@ -29,7 +29,7 @@ export function Nav() {
 
         <div className="flex items-center gap-3">
           {/* seletor de produto */}
-          <div className="flex items-center rounded-md border p-1 text-xs" role="tablist" aria-label="Product">
+          <div className="hidden items-center rounded-md border p-1 text-xs sm:flex" role="tablist" aria-label="Product">
             <button role="tab" aria-selected className="rounded-sm bg-muted px-3 py-1 font-medium text-foreground">
               {t.nav.products.mousepads}
             </button>

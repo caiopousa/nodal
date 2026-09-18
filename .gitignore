@@ -1,4 +1,7 @@
-node_modules/
-dist/
-site/src/data/catalog.json
 .DS_Store
+dist/
+mousepad101_v1.html
+nodal-setup.html
+node_modules/
+site/src/data/catalog.json
+site_fullpage*.png
