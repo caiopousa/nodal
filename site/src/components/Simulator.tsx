@@ -339,7 +339,7 @@ export function Simulator() {
 
   return (
     <div className="rounded-xl border bg-card p-4 sm:p-6">
-      <div className="grid gap-5 sm:grid-cols-[1fr_12rem]">
+      <div className="grid gap-x-5 gap-y-2 sm:grid-cols-[1fr_12rem]">
         <Lane type={type} gesture={gesture} K={K} runId={runId} custom={custom} onDone={onDone} onDragStart={onDragStart} onDragEnd={onDragEnd} />
         <div className="relative">
         <ul className="flex flex-col justify-between sm:absolute sm:inset-0" role="tablist">
@@ -362,12 +362,12 @@ export function Simulator() {
               </li>
             )
           })}
-          <li className="px-3 pt-2 text-xs leading-4 text-muted-foreground" role="presentation">
-            <span className="mr-1 inline-block size-2 rounded-[2px] bg-primary align-middle" aria-hidden />
-            {t.feel.legend}
-          </li>
         </ul>
         </div>
+        <p className="px-3 text-xs leading-4 text-muted-foreground sm:col-start-2">
+          <span className="mr-1 inline-block size-2 rounded-[2px] bg-primary align-middle" aria-hidden />
+          {t.feel.legend}
+        </p>
       </div>
 
       <div className="mt-5 flex flex-wrap items-end justify-between gap-4 border-t pt-5">
