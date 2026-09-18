@@ -21,7 +21,7 @@ export function Nav() {
         <a href="#" className="flex items-center gap-2" aria-label="nodal/setup">
           <img src="/logo.png" alt="" width={40} height={40} className="size-10 shrink-0 object-contain" />
           <span className="leading-none">
-            <span className="font-heading text-base text-primary">nodal</span>
+            <span className="font-heading text-[14px] text-primary">nodal</span>
             <span className="text-base font-medium text-foreground">/setup</span>
           </span>
         </a>
