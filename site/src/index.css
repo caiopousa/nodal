@@ -142,13 +142,13 @@
     --muted-foreground: #425466;    /* secondary */
     --accent: #E6EBF1;
     --accent-foreground: #0A2540;
-    --primary: #C18CFF;             /* tertiary: o único acento */
-    --primary-foreground: #0A2540;  /* on-primary: texto escuro, o lilás é claro */
+    --primary: #A259FF;             /* tertiary: o único acento */
+    --primary-foreground: #FFFFFF;  /* on-primary */
     --border: rgb(66 84 102 / 20%);
     --input: rgb(66 84 102 / 28%);
-    --ring: rgb(193 140 255 / 60%);
-    --chart-1: #C18CFF;
-    --chart-2: #DDC2FF;
+    --ring: rgb(162 89 255 / 50%);
+    --chart-1: #A259FF;
+    --chart-2: #C9A6FF;
     --chart-3: #425466;
     --chart-4: #8898AA;
     --chart-5: #CFD7DF;

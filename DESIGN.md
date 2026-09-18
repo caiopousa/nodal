@@ -1,14 +1,14 @@
 ---
 version: alpha
 name: Mousepad 101
-description: Base "Stripe" (designdotmd.directory/d/stripe) com ajustes: acento lilás #C18CFF, Valley Sans nos títulos, Figtree no corpo.
+description: Base "Stripe" (designdotmd.directory/d/stripe) com ajustes: acento roxo #A259FF, Valley Sans nos títulos, Figtree no corpo.
 colors:
   primary: "#0A2540"
   secondary: "#425466"
-  tertiary: "#C18CFF"
+  tertiary: "#A259FF"
   neutral: "#F6F9FC"
   surface: "#FFFFFF"
-  on-primary: "#0A2540"
+  on-primary: "#FFFFFF"
 grid: 4px            # todo tamanho, espaço e fonte em múltiplos de 4
 typography:
   display: { fontFamily: Valley Sans, fontSize: 56px, fontWeight: 400, letterSpacing: "-0.04em" }
@@ -36,5 +36,5 @@ tertiary → `--primary`; rounded.md → `--radius`. Fontes via Google Fonts em
 - **Sem gradiente decorativo.** Fundo plano. Exceção declarada: as texturas
   procedurais dos pads são render de material, não decoração.
 - **Valley Sans nos títulos e na marca; Figtree no corpo e nos rótulos.** Display (h1) em 400; h2 e h3 em 500; rótulos em 600. Números em JetBrains Mono. Cantos de 8px, cards em 16px.
-- **Acento lilás sobre texto escuro.** #C18CFF é claro; botões primários usam o azul-marinho como texto.
+- **Acento roxo #A259FF com texto branco.**
 - **Espaço negativo é parte da composição.** Não preencher por preencher.
