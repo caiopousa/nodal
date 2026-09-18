@@ -1,11 +1,11 @@
 ---
 version: alpha
 name: Mousepad 101
-description: Base "Stripe" (designdotmd.directory/d/stripe) com ajustes: acento roxo #A259FF, Valley Sans nos títulos, Figtree no corpo.
+description: Base "Stripe" (designdotmd.directory/d/stripe) com ajustes: acento roxo #8957E5, Valley Sans nos títulos, Figtree no corpo.
 colors:
   primary: "#0A2540"
   secondary: "#425466"
-  tertiary: "#A259FF"
+  tertiary: "#8957E5"
   neutral: "#F6F9FC"
   surface: "#FFFFFF"
   on-primary: "#FFFFFF"
@@ -37,5 +37,5 @@ tertiary → `--primary`; rounded.md → `--radius`. Fontes via Google Fonts em
   procedurais dos pads são render de material, e a base da roda do hero usa
   uma máscara de transparência pra não terminar numa linha reta.
 - **Valley Sans nos títulos e na marca; Figtree no corpo e nos rótulos.** Display (h1) em 400; h2 e h3 em 500; rótulos em 600. Números em JetBrains Mono. Cantos em múltiplos de 8: 16 no padrão (botões, cards, listas), 8 nos itens internos (abas, badges).
-- **Acento roxo #A259FF com texto branco.**
+- **Acento roxo #8957E5 com texto branco.**
 - **Espaço negativo é parte da composição.** Não preencher por preencher.
