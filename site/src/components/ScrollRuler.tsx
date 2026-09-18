@@ -19,6 +19,8 @@ export function ScrollRuler() {
   const [sections, setSections] = useState<{ id: string; frac: number }[]>([])
   const [progress, setProgress] = useState(0)
   const [hover, setHover] = useState<string | null>(null)
+  const [open, setOpen] = useState(false)                       // mouse sobre a régua: mostra todos os nomes
+  const current = Math.round(progress * (TICKS - 1))           // traço que representa o scroll atual
   const raf = useRef(0)
 
   useEffect(() => {
@@ -57,17 +59,19 @@ export function ScrollRuler() {
   }
 
   return (
-    <nav aria-label="Sections" className="fixed top-1/2 right-4 z-30 hidden -translate-y-1/2 lg:block">
+    <nav
+      aria-label="Sections"
+      className="fixed top-1/2 right-4 z-30 hidden -translate-y-1/2 py-4 pl-8 lg:block"
+      onMouseEnter={() => setOpen(true)}
+      onMouseLeave={() => { setOpen(false); setHover(null) }}
+    >
       <div className="relative flex flex-col justify-between" style={{ height: 320 }}>
-        {/* marcador do scroll */}
-        <span
-          className="pointer-events-none absolute -left-3 h-px w-full bg-primary transition-[top] duration-100"
-          style={{ top: `${progress * 100}%`, width: 40 }}
-          aria-hidden
-        />
         {Array.from({ length: TICKS }, (_, i) => {
           const id = tickSection(i)
           const label = id ? titles[id as keyof typeof titles] : null
+          const isCurrent = i === current
+          const color = isCurrent ? "bg-primary" : id ? (hover === id ? "bg-primary" : "bg-foreground") : "bg-foreground/35"
+          const width = isCurrent ? 32 : id ? 24 : 12
           return (
             <span key={i} className="relative flex h-px items-center justify-end">
               {id ? (
@@ -79,13 +83,15 @@ export function ScrollRuler() {
                   onClick={() => document.getElementById(id)?.scrollIntoView({ behavior: "smooth" })}
                   className="-my-2 flex h-4 items-center"
                 >
-                  <span className={`block h-px transition-colors ${hover === id ? "bg-primary" : "bg-foreground"}`} style={{ width: 24 }} />
+                  <span className={`block h-px transition-[width,background-color] duration-150 ${color}`} style={{ width }} />
                 </button>
               ) : (
-                <span className="block h-px bg-foreground/35" style={{ width: 12 }} />
+                <span className={`block h-px transition-[width,background-color] duration-150 ${color}`} style={{ width }} />
               )}
-              {id && hover === id && label && (
-                <span className="pointer-events-none absolute right-8 whitespace-nowrap rounded-md bg-foreground px-2 py-1 text-xs text-background">
+              {id && label && (
+                <span
+                  className={`pointer-events-none absolute right-10 whitespace-nowrap text-xs leading-4 transition-opacity duration-150 ${open ? "opacity-100" : "opacity-0"} ${hover === id || (isCurrent && id) ? "text-primary" : "text-foreground"}`}
+                >
                   {label}
                 </span>
               )}
