@@ -28,12 +28,12 @@ const tabsListVariants = cva(
         default: "bg-muted",
         line: "gap-1 bg-transparent",
       },
-      /* mesma escala do Button: xs 24 · sm 28 · default 32 · lg 36 */
+      /* mesma escala do Button: xs 24 · sm 28 · default 32 · lg 40 */
       size: {
         xs: "group-data-horizontal/tabs:h-6 text-xs",
         sm: "group-data-horizontal/tabs:h-7 text-xs",
         default: "group-data-horizontal/tabs:h-8",
-        lg: "group-data-horizontal/tabs:h-9",
+        lg: "group-data-horizontal/tabs:h-10",
       },
     },
     defaultVariants: {
