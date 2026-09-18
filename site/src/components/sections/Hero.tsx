@@ -4,7 +4,6 @@ import { Button } from "@/components/ui/button"
 import { Pad, type SurfaceKind } from "@/components/Pad"
 import { useI18n } from "@/lib/i18n"
 
-/** Esteira decorativa: tamanhos variados como no rabisco, looping contínuo. */
 const STRIP: { kind: SurfaceKind; color: string }[] = [
   { kind: "cloth", color: "#3a2226" },
   { kind: "polyester", color: "#22303b" },
@@ -15,39 +14,66 @@ const STRIP: { kind: SurfaceKind; color: string }[] = [
   { kind: "polyester", color: "#242a3d" },
   { kind: "cloth", color: "#1f2d2d" },
 ]
+const CARDS = [...STRIP, ...STRIP]          // 16 cartas na roda
+const CARD_W = 144, CARD_H = 184, GAP = 8    // px, múltiplos de 4
+const SPEED = 0.05                           // rad/s
 
 /**
- * Curvatura da esteira: cada pad é escalado e elevado conforme a distância
- * horizontal até o centro da tela (t = -1..1): desce nas bordas e gira
- * no plano em direção ao centro, como cartas numa roda. Sem escala.
+ * Roda de cartas (ref: React Bits "Rotating Cards"), mas com raio grande e
+ * centro muito abaixo da tela: só o topo do círculo aparece, de ponta a ponta.
+ * Cada carta fica tangente ao arco e gira em torno do centro comum.
  */
-function useCurvedStrip(ref: React.RefObject<HTMLDivElement | null>) {
+function useWheel(ref: React.RefObject<HTMLDivElement | null>) {
   useEffect(() => {
     const el = ref.current
     if (!el) return
+    const cards = Array.from(el.children) as HTMLElement[]
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    let paused = false
+    let last = performance.now()
+    let theta = 0
     let raf = 0
-    const tick = () => {
-      const cx = window.innerWidth / 2
-      const half = window.innerWidth / 2
-      for (const child of Array.from(el.children) as HTMLElement[]) {
-        const r = child.getBoundingClientRect()
-        const t = Math.max(-1.2, Math.min(1.2, (r.left + r.width / 2 - cx) / half))
-        const k = t * t
-        const inner = child.firstElementChild as HTMLElement | null
-        if (inner) inner.style.transform = `translateY(${(70 * k).toFixed(1)}px) rotate(${(22 * t).toFixed(1)}deg)`
-      }
+    const onEnter = () => { paused = true }
+    const onLeave = () => { paused = false }
+    el.addEventListener("pointerenter", onEnter)
+    el.addEventListener("pointerleave", onLeave)
+
+    const tick = (now: number) => {
+      const dt = (now - last) / 1000
+      last = now
+      if (!paused && !reduce) theta += SPEED * dt
+
+      const W = el.clientWidth
+      const R = Math.max(800, W * 0.9)                 // raio: quanto maior, mais reto o arco
+      const step = (CARD_W + GAP) / R                  // ângulo entre cartas
+      const span = cards.length * step                 // faixa angular que as cartas ocupam
+      const cx = W / 2
+      const cy = R + 24                                // centro da roda, abaixo do container
+
+      cards.forEach((card, i) => {
+        // ângulo da carta, enrolado dentro da faixa e centrado em zero
+        let a = (theta + i * step) % span
+        if (a < 0) a += span
+        a -= span / 2
+        const x = cx + R * Math.sin(a)
+        const y = cy - R * Math.cos(a)
+        card.style.transform = `translate(${(x - CARD_W / 2).toFixed(1)}px, ${y.toFixed(1)}px) rotate(${(a * 180 / Math.PI).toFixed(2)}deg)`
+      })
       raf = requestAnimationFrame(tick)
     }
     raf = requestAnimationFrame(tick)
-    return () => cancelAnimationFrame(raf)
+    return () => {
+      cancelAnimationFrame(raf)
+      el.removeEventListener("pointerenter", onEnter)
+      el.removeEventListener("pointerleave", onLeave)
+    }
   }, [ref])
 }
 
 export function Hero() {
   const { t } = useI18n()
-  const items = [...STRIP, ...STRIP]
-  const strip = useRef<HTMLDivElement>(null)
-  useCurvedStrip(strip)
+  const wheel = useRef<HTMLDivElement>(null)
+  useWheel(wheel)
   return (
     <section className="pt-20 sm:pt-28">
       <motion.div
@@ -62,14 +88,12 @@ export function Hero() {
         <Button size="lg" className="mt-8" nativeButton={false} render={<a href="#what" />}>{t.hero.cta}</Button>
       </motion.div>
 
-      <div className="mt-6 overflow-hidden pt-10 pb-24" aria-hidden>
-        <div ref={strip} className="marquee items-end px-4">
-          {items.map((p, i) => (
-            <div key={i} className="w-36 shrink-0">
-              <Pad kind={p.kind} color={p.color} ratio={0.78} style={{ transformOrigin: "50% 50%", willChange: "transform" }} />
-            </div>
-          ))}
-        </div>
+      <div ref={wheel} className="relative mt-12 h-[400px] w-full overflow-hidden" aria-hidden>
+        {CARDS.map((p, i) => (
+          <div key={i} className="absolute left-0 top-0" style={{ width: CARD_W, height: CARD_H, transformOrigin: "50% 0%", willChange: "transform" }}>
+            <Pad kind={p.kind} color={p.color} ratio={CARD_W / CARD_H} />
+          </div>
+        ))}
       </div>
     </section>
   )
