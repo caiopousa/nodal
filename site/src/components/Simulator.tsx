@@ -395,7 +395,7 @@ export function Simulator() {
       <div className="mb-5 flex items-center justify-between">
         <h3 className="text-lg">{t.feel.playground}</h3>
         <Popover>
-          <PopoverTrigger render={<Button variant="ghost" size="icon" aria-label={t.feel.infoTitle} />}>
+          <PopoverTrigger render={<Button variant="ghost" size="icon-lg" aria-label={t.feel.infoTitle} />}>
             <HugeiconsIcon icon={InformationCircleIcon} size={20} strokeWidth={1.5} />
           </PopoverTrigger>
           <PopoverContent align="end" className="w-80">
