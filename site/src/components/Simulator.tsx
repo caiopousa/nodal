@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Popover, PopoverTrigger, PopoverContent } from "@/components/ui/popover"
 import { InfoIcon } from "lucide-react"
-import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { useI18n } from "@/lib/i18n"
 
 /* ---------- Escala e constantes (ver mousepad_simulacao_superficie.md) ---------- */
@@ -381,27 +381,18 @@ export function Simulator() {
       <div className="grid gap-x-5 gap-y-2 sm:grid-cols-[1fr_12rem]">
         <Lane type={type} gesture={gesture} K={K} runId={runId} custom={custom} onDone={onDone} onDragStart={onDragStart} onDragEnd={onDragEnd} />
         <div className="relative">
-        <ul className="flex flex-col justify-between sm:absolute sm:inset-0" role="tablist">
-          {TYPES.map((x) => {
-            const active = sel === x.id
-            return (
-              <li key={x.id}>
-                <button
-                  role="tab" aria-selected={active}
-                  onClick={() => { setSel(x.id); reset() }}
-                  className={`flex w-full items-baseline gap-2 rounded-md px-3 pt-2 pb-4 text-left text-sm transition-colors ${active ? "bg-primary/10 text-foreground" : "text-muted-foreground hover:bg-muted hover:text-foreground"}`}
-                >
-                  <span className="flex-1">
-                    <span className="block">{t.feel.types[x.id].name}</span>
-                    <span className="mt-1 flex gap-1" aria-label={`${squares(x.muk)}/5`}>
-                      {[1, 2, 3, 4, 5].map((n) => <span key={n} className={`block size-2 rounded-[2px] ${n <= squares(x.muk) ? "bg-primary" : "bg-muted"}`} />)}
-                    </span>
+          <Tabs orientation="vertical" value={sel} onValueChange={(v) => { setSel(v as TypeId); reset() }} className="sm:absolute sm:inset-0">
+            <TabsList className="w-full justify-between bg-transparent p-0 group-data-vertical/tabs:h-full">
+              {TYPES.map((x) => (
+                <TabsTrigger key={x.id} value={x.id} className="h-auto flex-col items-start px-3 pt-2 pb-4 text-base font-normal data-active:bg-primary/10 data-active:shadow-none">
+                  <span>{t.feel.types[x.id].name}</span>
+                  <span className="mt-1 flex gap-1" aria-label={`${squares(x.muk)}/5`}>
+                    {[1, 2, 3, 4, 5].map((n) => <span key={n} className={`block size-2 rounded-[2px] ${n <= squares(x.muk) ? "bg-primary" : "bg-muted"}`} />)}
                   </span>
-                </button>
-              </li>
-            )
-          })}
-        </ul>
+                </TabsTrigger>
+              ))}
+            </TabsList>
+          </Tabs>
         </div>
       </div>
 
@@ -419,9 +410,11 @@ export function Simulator() {
       </div>
 
       <div className="mt-5 flex flex-wrap items-center gap-3">
-        <ToggleGroup value={[gesture]} onValueChange={(v) => { const g = v[0] as Gesture | undefined; if (g) { setGesture(g); reset() } }} variant="outline">
-          {([...Object.keys(GESTURES), "custom"] as Gesture[]).map((g) => <ToggleGroupItem key={g} value={g}>{t.feel.gestures[g]}</ToggleGroupItem>)}
-        </ToggleGroup>
+        <Tabs value={gesture} onValueChange={(v) => { setGesture(v as Gesture); reset() }}>
+          <TabsList size="lg">
+            {([...Object.keys(GESTURES), "custom"] as Gesture[]).map((g) => <TabsTrigger key={g} value={g}>{t.feel.gestures[g]}</TabsTrigger>)}
+          </TabsList>
+        </Tabs>
       </div>
     </div>
   )

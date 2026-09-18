@@ -4,6 +4,7 @@ import { Section } from "@/components/Section"
 import { Pad, type SurfaceKind } from "@/components/Pad"
 import { TYPES, type TypeId } from "@/components/Simulator"
 import { Badge } from "@/components/ui/badge"
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { useI18n } from "@/lib/i18n"
 
 const KIND: Record<TypeId, SurfaceKind> = { control: "cloth", balanced: "cloth", speed: "polyester", hybrid: "hybrid", glass: "glass" }
@@ -26,19 +27,11 @@ export function Types() {
         </motion.div>
       </div>
 
-      <div className="mt-10 flex flex-wrap justify-center gap-2" role="tablist">
-        {TYPES.map((x) => (
-          <button
-            key={x.id}
-            role="tab"
-            aria-selected={sel === x.id}
-            onClick={() => setSel(x.id)}
-            className={`rounded-lg border px-3 py-1 text-sm transition-colors ${sel === x.id ? "border-primary bg-primary/10 text-foreground" : "text-muted-foreground hover:text-foreground"}`}
-          >
-            {t.feel.types[x.id].name}
-          </button>
-        ))}
-      </div>
+      <Tabs value={sel} onValueChange={(v) => setSel(v as TypeId)} className="mt-10 items-center">
+        <TabsList>
+          {TYPES.map((x) => <TabsTrigger key={x.id} value={x.id}>{t.feel.types[x.id].name}</TabsTrigger>)}
+        </TabsList>
+      </Tabs>
 
       <motion.div key={sel} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} className="mt-4 rounded-lg border bg-card p-6">
         <div>
