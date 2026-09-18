@@ -338,7 +338,6 @@ export function Simulator() {
         <Lane type={type} gesture={gesture} K={K} runId={runId} custom={custom} onDone={onDone} onDragStart={onDragStart} onDragEnd={onDragEnd} />
         <ul className="flex flex-col gap-1" role="tablist">
           {TYPES.map((x) => {
-            const r = results[x.id]
             const active = sel === x.id
             return (
               <li key={x.id}>
@@ -348,12 +347,8 @@ export function Simulator() {
                   className={`flex w-full items-baseline gap-2 rounded-md px-3 py-2 text-left text-sm transition-colors ${active ? "bg-primary/10 text-foreground" : "text-muted-foreground hover:bg-muted hover:text-foreground"}`}
                 >
                   <span className="flex-1">
-                    <span className="flex items-baseline justify-between gap-2">
-                      <span>{t.feel.types[x.id].name}</span>
-                      <span className="font-mono text-xs tabular-nums text-muted-foreground">{fmtRel(relative(x.muk))}</span>
-                    </span>
+                    <span className="block">{t.feel.types[x.id].name}</span>
                     <span className="mt-1 block h-1 w-full rounded-full bg-muted"><span className="bar block h-1" style={{ width: `${(x.muk / MAX_MUK) * 100}%` }} /></span>
-                    {done && <span className="mt-1 block font-mono text-xs tabular-nums text-muted-foreground">{fmt(r.dStopCm)} cm · {fmtS(r.tStop)}</span>}
                   </span>
                 </button>
               </li>
