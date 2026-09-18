@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600&family=Valley+Sans:ital,wght@0,100..900;1,100..900&family=JetBrains+Mono:wght@400;500&display=swap");
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
@@ -142,13 +142,13 @@
     --muted-foreground: #425466;    /* secondary */
     --accent: #E6EBF1;
     --accent-foreground: #0A2540;
-    --primary: #635BFF;             /* tertiary: o único acento */
-    --primary-foreground: #FFFFFF;  /* on-primary */
+    --primary: #C18CFF;             /* tertiary: o único acento */
+    --primary-foreground: #0A2540;  /* on-primary: texto escuro, o lilás é claro */
     --border: rgb(66 84 102 / 20%);
     --input: rgb(66 84 102 / 28%);
-    --ring: rgb(99 91 255 / 50%);
-    --chart-1: #635BFF;
-    --chart-2: #8C86FF;
+    --ring: rgb(193 140 255 / 60%);
+    --chart-1: #C18CFF;
+    --chart-2: #DDC2FF;
     --chart-3: #425466;
     --chart-4: #8898AA;
     --chart-5: #CFD7DF;
@@ -169,12 +169,12 @@
     --text-7xl: 64px;  --text-7xl--line-height: 72px;
 }
 @theme inline {
-    --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
-    --font-heading: "Inter", ui-sans-serif, system-ui, sans-serif;
+    --font-sans: "Figtree", ui-sans-serif, system-ui, sans-serif;
+    --font-heading: "Valley Sans", "Figtree", ui-sans-serif, system-ui, sans-serif;
     --font-mono: "JetBrains Mono", ui-monospace, monospace;
 }
 h2, h3, .font-heading { font-family: var(--font-heading); font-weight: 500; letter-spacing: -0.02em; }
-h1 { font-family: var(--font-heading); font-weight: 300; letter-spacing: -0.04em; }   /* display */
+h1 { font-family: var(--font-heading); font-weight: 400; letter-spacing: -0.04em; }   /* display */
 
 html { scroll-behavior: smooth; }
 body { -webkit-font-smoothing: antialiased; }
