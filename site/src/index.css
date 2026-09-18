@@ -152,7 +152,7 @@
     --chart-3: #425466;
     --chart-4: #8898AA;
     --chart-5: #CFD7DF;
-    --radius: 8px;                  /* rounded.md (10 no Stripe, 8 no grid de 4) */
+    --radius: 0.625rem;             /* padrão do shadcn (10px); derivados sm/md/lg/xl vêm dele */
 }
 /* Escala tipográfica em múltiplos de 4 (tamanho / entrelinha) */
 @theme {
