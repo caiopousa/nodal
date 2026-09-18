@@ -57,7 +57,7 @@ export function Types() {
         ))}
       </div>
 
-      <Alert variant="muted" className="mt-8">
+      <Alert variant="muted" className="mt-4">
         <HugeiconsIcon icon={InformationCircleIcon} size={16} strokeWidth={1.5} />
         <AlertDescription>{t.feel.takeaway}</AlertDescription>
       </Alert>
