@@ -344,11 +344,11 @@ export function Simulator() {
                 <button
                   role="tab" aria-selected={active}
                   onClick={() => { setSel(x.id); reset() }}
-                  className={`flex w-full items-baseline gap-2 rounded-md px-3 py-2 text-left text-sm transition-colors ${active ? "bg-primary/10 text-foreground" : "text-muted-foreground hover:bg-muted hover:text-foreground"}`}
+                  className={`flex w-full items-baseline gap-2 rounded-md px-3 pt-2 pb-3 text-left text-sm transition-colors ${active ? "bg-primary/10 text-foreground" : "text-muted-foreground hover:bg-muted hover:text-foreground"}`}
                 >
                   <span className="flex-1">
                     <span className="block">{t.feel.types[x.id].name}</span>
-                    <span className="mt-1 block h-1 w-full rounded-full bg-muted"><span className="bar block h-1" style={{ width: `${(x.muk / MAX_MUK) * 100}%` }} /></span>
+                    <span className="mt-2 block h-1 w-full rounded-full bg-muted"><span className="bar block h-1" style={{ width: `${(x.muk / MAX_MUK) * 100}%` }} /></span>
                   </span>
                 </button>
               </li>
