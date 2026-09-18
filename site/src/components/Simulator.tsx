@@ -29,10 +29,6 @@ export const TYPES: { id: TypeId; mus: number; muk: number; color: string; weave
   { id: "glass", mus: 0.14, muk: 0.12, color: "#0f1216", weave: "glass" },
 ]
 
-const MAX_MUK = Math.max(...TYPES.map((x) => x.muk))
-const MIN_MUK = Math.min(...TYPES.map((x) => x.muk))
-/** Frenagem em 5 quadrados: mínimo (Glass) = 1, máximo (Control) = 5, linear entre eles. */
-const squares = (muk: number) => Math.round(1 + (4 * (muk - MIN_MUK)) / (MAX_MUK - MIN_MUK))
 
 const GESTURES: Record<Exclude<Gesture, "custom">, { pts: V[]; v0: number }> = {
   // soltura perto do meio da caixa, pra sobrar espaço de frenagem visível
@@ -323,6 +319,63 @@ function Lane({ type, gesture, K, runId, custom, onDone, onDragStart, onDragEnd 
   )
 }
 
+/* ---------- Raias: uma por tipo, mesma escala, todas ao mesmo tempo ---------- */
+type RaceProps = { gesture: Gesture; K: number; custom: Custom | null; runId: number; sel: TypeId; onSelect: (id: TypeId) => void }
+function Race({ gesture, K, custom, runId, sel, onSelect }: RaceProps) {
+  const { t, locale } = useI18n()
+  const plans = useMemo(() => TYPES.map((x) => plan(x, gesture, K, custom)), [gesture, K, custom])
+  const maxD = Math.max(...plans.map((p) => p.dStop))          // a raia inteira = a maior frenagem
+  const dots = useRef<(HTMLSpanElement | null)[]>([])
+  const [done, setDone] = useState(false)
+  const fmt = (cm: number) => cm.toLocaleString(locale === "pt" ? "pt-BR" : "en-US", { maximumFractionDigits: 1, minimumFractionDigits: 1 })
+
+  useEffect(() => {
+    setDone(false)
+    const set = (i: number, frac: number) => { const el = dots.current[i]; if (el) el.style.left = `${(frac * 100).toFixed(2)}%` }
+    if (runId === 0) { plans.forEach((_, i) => set(i, 0)); return }
+    const start = performance.now()
+    const total = Math.max(...plans.map((p) => p.tStick + p.T + p.tStop))
+    let raf = 0
+    const loop = (now: number) => {
+      const t = (now - start) * SLOWMO
+      plans.forEach((p, i) => {
+        const tb = Math.max(0, Math.min(t - p.tStick - p.T, p.tStop))  // só a frenagem, sem a borda
+        const sPx = p.v0 * tb - 0.5 * p.a * tb * tb
+        set(i, sPx / maxD)
+      })
+      if (t >= total) { setDone(true); return }
+      raf = requestAnimationFrame(loop)
+    }
+    raf = requestAnimationFrame(loop)
+    return () => cancelAnimationFrame(raf)
+  }, [runId, plans, maxD])
+
+  return (
+    <ul className="flex flex-col justify-between sm:absolute sm:inset-0" role="tablist">
+      {TYPES.map((x, i) => {
+        const active = sel === x.id
+        return (
+          <li key={x.id}>
+            <button
+              role="tab" aria-selected={active}
+              onClick={() => onSelect(x.id)}
+              className={`w-full rounded-md px-3 pt-2 pb-3 text-left text-sm transition-colors ${active ? "bg-primary/10 text-foreground" : "text-muted-foreground hover:bg-muted hover:text-foreground"}`}
+            >
+              <span className="flex items-baseline justify-between gap-2">
+                <span>{t.feel.types[x.id].name}</span>
+                <span className={`font-mono text-xs tabular-nums transition-opacity ${done ? "opacity-100" : "opacity-0"}`}>{fmt(plans[i].dStopCm)} cm</span>
+              </span>
+              <span className="relative mt-2 block h-1 rounded-full bg-muted">
+                <span ref={(el) => { dots.current[i] = el }} className="absolute top-1/2 block size-3 -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary" style={{ left: 0 }} />
+              </span>
+            </button>
+          </li>
+        )
+      })}
+    </ul>
+  )
+}
+
 export function Simulator() {
   const { t } = useI18n()
   const [sel, setSel] = useState<TypeId>("control")
@@ -349,50 +402,14 @@ export function Simulator() {
             <div className="flex flex-col gap-3 p-1">
               <h4 className="text-base font-medium">{t.feel.infoTitle}</h4>
               <p className="text-xs leading-4 text-muted-foreground">{t.feel.howRead}</p>
-              <div className="border-t pt-3">
-                <div className="mb-2 text-xs font-medium">{t.feel.legendTitle}</div>
-                <ul className="flex flex-col gap-2">
-                  {[...TYPES].sort((a, b) => a.muk - b.muk).map((x) => (
-                    <li key={x.id} className="flex items-center gap-3 text-xs">
-                      <span className="flex gap-1">
-                        {[1, 2, 3, 4, 5].map((n) => <span key={n} className={`block size-2 rounded-[2px] ${n <= squares(x.muk) ? "bg-primary" : "bg-muted"}`} />)}
-                      </span>
-                      <span className="text-muted-foreground">{t.feel.types[x.id].name}</span>
-                    </li>
-                  ))}
-                </ul>
-                <div className="mt-2 flex justify-between text-xs text-muted-foreground/70">
-                  <span>{t.feel.legendLess}</span><span>{t.feel.legendMore}</span>
-                </div>
-              </div>
             </div>
           </PopoverContent>
         </Popover>
       </div>
-      <div className="grid gap-x-5 gap-y-2 sm:grid-cols-[1fr_12rem]">
+      <div className="grid gap-x-5 gap-y-2 sm:grid-cols-[1fr_14rem]">
         <Lane type={type} gesture={gesture} K={K} runId={runId} custom={custom} onDone={onDone} onDragStart={onDragStart} onDragEnd={onDragEnd} />
         <div className="relative">
-          <ul className="flex flex-col justify-between sm:absolute sm:inset-0" role="tablist">
-            {TYPES.map((x) => {
-              const active = sel === x.id
-              return (
-                <li key={x.id}>
-                  <button
-                    role="tab" aria-selected={active}
-                    onClick={() => { setSel(x.id); reset() }}
-                    className={`flex w-full items-baseline gap-2 rounded-md px-3 pt-2 pb-4 text-left text-sm transition-colors ${active ? "bg-primary/10 text-foreground" : "text-muted-foreground hover:bg-muted hover:text-foreground"}`}
-                  >
-                    <span className="flex-1">
-                      <span className="block">{t.feel.types[x.id].name}</span>
-                      <span className="mt-1 flex gap-1" aria-label={`${squares(x.muk)}/5`}>
-                        {[1, 2, 3, 4, 5].map((n) => <span key={n} className={`block size-2 rounded-[2px] ${n <= squares(x.muk) ? "bg-primary" : "bg-muted"}`} />)}
-                      </span>
-                    </span>
-                  </button>
-                </li>
-              )
-            })}
-          </ul>
+          <Race gesture={gesture} K={K} custom={custom} runId={runId} sel={sel} onSelect={(id) => { setSel(id); reset() }} />
         </div>
       </div>
 
