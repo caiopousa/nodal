@@ -415,7 +415,6 @@ export function Simulator() {
         <ToggleGroup value={[gesture]} onValueChange={(v) => { const g = v[0] as Gesture | undefined; if (g) { setGesture(g); reset() } }} variant="outline">
           {([...Object.keys(GESTURES), "custom"] as Gesture[]).map((g) => <ToggleGroupItem key={g} value={g}>{t.feel.gestures[g]}</ToggleGroupItem>)}
         </ToggleGroup>
-        <span className="text-xs text-muted-foreground">{t.feel.dragHint}</span>
       </div>
     </div>
   )
