@@ -36,9 +36,10 @@ const MIN_MUK = Math.min(...TYPES.map((x) => x.muk))
 const squares = (muk: number) => Math.round(1 + (4 * (muk - MIN_MUK)) / (MAX_MUK - MIN_MUK))
 
 const GESTURES: Record<Exclude<Gesture, "custom">, { pts: V[]; v0: number }> = {
-  vertical: { pts: [{ x: 0.5, y: 0.14 }, { x: 0.5, y: 0.55 }], v0: 0.7 },
-  diagonal: { pts: [{ x: 0.08, y: 0.14 }, { x: 0.70, y: 0.65 }], v0: 1.0 },
-  flick: { pts: [{ x: 0.25, y: 0.78 }, { x: 0.55, y: 0.05 }, { x: 0.5, y: 0.5 }], v0: 0.9 },
+  // soltura perto do meio da caixa, pra sobrar espaço de frenagem visível
+  vertical: { pts: [{ x: 0.5, y: 0.14 }, { x: 0.5, y: 0.42 }], v0: 0.7 },
+  diagonal: { pts: [{ x: 0.10, y: 0.14 }, { x: 0.50, y: 0.46 }], v0: 1.0 },
+  flick: { pts: [{ x: 0.25, y: 0.78 }, { x: 0.55, y: 0.05 }, { x: 0.5, y: 0.40 }], v0: 0.9 },
 }
 
 function path(pts: V[], t: number): V {
@@ -338,9 +339,10 @@ export function Simulator() {
 
   return (
     <div className="rounded-xl border bg-card p-4 sm:p-6">
-      <div className="grid items-stretch gap-5 sm:grid-cols-[1fr_12rem]">
+      <div className="grid gap-5 sm:grid-cols-[1fr_12rem]">
         <Lane type={type} gesture={gesture} K={K} runId={runId} custom={custom} onDone={onDone} onDragStart={onDragStart} onDragEnd={onDragEnd} />
-        <ul className="flex h-full flex-col justify-between gap-1" role="tablist">
+        <div className="relative">
+        <ul className="flex flex-col justify-between sm:absolute sm:inset-0" role="tablist">
           {TYPES.map((x) => {
             const active = sel === x.id
             return (
@@ -352,7 +354,7 @@ export function Simulator() {
                 >
                   <span className="flex-1">
                     <span className="block">{t.feel.types[x.id].name}</span>
-                    <span className="mt-2 flex gap-1" aria-label={`${squares(x.muk)}/5`}>
+                    <span className="mt-1 flex gap-1" aria-label={`${squares(x.muk)}/5`}>
                       {[1, 2, 3, 4, 5].map((n) => <span key={n} className={`block size-2 rounded-[2px] ${n <= squares(x.muk) ? "bg-primary" : "bg-muted"}`} />)}
                     </span>
                   </span>
@@ -361,6 +363,7 @@ export function Simulator() {
             )
           })}
         </ul>
+        </div>
       </div>
 
       <div className="mt-5 flex flex-wrap items-end justify-between gap-4 border-t pt-5">
