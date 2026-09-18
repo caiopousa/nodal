@@ -2,6 +2,11 @@ import { Section } from "@/components/Section"
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/motion-primitives/accordion"
 import { Pad } from "@/components/Pad"
 import { useI18n } from "@/lib/i18n"
+import { HugeiconsIcon } from "@hugeicons/react"
+import { DashboardSpeed02Icon, MaterialAndTextureIcon, RulerDimensionLineIcon, Layers01Icon, Magnet01Icon, BorderAll01Icon } from "@hugeicons/core-free-icons"
+
+/** Um ícone da Hugeicons por critério. */
+const ICONS = { feel: DashboardSpeed02Icon, material: MaterialAndTextureIcon, size: RulerDimensionLineIcon, thickness: Layers01Icon, base: Magnet01Icon, edges: BorderAll01Icon }
 
 /** Miniaturas por critério, todas construídas com o pad procedural. */
 function Visual({ k }: { k: string }) {
@@ -61,10 +66,10 @@ export function Choose() {
   return (
     <Section id="choose" eyebrow={t.choose.eyebrow} title={t.choose.title} lede={t.choose.lede}>
       <Accordion className="border-t" transition={{ type: "spring", stiffness: 260, damping: 30 }}>
-        {t.choose.items.map((it, i) => (
+        {t.choose.items.map((it) => (
           <AccordionItem key={it.key} value={it.key} className="border-b">
             <AccordionTrigger className="grid w-full grid-cols-[2.5rem_1fr_auto] text-left items-center gap-4 py-5 transition-colors hover:text-foreground">
-              <span className="font-mono text-sm text-primary">0{i + 1}</span>
+              <HugeiconsIcon icon={ICONS[it.key as keyof typeof ICONS]} size={24} strokeWidth={1.5} className="text-primary" />
               <span className="text-lg font-medium">{it.title}</span>
               <span className="text-muted-foreground transition-transform duration-300 group-data-[expanded]:rotate-45" aria-hidden>+</span>
             </AccordionTrigger>

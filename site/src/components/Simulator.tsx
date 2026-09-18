@@ -1,7 +1,8 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Popover, PopoverTrigger, PopoverContent } from "@/components/ui/popover"
-import { InfoIcon } from "lucide-react"
+import { HugeiconsIcon } from "@hugeicons/react"
+import { InformationCircleIcon } from "@hugeicons/core-free-icons"
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { useI18n } from "@/lib/i18n"
 
@@ -342,7 +343,7 @@ export function Simulator() {
         <h3 className="text-lg">{t.feel.playground}</h3>
         <Popover>
           <PopoverTrigger render={<Button variant="ghost" size="icon" aria-label={t.feel.infoTitle} />}>
-            <InfoIcon />
+            <HugeiconsIcon icon={InformationCircleIcon} size={20} strokeWidth={1.5} />
           </PopoverTrigger>
           <PopoverContent align="end" className="w-80">
             <div className="flex flex-col gap-3 p-1">
