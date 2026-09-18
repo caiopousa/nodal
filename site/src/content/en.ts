@@ -1,6 +1,6 @@
 export const en = {
   nav: {
-    brand: "nodal",
+    brand: "nodal/setup",
     items: [
       { id: "what", label: "What it is" },
       { id: "feel", label: "Speed vs. Control" },
