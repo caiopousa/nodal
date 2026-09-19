@@ -420,7 +420,8 @@ html {
         0 1px 0 rgb(255 255 255 / 70%);           /* luz na borda de baixo */
 }
 .tabs-tray [data-slot="tabs-trigger"][data-active],
-.tabs-tray .tab-chip[data-active] {
+.tabs-tray .tab-chip[data-active],
+.race-list .tab-chip[data-active] {
     background: var(--card);
     color: var(--foreground);
     border-color: rgb(66 84 102 / 14%);
@@ -430,3 +431,17 @@ html {
         0 2px 6px -2px rgb(10 37 64 / 14%);
 }
 .tabs-tray [data-slot="tabs-trigger"] { transition: background-color 150ms ease, box-shadow 150ms ease, color 150ms ease; }
+
+/* ---------- Raias do playground: 10 quadrados que acendem no acento ---------- */
+.race-meter > span {
+    display: block;
+    width: 12px; height: 12px;
+    border-radius: 4px;
+    background: color-mix(in oklab, var(--muted) 80%, var(--foreground) 6%);
+    box-shadow: inset 0 1px 1px rgb(10 37 64 / 10%);
+    transition: background-color 90ms linear, box-shadow 90ms linear;
+}
+.race-meter > span[data-on="1"] {
+    background: var(--primary);
+    box-shadow: inset 0 1px 0 rgb(255 255 255 / 30%);
+}

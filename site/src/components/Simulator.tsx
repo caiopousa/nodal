@@ -321,17 +321,25 @@ function Lane({ type, gesture, K, runId, custom, onDone, onDragStart, onDragEnd 
 
 /* ---------- Raias: uma por tipo, mesma escala, todas ao mesmo tempo ---------- */
 type RaceProps = { gesture: Gesture; K: number; custom: Custom | null; runId: number; sel: TypeId; onSelect: (id: TypeId) => void }
+const SQUARES = 10
+
 function Race({ gesture, K, custom, runId, sel, onSelect }: RaceProps) {
   const { t, locale } = useI18n()
   const plans = useMemo(() => TYPES.map((x) => plan(x, gesture, K, custom)), [gesture, K, custom])
   const maxD = Math.max(...plans.map((p) => p.dStop))          // a raia inteira = a maior frenagem
-  const dots = useRef<(HTMLSpanElement | null)[]>([])
+  const meters = useRef<(HTMLSpanElement | null)[]>([])   // uma fileira de SQUARES quadrados por raia
   const [done, setDone] = useState(false)
   const fmt = (cm: number) => cm.toLocaleString(locale === "pt" ? "pt-BR" : "en-US", { maximumFractionDigits: 1, minimumFractionDigits: 1 })
 
   useEffect(() => {
     setDone(false)
-    const set = (i: number, frac: number) => { const el = dots.current[i]; if (el) el.style.left = `${(frac * 100).toFixed(2)}%` }
+    // acende os quadrados proporcionalmente à distância percorrida; DOM direto, sem re-render por quadro
+    const set = (i: number, frac: number) => {
+      const el = meters.current[i]
+      if (!el) return
+      const on = Math.round(Math.min(1, Math.max(0, frac)) * SQUARES)
+      Array.from(el.children).forEach((sq, j) => { (sq as HTMLElement).dataset.on = j < on ? "1" : "" })
+    }
     if (runId === 0) { plans.forEach((_, i) => set(i, 0)); return }
     const start = performance.now()
     const total = Math.max(...plans.map((p) => p.tStick + p.T + p.tStop))
@@ -351,22 +359,23 @@ function Race({ gesture, K, custom, runId, sel, onSelect }: RaceProps) {
   }, [runId, plans, maxD])
 
   return (
-    <ul className="flex flex-col justify-between sm:absolute sm:inset-0" role="tablist">
+    <ul className="race-list flex flex-col gap-1 md:absolute md:inset-0" role="tablist">
       {TYPES.map((x, i) => {
         const active = sel === x.id
         return (
-          <li key={x.id}>
+          <li key={x.id} className="flex flex-1">
             <button
               role="tab" aria-selected={active}
               onClick={() => onSelect(x.id)}
-              className={`w-full rounded-md px-3 pt-2 pb-3 text-left text-sm transition-colors ${active ? "bg-primary/10 text-foreground" : "text-muted-foreground hover:bg-muted hover:text-foreground"}`}
+              data-active={active ? "" : undefined}
+              className={`tab-chip flex w-full flex-col justify-center gap-1 rounded-md border border-transparent px-3 py-1 text-left text-sm transition-[background-color,box-shadow,color] duration-150 ${active ? "text-foreground" : "text-muted-foreground hover:bg-card/50 hover:text-foreground"}`}
             >
               <span className="flex items-baseline justify-between gap-2">
                 <span>{t.feel.types[x.id].name}</span>
                 <span className={`font-mono text-xs tabular-nums transition-opacity ${done ? "opacity-100" : "opacity-0"}`}>{fmt(plans[i].dStopCm)} cm</span>
               </span>
-              <span className="relative mt-2 block h-1 rounded-full bg-muted">
-                <span ref={(el) => { dots.current[i] = el }} className="absolute top-1/2 block size-3 -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary" style={{ left: 0 }} />
+              <span ref={(el) => { meters.current[i] = el }} className="race-meter flex gap-1" aria-hidden>
+                {Array.from({ length: SQUARES }, (_, j) => <span key={j} />)}
               </span>
             </button>
           </li>
@@ -406,7 +415,7 @@ export function Simulator() {
           </PopoverContent>
         </Popover>
       </div>
-      <div className="grid gap-x-5 gap-y-2 sm:grid-cols-[1fr_14rem]">
+      <div className="grid gap-x-5 gap-y-2 md:grid-cols-[1fr_14rem]">
         <Lane type={type} gesture={gesture} K={K} runId={runId} custom={custom} onDone={onDone} onDragStart={onDragStart} onDragEnd={onDragEnd} />
         <div className="relative">
           <Race gesture={gesture} K={K} custom={custom} runId={runId} sel={sel} onSelect={(id) => { setSel(id); reset() }} />
