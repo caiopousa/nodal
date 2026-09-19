@@ -462,19 +462,27 @@ export function Simulator() {
           </PopoverContent>
         </Popover>
       </div>
-      <div className="grid gap-x-5 gap-y-2 md:grid-cols-[1fr_14rem]">
+      {/* rótulos numa linha própria do grid: no desktop alinham por cima das duas colunas, no celular ficam colados a cada peça */}
+      <div className="grid gap-x-5 gap-y-2 md:grid-cols-[1fr_14rem] md:grid-rows-[auto_1fr]">
+        <span className="playground-label md:col-start-1 md:row-start-1">{t.feel.labelArea}</span>
+        <div className="md:col-start-1 md:row-start-2">
         <Lane type={type} gesture={gesture} K={K} runId={runId} custom={custom} onDone={onDone} onDragStart={onDragStart} onDragEnd={onDragEnd} />
-        <div className="relative">
+        </div>
+        <span className="playground-label mt-3 md:col-start-2 md:row-start-1 md:mt-0">{t.feel.labelType}</span>
+        <div className="relative md:col-start-2 md:row-start-2">
           <Race gesture={gesture} K={K} custom={custom} runId={runId} sel={sel} onSelect={(id) => { setSel(id); reset() }} />
         </div>
       </div>
 
-      <div className="mt-5 flex flex-wrap items-center justify-between gap-3 border-t pt-5">
+      <div className="mt-5 flex flex-wrap items-end justify-between gap-3 border-t pt-5">
+        <div className="flex flex-col gap-2">
+        <span className="playground-label">{t.feel.labelMovement}</span>
         <Tabs value={gesture} onValueChange={(v) => { setGesture(v as Gesture); reset() }}>
           <TabsList size="lg">
             {([...Object.keys(GESTURES), "custom"] as Gesture[]).map((g) => <TabsTrigger key={g} value={g}>{t.feel.gestures[g]}</TabsTrigger>)}
           </TabsList>
         </Tabs>
+        </div>
         <Button size="lg" disabled={!canRelease} onClick={() => { setRunId((n) => n + 1) }}>{t.feel.release}</Button>
       </div>
     </div>

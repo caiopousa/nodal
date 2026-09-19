@@ -481,3 +481,6 @@ html {
     .mouse-pulse { animation: none; transform: scale(1); opacity: 0.6; }
     .drag-tip { animation: none; }
 }
+
+/* rótulos das peças do playground */
+.playground-label { font-size: 12px; line-height: 16px; font-weight: 500; color: var(--muted-foreground); }
