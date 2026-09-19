@@ -101,6 +101,8 @@ export const en = {
     eyebrow: "06",
     title: "Brands",
     lede: "A decorative sample: one real model from each of the most active brands in the catalog, drawn from their declared specs.",
+    prev: "Previous",
+    next: "Next",
   },
   market: {
     eyebrow: "07",

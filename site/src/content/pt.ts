@@ -101,6 +101,8 @@ export const pt = {
     eyebrow: "06",
     title: "Marcas",
     lede: "Uma amostra decorativa: um modelo real de cada uma das marcas mais ativas do catálogo, desenhado a partir das specs declaradas.",
+    prev: "Anterior",
+    next: "Próximo",
   },
   market: {
     eyebrow: "07",
