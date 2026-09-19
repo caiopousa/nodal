@@ -4,6 +4,7 @@ import { HugeiconsIcon } from "@hugeicons/react"
 import { ArrowLeft01Icon, ArrowRight01Icon } from "@hugeicons/core-free-icons"
 import { Section } from "@/components/Section"
 import { Button } from "@/components/ui/button"
+import { StepPlayer } from "@/components/ui/step-player"
 import { Pad, brandColor, surfaceKind } from "@/components/Pad"
 import { brandSample } from "@/lib/catalog"
 import { useI18n } from "@/lib/i18n"
@@ -68,6 +69,15 @@ export function Brands() {
     goTo(Math.round(projected / step))
   }
 
+  // páginas do controlador: 0, n, 2n, ... e a última posição possível
+  const pages = useMemo(() => {
+    const p: number[] = []
+    for (let i = 0; i < maxIndex; i += n) p.push(i)
+    p.push(maxIndex)
+    return p
+  }, [maxIndex, n])
+  const page = pages.reduce((best, p, k) => (Math.abs(p - index) < Math.abs(pages[best] - index) ? k : best), 0)
+
   const padBox = cardW   // caixa quadrada pro pad: legendas sempre na mesma linha
   const arrow = "absolute z-10 size-10 rounded-full bg-card shadow-md transition-opacity dark:bg-card dark:hover:bg-muted disabled:pointer-events-none disabled:opacity-0"
 
@@ -122,6 +132,19 @@ export function Brands() {
         <Button variant="outline" size="icon-lg" className={`${arrow} right-1 md:-right-16`} style={{ top: padBox / 2 - 20 }} onClick={() => goTo(index + n)} disabled={index >= maxIndex} aria-label={t.brands.next}>
           <HugeiconsIcon icon={ArrowRight01Icon} size={20} strokeWidth={1.5} />
         </Button>
+      </div>
+
+      {/* controlador: um passo por página, clicável; o play avança sozinho e volta ao início */}
+      <div className="mt-8 flex justify-center">
+        <StepPlayer
+          steps={pages.length}
+          value={page}
+          onValueChange={(k) => goTo(pages[k])}
+          duration={3200}
+          loop
+          seekable
+          size={40}
+        />
       </div>
     </Section>
   )
