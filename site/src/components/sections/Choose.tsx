@@ -3,7 +3,8 @@ import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/
 import { Pad } from "@/components/Pad"
 import { useI18n } from "@/lib/i18n"
 import { HugeiconsIcon } from "@hugeicons/react"
-import { DashboardSpeed02Icon, MaterialAndTextureIcon, RulerDimensionLineIcon, Layers01Icon, Magnet01Icon, BorderAll01Icon } from "@hugeicons/core-free-icons"
+import { DashboardSpeed02Icon, MaterialAndTextureIcon, RulerDimensionLineIcon, Layers01Icon, Magnet01Icon, BorderAll01Icon, InformationCircleIcon } from "@hugeicons/core-free-icons"
+import { Alert, AlertDescription } from "@/components/ui/alert"
 
 /** Um ícone da Hugeicons por critério. */
 const ICONS = { feel: DashboardSpeed02Icon, material: MaterialAndTextureIcon, size: RulerDimensionLineIcon, thickness: Layers01Icon, base: Magnet01Icon, edges: BorderAll01Icon }
@@ -77,7 +78,10 @@ export function Choose() {
               <div className="grid gap-6 pb-7 pl-[3.5rem] sm:grid-cols-[1fr_auto] sm:items-start">
                 <div>
                   <p className="prose-101 text-base">{it.body}</p>
-                  <p className="mt-4 text-sm"><span className="text-primary">→</span> {it.tip}</p>
+                  <Alert variant="muted" className="mt-4">
+                    <HugeiconsIcon icon={InformationCircleIcon} size={16} strokeWidth={1.5} />
+                    <AlertDescription>{it.tip}</AlertDescription>
+                  </Alert>
                 </div>
                 <div className="sm:pt-1"><Visual k={it.key} /></div>
               </div>

@@ -1,5 +1,8 @@
 import { Section, Reveal } from "@/components/Section"
 import { useI18n } from "@/lib/i18n"
+import { Alert, AlertDescription } from "@/components/ui/alert"
+import { HugeiconsIcon } from "@hugeicons/react"
+import { InformationCircleIcon } from "@hugeicons/core-free-icons"
 
 export function Price() {
   const { t } = useI18n()
@@ -17,8 +20,11 @@ export function Price() {
           </div>
         ))}
       </Reveal>
-      <Reveal className="mt-8 max-w-2xl">
-        <p className="text-lg text-balance"><span className="text-primary">→</span> {t.price.note}</p>
+      <Reveal className="mt-4">
+        <Alert variant="muted">
+          <HugeiconsIcon icon={InformationCircleIcon} size={16} strokeWidth={1.5} />
+          <AlertDescription>{t.price.note}</AlertDescription>
+        </Alert>
       </Reveal>
     </Section>
   )
