@@ -35,7 +35,8 @@ export function Keycap({ label = "N", className }: { label?: string; className?:
       <span
         className="keycap-tile"
         style={{
-          transform: `rotateX(${tilt.x}deg) rotateY(${tilt.y}deg) translateZ(${pressed ? -6 : 0}px)`,
+          // perspectiva embutida no transform: projeção independente de qualquer ancestral
+          transform: `perspective(180px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg) translateZ(${pressed ? -6 : 0}px)`,
         }}
       >
         {label}
