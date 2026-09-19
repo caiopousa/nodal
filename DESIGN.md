@@ -37,7 +37,9 @@ tertiary → `--primary`; rounded.md → `--radius`. Fontes via Google Fonts em
   procedurais dos pads são render de material; a base da roda do hero usa
   uma máscara de transparência pra não terminar numa linha reta; e o botão
   padrão é tátil (degradê vertical, reflexo no topo, aro claro interno e
-  sombra no tom do acento), definido em `.btn-raised`.
+  sombra no tom do acento), definido em `.btn-raised`. As abas seguem a
+  mesma lógica invertida: bandeja rebaixada e aba ativa branca elevada
+  (`.tabs-tray`), com raio 12 = aba 8 + padding 4.
 - **Valley Sans nos títulos e na marca; Figtree no corpo e nos rótulos.** Display (h1) em 400; h2 e h3 em 500; rótulos em 600. Números em JetBrains Mono. Cantos em múltiplos de 8: 16 no padrão (botões, cards, listas), 8 nos itens internos (abas, badges).
 - **Acento #8B5A3C com texto branco.** Vale também pra seleção de texto e pra barra de rolagem.
 - **Espaço negativo é parte da composição.** Não preencher por preencher.
