@@ -1,7 +1,8 @@
 import { I18nProvider, useI18n } from "@/lib/i18n"
 import { Nav } from "@/components/Nav"
 import { HoverPreview } from "@/components/HoverPreview"
-import { SectionsSidebar } from "@/components/SectionsSidebar"
+// teste: navegação por seções na base da tela; o sumário lateral (SectionsSidebar) segue no projeto pra voltar fácil
+import { SectionsProgress } from "@/components/SectionsProgress"
 import { Hero } from "@/components/sections/Hero"
 import { WhatIs } from "@/components/sections/WhatIs"
 import { Types } from "@/components/sections/Types"
@@ -33,7 +34,7 @@ export default function App() {
   return (
     <I18nProvider>
       <Nav />
-      <SectionsSidebar />
+      <SectionsProgress />
       <main>
         <Hero />
         <WhatIs />
