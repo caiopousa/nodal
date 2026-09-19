@@ -2,7 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Popover, PopoverTrigger, PopoverContent } from "@/components/ui/popover"
 import { HugeiconsIcon } from "@hugeicons/react"
-import { InformationCircleIcon } from "@hugeicons/core-free-icons"
+import { InformationCircleIcon, HandGrabIcon } from "@hugeicons/core-free-icons"
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { useI18n } from "@/lib/i18n"
 
@@ -139,7 +139,7 @@ function makeBackground(type: (typeof TYPES)[number], label: string) {
   return c
 }
 
-function draw(ctx: CanvasRenderingContext2D, bg: HTMLCanvasElement, p: Plan, t: number, override?: V) {
+function draw(ctx: CanvasRenderingContext2D, bg: HTMLCanvasElement, p: Plan, t: number, override?: V, lift = false) {
   ctx.clearRect(0, 0, W, H)
   ctx.drawImage(bg, 0, 0)
   const st = override ? { pos: override, phase: "drag" as const } : stateAt(p, t)
@@ -172,8 +172,10 @@ function draw(ctx: CanvasRenderingContext2D, bg: HTMLCanvasElement, p: Plan, t: 
   const squash = phase === "stick" ? 1 - 0.06 * Math.min(1, t / Math.max(1, p.tStick)) : 1
   ctx.save()
   ctx.translate(pos.x, pos.y)
-  ctx.scale(1, squash)
-  ctx.shadowColor = "rgba(0,0,0,0.6)"; ctx.shadowBlur = 10; ctx.shadowOffsetY = 4
+  const L = lift ? 1.08 : 1
+  ctx.scale(L, squash * L)
+  ctx.shadowColor = lift ? "rgba(0,0,0,0.5)" : "rgba(0,0,0,0.6)"
+  ctx.shadowBlur = lift ? 16 : 10; ctx.shadowOffsetY = lift ? 8 : 4
   ctx.fillStyle = "#ececef"
   mouseShape(ctx)
   ctx.fill()
@@ -244,6 +246,17 @@ function Lane({ type, gesture, K, runId, custom, onDone, onDragStart, onDragEnd 
   const bg = useMemo(() => makeBackground(type, t.feel.types[type.id].name), [type, t])
   const p = useMemo(() => plan(type, gesture, K, custom), [type, gesture, K, custom])
   const drag = useRef<{ samples: { x: number; y: number; t: number }[] } | null>(null)
+  const lastFrame = useRef<{ t: number; override?: V }>({ t: 0 })
+  const [hover, setHover] = useState(false)
+  const [animating, setAnimating] = useState(false)
+  const [everDragged, setEverDragged] = useState(() => {
+    try { return localStorage.getItem(DRAGGED_KEY) === "1" } catch { return false }
+  })
+  // desenha e lembra o quadro, pra poder redesenhar o mesmo estado com o "lift" do hover
+  const paint = (ctx: CanvasRenderingContext2D, t: number, override?: V, lift = hover) => {
+    lastFrame.current = { t, override }
+    draw(ctx, bg, p, t, override, lift)
+  }
 
   const getCtx = () => {
     const canvas = ref.current!
@@ -257,19 +270,27 @@ function Lane({ type, gesture, K, runId, custom, onDone, onDragStart, onDragEnd 
   useEffect(() => {
     if (!ref.current) return
     const ctx = getCtx()
-    if (runId === 0 || drag.current) { draw(ctx, bg, p, 0); return }
+    if (runId === 0 || drag.current) { paint(ctx, 0); setAnimating(false); return }
     const start = performance.now()
     let raf = 0
+    setAnimating(true)
     const loop = (now: number) => {
       if (drag.current) return
       const elapsed = (now - start) * SLOWMO
-      draw(ctx, bg, p, elapsed)
-      if (elapsed >= p.total) { onDone(); return }
+      paint(ctx, Math.min(elapsed, p.total), undefined, false)
+      if (elapsed >= p.total) { setAnimating(false); onDone(); return }
       raf = requestAnimationFrame(loop)
     }
     raf = requestAnimationFrame(loop)
     return () => cancelAnimationFrame(raf)
-  }, [runId, p, bg, onDone])
+  }, [runId, p, bg, onDone]) // eslint-disable-line react-hooks/exhaustive-deps
+
+  // hover parado: redesenha o último quadro com o mouse "levantado"
+  useEffect(() => {
+    if (!ref.current || animating || drag.current) return
+    const { t: ft, override } = lastFrame.current
+    draw(getCtx(), bg, p, ft, override, hover)
+  }, [hover]) // eslint-disable-line react-hooks/exhaustive-deps
 
   // posição do ponteiro em coordenadas do canvas, presa dentro da caixa
   const toCanvas = (e: React.PointerEvent<HTMLCanvasElement>): V => {
@@ -283,8 +304,12 @@ function Lane({ type, gesture, K, runId, custom, onDone, onDragStart, onDragEnd 
     e.currentTarget.setPointerCapture(e.pointerId)
     const pos = toCanvas(e)
     drag.current = { samples: [{ ...pos, t: performance.now() }] }
+    if (!everDragged) {
+      setEverDragged(true)
+      try { localStorage.setItem(DRAGGED_KEY, "1") } catch { /* sem storage: só não lembra */ }
+    }
     onDragStart()
-    draw(getCtx(), bg, p, 0, pos)
+    paint(getCtx(), 0, pos, true)
   }
   const onPointerMove = (e: React.PointerEvent<HTMLCanvasElement>) => {
     if (!drag.current) return
@@ -293,7 +318,7 @@ function Lane({ type, gesture, K, runId, custom, onDone, onDragStart, onDragEnd 
     const samples = drag.current.samples
     samples.push({ ...pos, t: now })
     while (samples.length > 2 && now - samples[0].t > 90) samples.shift()   // janela curta: só o fim do gesto conta
-    draw(getCtx(), bg, p, 0, pos)
+    paint(getCtx(), 0, pos, true)
   }
   const onPointerUp = (e: React.PointerEvent<HTMLCanvasElement>) => {
     if (!drag.current) return
@@ -304,24 +329,46 @@ function Lane({ type, gesture, K, runId, custom, onDone, onDragStart, onDragEnd 
     const dt = Math.max(1, b.t - a.t)
     const vx = (b.x - a.x) / dt, vy = (b.y - a.y) / dt
     const speed = Math.hypot(vx, vy)
-    if (speed < 0.05) { draw(getCtx(), bg, p, 0, { x: b.x, y: b.y }); return }   // soltou parado: nada a frear
+    if (speed < 0.05) { paint(getCtx(), 0, { x: b.x, y: b.y }); return }   // soltou parado: nada a frear
     const v0 = Math.min(speed, 3.0 * 0.9)                                        // teto de 3 m/s
     onDragEnd({ R: { x: b.x, y: b.y }, dir: { x: vx / speed, y: vy / speed }, v0 })
   }
 
+  // pulso e dica só em repouso, antes do primeiro arrasto; somem pra sempre depois dele
+  const showHint = !everDragged && runId === 0 && !animating
+  const rest = p.pts[0]
+  const left = (rest.x / W) * 100, top = (rest.y / H) * 100
+  const tipOnLeft = left > 66
+
   return (
-    <canvas
-      ref={ref}
-      style={{ width: "100%", aspectRatio: `${W} / ${H}`, touchAction: "none" }}
-      className="cursor-grab rounded-md active:cursor-grabbing"
-      onPointerDown={onPointerDown} onPointerMove={onPointerMove} onPointerUp={onPointerUp} onPointerCancel={onPointerUp}
-    />
+    <div className="relative">
+      <canvas
+        ref={ref}
+        style={{ width: "100%", aspectRatio: `${W} / ${H}`, touchAction: "none" }}
+        className="cursor-grab rounded-md active:cursor-grabbing"
+        onPointerDown={onPointerDown} onPointerMove={onPointerMove} onPointerUp={onPointerUp} onPointerCancel={onPointerUp}
+        onPointerEnter={() => setHover(true)} onPointerLeave={() => setHover(false)}
+      />
+      {showHint && (
+        <>
+          <span className="mouse-pulse" style={{ left: `${left}%`, top: `${top}%` }} aria-hidden />
+          <span
+            className="drag-tip"
+            style={{ left: `${left}%`, top: `${top}%`, transform: `translate(${tipOnLeft ? "calc(-100% - 28px)" : "28px"}, -50%)` }}
+          >
+            <HugeiconsIcon icon={HandGrabIcon} size={14} strokeWidth={1.8} aria-hidden />
+            {t.feel.dragTip}
+          </span>
+        </>
+      )}
+    </div>
   )
 }
 
 /* ---------- Raias: uma por tipo, mesma escala, todas ao mesmo tempo ---------- */
 type RaceProps = { gesture: Gesture; K: number; custom: Custom | null; runId: number; sel: TypeId; onSelect: (id: TypeId) => void }
 const SQUARES = 10
+const DRAGGED_KEY = "nodal:dragged"   // lembra que a pessoa já arrastou, pra dica não voltar
 
 function Race({ gesture, K, custom, runId, sel, onSelect }: RaceProps) {
   const { t, locale } = useI18n()

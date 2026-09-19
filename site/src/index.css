@@ -449,3 +449,35 @@ html {
     background: var(--primary);
     box-shadow: inset 0 1px 0 rgb(255 255 255 / 30%);
 }
+
+/* ---------- Playground: sinais de que o mouse é arrastável ---------- */
+.mouse-pulse {
+    position: absolute;
+    width: 56px; height: 56px;
+    margin: -28px 0 0 -28px;
+    border-radius: 999px;
+    border: 2px solid rgb(255 255 255 / 70%);
+    pointer-events: none;
+    animation: mouse-pulse 2.4s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+}
+@keyframes mouse-pulse {
+    0%       { transform: scale(0.55); opacity: 0.9; }
+    70%,100% { transform: scale(1.5);  opacity: 0; }
+}
+.drag-tip {
+    position: absolute;
+    display: inline-flex; align-items: center; gap: 4px;
+    padding: 4px 8px;
+    border-radius: 999px;
+    font-size: 12px; line-height: 16px; white-space: nowrap;
+    color: var(--foreground);
+    background: color-mix(in oklab, var(--card) 92%, transparent);
+    box-shadow: 0 2px 8px -2px rgb(10 37 64 / 30%);
+    pointer-events: none;
+    animation: drag-tip-in 400ms 300ms both cubic-bezier(0.22, 1, 0.36, 1);
+}
+@keyframes drag-tip-in { from { opacity: 0; } to { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) {
+    .mouse-pulse { animation: none; transform: scale(1); opacity: 0.6; }
+    .drag-tip { animation: none; }
+}

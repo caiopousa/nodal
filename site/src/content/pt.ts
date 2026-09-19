@@ -55,6 +55,7 @@ export const pt = {
     howRead: "Cada raia mostra quanto o mouse continuaria deslizando naquela superfície depois de solto, a partir de coeficientes de atrito reais e gravidade real. Mesmo gesto e mesma velocidade pros cinco; só a superfície muda. A animação é só uma forma de olhar pra isso.",
     gestures: { vertical: "Vertical", diagonal: "Diagonal", flick: "Flick", custom: "Livre" },
     dragHint: "Ou arraste o mouse você mesmo e solte.",
+    dragTip: "Arraste e solte",
     modes: { real: "Realista", amp: "Frenagem ×2" },
     modeNote: { real: "Nada ampliado. As diferenças são sutis, porque é assim que elas são. Exibido em câmera lenta (0,4×); os números não dependem da reprodução.", amp: "Frenagem dobrada pra toda superfície parar dentro do pad. Os valores de atrito não mudam e a proporção entre superfícies é a mesma." },
     release: "Testar",

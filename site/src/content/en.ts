@@ -55,6 +55,7 @@ export const en = {
     howRead: "Each track shows how far the mouse would keep sliding on that surface after you let go, from real friction coefficients and real gravity. Same gesture and same speed for all five; only the surface changes. The animation is just a way to look at it.",
     gestures: { vertical: "Vertical", diagonal: "Diagonal", flick: "Flick", custom: "Custom" },
     dragHint: "Or drag the mouse yourself and let go.",
+    dragTip: "Drag and release",
     modes: { real: "Realistic", amp: "Braking ×2" },
     modeNote: { real: "Nothing amplified. Differences are subtle, because that is how they are. Shown in slow motion (0.4×); the numbers do not depend on playback.", amp: "Braking doubled so every surface stops inside the pad. Friction values are untouched and the ratio between surfaces is the same." },
     release: "Test",
