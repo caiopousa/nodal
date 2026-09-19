@@ -152,6 +152,10 @@
     --chart-3: #425466;
     --chart-4: #8898AA;
     --chart-5: #CFD7DF;
+    /* par divergente validado (validate_palette: todas as checagens passam) + meio neutro */
+    --chart-cool: #3B6FB6;
+    --chart-warm: #B0703F;
+    --chart-neutral: #C7CCD3;
     --radius: 16px;                 /* base; escala derivada fixada em múltiplos de 8 abaixo */
 }
 /* Raios em múltiplos de 4. Regra de aninhamento: raio externo = raio interno + padding */
