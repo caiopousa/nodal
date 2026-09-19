@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react"
 import { motion } from "motion/react"
 import { Button } from "@/components/ui/button"
+import { TextAnimate } from "@/components/ui/text-animate"
 import { Pad, type SurfaceKind } from "@/components/Pad"
 import { useI18n } from "@/lib/i18n"
 
@@ -110,7 +111,7 @@ function useWheel(ref: React.RefObject<HTMLDivElement | null>) {
 }
 
 export function Hero() {
-  const { t } = useI18n()
+  const { t, locale } = useI18n()
   const wheel = useRef<HTMLDivElement>(null)
   useWheel(wheel)
   return (
@@ -122,7 +123,10 @@ export function Hero() {
         transition={{ duration: 0.6, ease: "easeOut" }}
       >
         <p className="eyebrow">{t.hero.eyebrow}</p>
-        <h1 className="mt-4 max-w-2xl text-4xl tracking-tight text-balance sm:text-6xl">{t.hero.title}</h1>
+        {/* Magic UI "Text Animate": palavra a palavra, com desfoque subindo; refaz ao trocar de idioma */}
+        <TextAnimate key={locale} as="h1" by="word" animation="blurInUp" duration={0.6} once className="mt-4 max-w-2xl text-4xl tracking-tight text-balance sm:text-6xl">
+          {t.hero.title}
+        </TextAnimate>
         <p className="prose-101 mt-6 max-w-xl">{t.hero.lede}</p>
         <Button size="lg" className="mt-8" nativeButton={false} render={<a href="#what" />}>{t.hero.cta}</Button>
       </motion.div>
