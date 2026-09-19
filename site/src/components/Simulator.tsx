@@ -368,7 +368,7 @@ function Race({ gesture, K, custom, runId, sel, onSelect }: RaceProps) {
               role="tab" aria-selected={active}
               onClick={() => onSelect(x.id)}
               data-active={active ? "" : undefined}
-              className={`tab-chip flex w-full flex-col justify-center gap-0 rounded-md border border-transparent px-3 py-1 text-left text-sm transition-[background-color,box-shadow,color] duration-150 ${active ? "text-foreground" : "text-muted-foreground hover:bg-card/50 hover:text-foreground"}`}
+              className={`tab-chip flex w-full flex-col justify-center gap-2 rounded-md border border-transparent px-2 py-1 text-left text-sm transition-[background-color,box-shadow,color] duration-150 ${active ? "text-foreground" : "text-muted-foreground hover:bg-card/50 hover:text-foreground"}`}
             >
               <span className="flex items-baseline justify-between gap-2 leading-5">
                 <span>{t.feel.types[x.id].name}</span>
