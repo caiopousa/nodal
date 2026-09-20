@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react"
-import { animate, motion, useMotionValue, type PanInfo } from "motion/react"
+import { animate, motion, useInView, useMotionValue, type PanInfo } from "motion/react"
 import { HugeiconsIcon } from "@hugeicons/react"
 import { ArrowLeft01Icon, ArrowRight01Icon } from "@hugeicons/core-free-icons"
 import { Section } from "@/components/Section"
@@ -28,6 +28,10 @@ export function Brands() {
   const [cardW, setCardW] = useState(224)
   const [n, setN] = useState(3)
   const [index, setIndex] = useState(0)
+  // o play só começa quando a seção entra na tela; depois disso quem manda é o botão
+  const inView = useInView(viewport, { once: true, margin: "-25%" })
+  const [playing, setPlaying] = useState(false)
+  useEffect(() => { if (inView) setPlaying(true) }, [inView])
 
   const step = cardW + GAP
   const maxIndex = Math.max(0, SAMPLE.length - n)
@@ -134,7 +138,7 @@ export function Brands() {
         </Button>
       </div>
 
-      {/* controlador: um passo por página, clicável; já vem tocando e volta ao início no fim */}
+      {/* controlador: um passo por página, clicável; começa sozinho quando a seção aparece */}
       <div className="mt-8 flex justify-center">
         <StepPlayer
           steps={pages.length}
@@ -142,7 +146,8 @@ export function Brands() {
           onValueChange={(k) => goTo(pages[k])}
           duration={8000}
           loop
-          defaultPlaying
+          playing={playing}
+          onPlayingChange={setPlaying}
           seekable
           size={40}
         />
