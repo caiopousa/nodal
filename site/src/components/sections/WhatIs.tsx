@@ -5,7 +5,7 @@ import { Badge } from "@/components/ui/badge"
 import { useI18n } from "@/lib/i18n"
 
 const LAYERS = [
-  { cls: "pad pad-cloth pad-stitched", color: "#8b5a3c" },
+  { cls: "pad pad-cloth pad-stitched", color: "#a85a28" },
   { cls: "rounded-md border border-white/10", color: "#9ca3ae" },
   { cls: "rounded-md border border-white/10", color: "#1a1c22" },
 ]
