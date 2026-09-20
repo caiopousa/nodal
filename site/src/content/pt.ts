@@ -131,7 +131,6 @@ export const pt = {
   glossary: {
     eyebrow: "08",
     title: "Glossário",
-    index: "Ir para uma letra",
     terms: [
       { term: "Speed / Control", def: "As duas pontas da escala de atrito. Pad speed tem atrito baixo e continua deslizando; pad control tem atrito alto e para rápido." },
       { term: "Balanced", def: "Atalho de marketing pra um pad no meio da escala de atrito." },

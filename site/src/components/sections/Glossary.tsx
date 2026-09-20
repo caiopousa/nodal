@@ -25,27 +25,9 @@ export function Glossary() {
 
   return (
     <Section id="glossary" eyebrow={t.glossary.eyebrow} title={t.glossary.title} className="border-t bg-card/40">
-      <nav className="-mx-2 flex flex-wrap gap-x-1 gap-y-0" aria-label={t.glossary.index}>
-        {LETTERS.map((l) =>
-          groups.has(l) ? (
-            <a
-              key={l}
-              href={`#glossary-${l === "#" ? "num" : l}`}
-              className="inline-flex size-8 items-center justify-center rounded-sm font-mono text-sm text-foreground transition-colors hover:bg-muted hover:text-primary"
-            >
-              {l}
-            </a>
-          ) : (
-            <span key={l} className="inline-flex size-8 items-center justify-center font-mono text-sm text-muted-foreground/40" aria-hidden>
-              {l}
-            </span>
-          ),
-        )}
-      </nav>
-
-      <div className="mt-10 gap-x-10 sm:columns-2">
+      <div className="gap-x-10 sm:columns-2">
         {LETTERS.filter((l) => groups.has(l)).map((l) => (
-          <section key={l} id={`glossary-${l === "#" ? "num" : l}`} className="mb-10 break-inside-avoid scroll-mt-28">
+          <section key={l} className="mb-10 break-inside-avoid">
             <h3 className="font-heading text-3xl leading-10">{l}</h3>
             <div className="mt-2 border-t" />
             <dl className="mt-4 flex flex-col gap-4">
