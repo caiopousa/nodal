@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import { Keycap } from "@/components/Keycap"
+import { Badge } from "@/components/ui/badge"
 import { useI18n } from "@/lib/i18n"
 
 /**
@@ -33,11 +34,9 @@ export function Nav() {
             <button role="tab" aria-selected data-active="" className="tab-chip rounded-md px-3 py-1 font-medium text-foreground">
               {t.nav.products.mousepads}
             </button>
-            <button role="tab" aria-selected={false} disabled className="relative rounded-md px-3 py-1 text-muted-foreground disabled:cursor-not-allowed">
+            <button role="tab" aria-selected={false} disabled className="flex items-center gap-2 rounded-md px-3 py-1 text-muted-foreground disabled:cursor-not-allowed">
               {t.nav.products.keyboards}
-              <span className="absolute -top-2 -right-1 rounded-full border bg-background px-2 py-0 font-mono text-[8px] uppercase tracking-wider text-primary">
-                {t.nav.products.soon}
-              </span>
+              <Badge variant="outline">{t.nav.products.soon}</Badge>
             </button>
           </div>
 
