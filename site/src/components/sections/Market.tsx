@@ -76,8 +76,9 @@ function Card({ title, children, className = "" }: { title: string; children: Re
 /** Coluna com tooltip no hover; a área de acerto é a coluna inteira, não só a barra. */
 function Column({ n, max, color, tip }: { n: number; max: number; color: string; tip: string }) {
   return (
-    <div className="group relative flex h-full flex-1 items-end" title={tip}>
-      <div className="w-full rounded-t-[4px] transition-opacity group-hover:opacity-80" style={{ height: `${Math.max(2, (n / max) * 100)}%`, background: color }} />
+    <div className="group relative flex h-full flex-1 flex-col justify-end" title={tip}>
+      <span className="text-center font-mono text-xs tabular-nums text-muted-foreground">{n}</span>
+      <div className="mt-1 w-full rounded-t-[4px] transition-opacity group-hover:opacity-80" style={{ height: `${Math.max(2, (n / max) * 100)}%`, background: color }} />
       <span className="pointer-events-none absolute bottom-full left-1/2 z-10 mb-1 -translate-x-1/2 whitespace-nowrap rounded-md bg-foreground px-2 py-1 text-xs text-background opacity-0 transition-opacity group-hover:opacity-100">
         {tip}
       </span>
@@ -90,11 +91,12 @@ function Ranked({ rows, models }: { rows: Row[]; models: string }) {
   return (
     <ul className="flex flex-col gap-2" role="img" aria-label={rows.map((r) => `${r.label} ${pct(r.n)}%`).join(", ")}>
       {rows.map((r) => (
-        <li key={r.label} className="grid grid-cols-[7rem_1fr_3rem] items-center gap-3 text-sm" title={`${r.label}: ${r.n} ${models}`}>
+        <li key={r.label} className="grid grid-cols-[6rem_1fr_2.5rem_2.5rem] items-center gap-2 text-sm" title={`${r.label}: ${r.n} ${models}`}>
           <span className="truncate text-muted-foreground">{r.label}</span>
           <span className="h-2 rounded-full bg-muted">
             <span className="block h-2 rounded-r-[4px]" style={{ width: `${(r.n / max) * 100}%`, background: r.other ? SERIES.neutral : SERIES.primary }} />
           </span>
+          <span className="text-right font-mono text-xs tabular-nums text-muted-foreground">{r.n}</span>
           <span className="text-right font-mono text-xs tabular-nums">{pct(r.n)}%</span>
         </li>
       ))}
@@ -102,11 +104,14 @@ function Ranked({ rows, models }: { rows: Row[]; models: string }) {
   )
 }
 
-function Swatch({ color, children }: { color: string; children: ReactNode }) {
+/** Legenda: cor, rótulo, contagem em modelos e a fatia em porcentagem. */
+function Swatch({ color, label, n }: { color: string; label: string; n: number }) {
   return (
     <span className="flex items-center gap-2">
       <span className="size-2 rounded-[2px]" style={{ background: color }} aria-hidden />
-      {children}
+      {label}
+      <span className="font-mono tabular-nums">{n}</span>
+      <span className="font-mono tabular-nums text-foreground">{pct(n)}%</span>
     </span>
   )
 }
@@ -141,9 +146,9 @@ export function Market() {
               <span style={{ width: `${(SPEED_SPLIT.warm / TOTAL) * 100}%`, background: SERIES.warm }} />
             </div>
             <div className="mt-2 flex flex-wrap justify-between gap-x-4 gap-y-1 text-xs text-muted-foreground">
-              <Swatch color={SERIES.cool}>{m.controlSide} <span className="font-mono tabular-nums text-foreground">{pct(SPEED_SPLIT.cool)}%</span></Swatch>
-              <Swatch color={SERIES.neutral}>Balanced <span className="font-mono tabular-nums text-foreground">{pct(SPEED_SPLIT.neutral)}%</span></Swatch>
-              <Swatch color={SERIES.warm}>{m.speedSide} <span className="font-mono tabular-nums text-foreground">{pct(SPEED_SPLIT.warm)}%</span></Swatch>
+              <Swatch color={SERIES.cool} label={m.controlSide} n={SPEED_SPLIT.cool} />
+              <Swatch color={SERIES.neutral} label="Balanced" n={SPEED_SPLIT.neutral} />
+              <Swatch color={SERIES.warm} label={m.speedSide} n={SPEED_SPLIT.warm} />
             </div>
           </Card>
         </Reveal>
@@ -180,9 +185,7 @@ export function Market() {
             </div>
             <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-xs text-muted-foreground">
               {EDGES.map((e) => (
-                <Swatch key={e.label} color={e.label === "Stitched" ? SERIES.primary : SERIES.neutral}>
-                  {e.label} <span className="font-mono tabular-nums text-foreground">{pct(e.n)}%</span>
-                </Swatch>
+                <Swatch key={e.label} color={e.label === "Stitched" ? SERIES.primary : SERIES.neutral} label={e.label} n={e.n} />
               ))}
             </div>
           </Card>
