@@ -67,7 +67,7 @@ const SERIES = {
 
 /** Contagem absoluta de modelos, sempre no mesmo formato. */
 function Count({ n }: { n: number }) {
-  return <Badge variant="secondary" className="font-mono tabular-nums">{n}</Badge>
+  return <Badge variant="outline" className="font-mono tabular-nums">{n}</Badge>
 }
 
 function Card({ title, children, className = "" }: { title: string; children: ReactNode; className?: string }) {
