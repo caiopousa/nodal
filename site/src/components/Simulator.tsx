@@ -475,15 +475,15 @@ export function Simulator() {
       </div>
 
       <div className="mt-5 flex flex-wrap items-end justify-between gap-3 border-t pt-5">
-        <div className="flex flex-col gap-2">
-        <span className="playground-label">{t.feel.labelMovement}</span>
-        <Tabs value={gesture} onValueChange={(v) => { setGesture(v as Gesture); reset() }}>
-          <TabsList size="lg">
-            {([...Object.keys(GESTURES), "custom"] as Gesture[]).map((g) => <TabsTrigger key={g} value={g}>{t.feel.gestures[g]}</TabsTrigger>)}
-          </TabsList>
-        </Tabs>
+        <div className="flex w-full flex-col gap-2 sm:w-auto">
+          <span className="playground-label">{t.feel.labelMovement}</span>
+          <Tabs value={gesture} onValueChange={(v) => { setGesture(v as Gesture); reset() }}>
+            <TabsList size="lg" className="w-full sm:w-fit">
+              {([...Object.keys(GESTURES), "custom"] as Gesture[]).map((g) => <TabsTrigger key={g} value={g}>{t.feel.gestures[g]}</TabsTrigger>)}
+            </TabsList>
+          </Tabs>
         </div>
-        <Button size="lg" disabled={!canRelease} onClick={() => { setRunId((n) => n + 1) }}>{t.feel.release}</Button>
+        <Button size="lg" className="w-full sm:w-auto" disabled={!canRelease} onClick={() => { setRunId((n) => n + 1) }}>{t.feel.release}</Button>
       </div>
     </div>
   )
