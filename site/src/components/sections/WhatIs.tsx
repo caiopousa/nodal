@@ -6,7 +6,7 @@ import { useI18n } from "@/lib/i18n"
 
 const LAYERS = [
   { cls: "pad pad-cloth pad-stitched", color: "#2a3040" },
-  { cls: "rounded-md border border-white/10", color: "#4a5160" },
+  { cls: "rounded-md border border-white/10", color: "#9ca3ae" },
   { cls: "rounded-md border border-white/10", color: "#1a1c22" },
 ]
 
