@@ -30,7 +30,7 @@ export function Nav() {
 
         <div className="flex items-center gap-3">
           {/* seletor de produto */}
-          <div className="tabs-tray hidden items-center rounded-[12px] p-1 text-xs sm:flex" role="tablist" aria-label="Product">
+          <div className="tabs-tray hidden items-center rounded-[12px] px-2 py-1 text-xs sm:flex" role="tablist" aria-label="Product">
             <button role="tab" aria-selected data-active="" className="tab-chip rounded-md px-3 py-1 font-medium text-foreground">
               {t.nav.products.mousepads}
             </button>
