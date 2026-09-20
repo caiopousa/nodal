@@ -134,14 +134,15 @@ export function Brands() {
         </Button>
       </div>
 
-      {/* controlador: um passo por página, clicável; o play avança sozinho e volta ao início */}
+      {/* controlador: um passo por página, clicável; já vem tocando e volta ao início no fim */}
       <div className="mt-8 flex justify-center">
         <StepPlayer
           steps={pages.length}
           value={page}
           onValueChange={(k) => goTo(pages[k])}
-          duration={3200}
+          duration={8000}
           loop
+          defaultPlaying
           seekable
           size={40}
         />
