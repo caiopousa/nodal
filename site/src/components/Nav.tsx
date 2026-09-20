@@ -34,7 +34,7 @@ export function Nav() {
             <button role="tab" aria-selected data-active="" className="tab-chip rounded-md px-3 py-1 font-medium text-foreground">
               {t.nav.products.mousepads}
             </button>
-            <button role="tab" aria-selected={false} disabled className="flex items-center gap-2 rounded-md px-3 py-1 text-muted-foreground disabled:cursor-not-allowed">
+            <button role="tab" aria-selected={false} disabled className="flex items-center gap-2 rounded-md py-1 pl-3 pr-1 text-muted-foreground disabled:cursor-not-allowed">
               {t.nav.products.keyboards}
               <Badge variant="outline">{t.nav.products.soon}</Badge>
             </button>
