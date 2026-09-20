@@ -11,10 +11,12 @@ import { useI18n } from "@/lib/i18n"
 
 const SAMPLE = brandSample(12)
 const GAP = 24                                   // px, múltiplo de 4
+const GAP_SM = 16                                // no celular, menos respiro pra caber dois pads
 const SPRING = { type: "spring", stiffness: 260, damping: 34 } as const
 
 /** Quantos cards cabem inteiros, conforme a largura disponível. */
-const perView = (w: number) => (w >= 640 ? 3 : w >= 420 ? 2 : 1)
+const perView = (w: number) => (w >= 640 ? 3 : 2)
+const gapFor = (w: number) => (w >= 640 ? GAP : GAP_SM)
 
 /**
  * Vitrine de marcas: sempre um número inteiro de cards visíveis, nunca um pad
@@ -27,13 +29,14 @@ export function Brands() {
   const x = useMotionValue(0)
   const [cardW, setCardW] = useState(224)
   const [n, setN] = useState(3)
+  const [gap, setGap] = useState(GAP)
   const [index, setIndex] = useState(0)
   // o play só começa quando a seção entra na tela; depois disso quem manda é o botão
   const inView = useInView(viewport, { once: true, margin: "-25%" })
   const [playing, setPlaying] = useState(false)
   useEffect(() => { if (inView) setPlaying(true) }, [inView])
 
-  const step = cardW + GAP
+  const step = cardW + gap
   const maxIndex = Math.max(0, SAMPLE.length - n)
 
   // mede o container e recalcula largura dos cards e quantos cabem
@@ -42,8 +45,10 @@ export function Brands() {
       const w = viewport.current?.clientWidth ?? 0
       if (!w) return
       const count = perView(w)
+      const g = gapFor(w)
       setN(count)
-      setCardW((w - GAP * (count - 1)) / count)
+      setGap(g)
+      setCardW((w - g * (count - 1)) / count)
     }
     measure()
     const ro = new ResizeObserver(measure)
@@ -91,7 +96,7 @@ export function Brands() {
         <div ref={viewport} className="overflow-hidden">
           <motion.div
             className="flex cursor-grab select-none active:cursor-grabbing"
-            style={{ x, gap: GAP, touchAction: "pan-y" }}
+            style={{ x, gap, touchAction: "pan-y" }}
             drag="x"
             dragConstraints={constraints}
             dragElastic={0.1}
