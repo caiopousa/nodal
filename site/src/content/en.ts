@@ -99,7 +99,7 @@ export const en = {
       { aspect: "Wear", cheap: "Surface polishes with use; the pad gets faster and slicker.", premium: "Slower wear, and the feel drifts less over months." },
       { aspect: "Specs", cheap: "\"Speed\" or \"Control\" as a marketing word.", premium: "Speed level, texture, firmness and dimensions declared, sometimes tested by third parties." },
     ],
-    note: "Expensive does not mean better for you. It means more consistent and more durable. A budget Balanced cloth pad is still the right first pad for most people.",
+    note: "Expensive does not mean better for you. It means more consistent and more durable.",
   },
   brands: {
     eyebrow: "06",

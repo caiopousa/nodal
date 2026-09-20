@@ -99,7 +99,7 @@ export const pt = {
       { aspect: "Desgaste", cheap: "A superfície vai polindo com o uso; o pad fica mais rápido e liso.", premium: "Desgaste mais lento, e a sensação muda menos ao longo dos meses." },
       { aspect: "Specs", cheap: "\"Speed\" ou \"Control\" como palavra de marketing.", premium: "Nível de speed, textura, firmeza e dimensões declaradas, às vezes testadas por terceiros." },
     ],
-    note: "Caro não significa melhor pra você. Significa mais consistente e mais durável. Um pad cloth Balanced de entrada continua sendo o primeiro pad certo pra maioria das pessoas.",
+    note: "Caro não significa melhor pra você. Significa mais consistente e mais durável.",
   },
   brands: {
     eyebrow: "06",
