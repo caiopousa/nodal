@@ -1,4 +1,4 @@
-import { useLayoutEffect, useRef, useState } from "react"
+import { useEffect, useLayoutEffect, useRef, useState } from "react"
 import { motion, useScroll, useTransform, type MotionValue } from "motion/react"
 import { Section } from "@/components/Section"
 import { Badge } from "@/components/ui/badge"
@@ -10,6 +10,19 @@ const LAYERS = [
   { cls: "rounded-md border border-white/10", color: "#1a1c22" },
 ]
 
+/** true enquanto a media query casa; usada pra separar celular de desktop no JS. */
+function useMedia(query: string) {
+  const [match, setMatch] = useState(() => typeof window !== "undefined" && window.matchMedia(query).matches)
+  useEffect(() => {
+    const mq = window.matchMedia(query)
+    const on = () => setMatch(mq.matches)
+    on()
+    mq.addEventListener("change", on)
+    return () => mq.removeEventListener("change", on)
+  }, [query])
+  return match
+}
+
 /**
  * Camada isométrica. Começa empilhada sobre o primeiro tópico (deslocada
  * -offset px, com um leve degrau pra parecer um pad fechado) e, conforme o
@@ -17,12 +30,14 @@ const LAYERS = [
  */
 function Layer({ i, offset, progress }: { i: number; offset: number; progress: MotionValue<number> }) {
   const l = LAYERS[i]
+  // no celular a coluna é uma só: cada camada aparece acima do seu texto, sem a pilha
+  const stacks = useMedia("(min-width: 640px)")
   const y = useTransform(progress, [0, 1], [-offset, 0])
   return (
-    <div data-layer className="relative hidden h-28 sm:block" style={{ zIndex: 3 - i }}>
+    <div data-layer className="relative h-28" style={{ zIndex: 3 - i }}>
       <motion.div
         className={`absolute left-1/2 top-1/2 h-24 w-40 -translate-x-1/2 -translate-y-1/2 ${l.cls}`}
-        style={{ y, background: l.color, ["--pad-color" as string]: l.color, rotateX: 60, rotateZ: -35, boxShadow: "0 24px 30px -16px rgba(0,0,0,.9)" }}
+        style={{ y: stacks ? y : 0, background: l.color, ["--pad-color" as string]: l.color, rotateX: 60, rotateZ: -35, boxShadow: "0 24px 30px -16px rgba(0,0,0,.9)" }}
       />
     </div>
   )
