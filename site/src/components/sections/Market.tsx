@@ -140,7 +140,7 @@ export function Market() {
             <div className="mt-2 flex justify-between text-xs text-muted-foreground">
               <span>{m.slower}</span><span>Balanced</span><span>{m.faster}</span>
             </div>
-            <div className="mt-5 flex h-3 gap-0.5 overflow-hidden rounded-[4px]" role="img" aria-label={`${m.controlSide} ${pct(SPEED_SPLIT.cool)}%, Balanced ${pct(SPEED_SPLIT.neutral)}%, ${m.speedSide} ${pct(SPEED_SPLIT.warm)}%`}>
+            <div className="mt-5 flex h-3 gap-0.5 overflow-hidden rounded-full" role="img" aria-label={`${m.controlSide} ${pct(SPEED_SPLIT.cool)}%, Balanced ${pct(SPEED_SPLIT.neutral)}%, ${m.speedSide} ${pct(SPEED_SPLIT.warm)}%`}>
               <span style={{ width: `${(SPEED_SPLIT.cool / TOTAL) * 100}%`, background: SERIES.cool }} />
               <span style={{ width: `${(SPEED_SPLIT.neutral / TOTAL) * 100}%`, background: SERIES.neutral }} />
               <span style={{ width: `${(SPEED_SPLIT.warm / TOTAL) * 100}%`, background: SERIES.warm }} />
@@ -179,7 +179,7 @@ export function Market() {
               <span className="font-heading text-4xl tabular-nums">{Math.round((STITCHED / TOTAL) * 10)} {m.outOf10}</span>
               <span className="text-sm text-muted-foreground">{m.edgesHero}</span>
             </div>
-            <div className="mt-6 flex h-3 gap-0.5 overflow-hidden rounded-[4px]" role="img" aria-label={EDGES.map((e) => `${e.label} ${pct(e.n)}%`).join(", ")}>
+            <div className="mt-6 flex h-3 gap-0.5 overflow-hidden rounded-full" role="img" aria-label={EDGES.map((e) => `${e.label} ${pct(e.n)}%`).join(", ")}>
               <span style={{ width: `${(STITCHED / TOTAL) * 100}%`, background: SERIES.primary }} />
               <span className="flex-1" style={{ background: SERIES.neutral }} />
             </div>
