@@ -94,7 +94,7 @@ function Ranked({ rows, models }: { rows: Row[]; models: string }) {
         <li key={r.label} className="grid grid-cols-[6rem_1fr_2.5rem_2.5rem] items-center gap-2 text-sm" title={`${r.label}: ${r.n} ${models}`}>
           <span className="truncate text-muted-foreground">{r.label}</span>
           <span className="h-2 rounded-full bg-muted">
-            <span className="block h-2 rounded-r-[4px]" style={{ width: `${(r.n / max) * 100}%`, background: r.other ? SERIES.neutral : SERIES.primary }} />
+            <span className="block h-2 rounded-full" style={{ width: `${(r.n / max) * 100}%`, background: r.other ? SERIES.neutral : SERIES.primary }} />
           </span>
           <span className="text-right font-mono text-xs tabular-nums text-muted-foreground">{r.n}</span>
           <span className="text-right font-mono text-xs tabular-nums">{pct(r.n)}%</span>
