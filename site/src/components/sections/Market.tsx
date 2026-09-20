@@ -1,5 +1,6 @@
 import type { ReactNode } from "react"
 import { Section, Reveal } from "@/components/Section"
+import { Badge } from "@/components/ui/badge"
 import { catalog, count, SPEED_ORDER } from "@/lib/catalog"
 import { useI18n } from "@/lib/i18n"
 
@@ -64,6 +65,11 @@ const SERIES = {
   neutral: "var(--chart-neutral)",
 }
 
+/** Contagem absoluta de modelos, sempre no mesmo formato. */
+function Count({ n }: { n: number }) {
+  return <Badge variant="secondary" className="font-mono tabular-nums">{n}</Badge>
+}
+
 function Card({ title, children, className = "" }: { title: string; children: ReactNode; className?: string }) {
   return (
     <div className={`h-full rounded-lg border bg-card p-5 sm:p-6 ${className}`}>
@@ -77,7 +83,7 @@ function Card({ title, children, className = "" }: { title: string; children: Re
 function Column({ n, max, color, tip }: { n: number; max: number; color: string; tip: string }) {
   return (
     <div className="group relative flex h-full flex-1 flex-col justify-end" title={tip}>
-      <span className="text-center font-mono text-xs tabular-nums text-muted-foreground">{n}</span>
+      <span className="flex justify-center"><Count n={n} /></span>
       <div className="mt-1 w-full rounded-t-[4px] transition-opacity group-hover:opacity-80" style={{ height: `${Math.max(2, (n / max) * 100)}%`, background: color }} />
       <span className="pointer-events-none absolute bottom-full left-1/2 z-10 mb-1 -translate-x-1/2 whitespace-nowrap rounded-md bg-foreground px-2 py-1 text-xs text-background opacity-0 transition-opacity group-hover:opacity-100">
         {tip}
@@ -91,12 +97,12 @@ function Ranked({ rows, models }: { rows: Row[]; models: string }) {
   return (
     <ul className="flex flex-col gap-2" role="img" aria-label={rows.map((r) => `${r.label} ${pct(r.n)}%`).join(", ")}>
       {rows.map((r) => (
-        <li key={r.label} className="grid grid-cols-[6rem_1fr_2.5rem_2.5rem] items-center gap-2 text-sm" title={`${r.label}: ${r.n} ${models}`}>
+        <li key={r.label} className="grid grid-cols-[6rem_1fr_auto_2.5rem] items-center gap-2 text-sm" title={`${r.label}: ${r.n} ${models}`}>
           <span className="truncate text-muted-foreground">{r.label}</span>
           <span className="h-2 rounded-full bg-muted">
             <span className="block h-2 rounded-full" style={{ width: `${(r.n / max) * 100}%`, background: r.other ? SERIES.neutral : SERIES.primary }} />
           </span>
-          <span className="text-right font-mono text-xs tabular-nums text-muted-foreground">{r.n}</span>
+          <Count n={r.n} />
           <span className="text-right font-mono text-xs tabular-nums">{pct(r.n)}%</span>
         </li>
       ))}
@@ -110,7 +116,7 @@ function Swatch({ color, label, n }: { color: string; label: string; n: number }
     <span className="flex items-center gap-2">
       <span className="size-2 rounded-[2px]" style={{ background: color }} aria-hidden />
       {label}
-      <span className="font-mono tabular-nums">{n}</span>
+      <Count n={n} />
       <span className="font-mono tabular-nums text-foreground">{pct(n)}%</span>
     </span>
   )
