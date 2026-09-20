@@ -126,7 +126,7 @@ export const pt = {
     thicknessHero: "dos modelos têm {mm} mm",
     outOf10: "em 10",
     edgesHero: "são costurados",
-    source: "Specs declaradas via EloShapes. Testes independentes de atrito via ProSettings em 13 modelos.",
+    source: { intro: "Specs declaradas via ", mid: ". Testes independentes de atrito via ", outro: " em 13 modelos." },
   },
   glossary: {
     eyebrow: "08",

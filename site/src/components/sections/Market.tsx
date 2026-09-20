@@ -199,7 +199,13 @@ export function Market() {
           <Card title={m.base}><Ranked rows={baseRows(m.other)} models={m.models} /></Card>
         </Reveal>
       </div>
-      <p className="mt-4 text-xs text-muted-foreground">{m.source}</p>
+      <p className="mt-4 text-xs text-muted-foreground">
+        {m.source.intro}
+        <a href="https://www.eloshapes.com/mousepads/browse" target="_blank" rel="noreferrer" className="text-primary underline underline-offset-2">EloShapes</a>
+        {m.source.mid}
+        <a href="https://prosettings.net/gear/lists/mousepads/" target="_blank" rel="noreferrer" className="text-primary underline underline-offset-2">ProSettings</a>
+        {m.source.outro}
+      </p>
     </Section>
   )
 }

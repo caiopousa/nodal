@@ -126,7 +126,7 @@ export const en = {
     thicknessHero: "of models are {mm} mm",
     outOf10: "in 10",
     edgesHero: "are stitched",
-    source: "Declared specs via EloShapes. Independent friction tests via ProSettings on 13 models.",
+    source: { intro: "Declared specs via ", mid: ". Independent friction tests via ", outro: " on 13 models." },
   },
   glossary: {
     eyebrow: "08",
