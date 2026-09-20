@@ -131,6 +131,7 @@ export const en = {
   glossary: {
     eyebrow: "08",
     title: "Glossary",
+    index: "Jump to a letter",
     terms: [
       { term: "Speed / Control", def: "The two ends of the friction scale. Speed pads have low friction and keep gliding; control pads have high friction and stop fast." },
       { term: "Balanced", def: "Marketing shorthand for a pad in the middle of the friction scale." },
