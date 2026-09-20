@@ -8,6 +8,7 @@ import { Alert, AlertDescription } from "@/components/ui/alert"
 import { HugeiconsIcon } from "@hugeicons/react"
 import { InformationCircleIcon } from "@hugeicons/core-free-icons"
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { useI18n } from "@/lib/i18n"
 
 const KIND: Record<TypeId, SurfaceKind> = { control: "cloth", balanced: "cloth", speed: "polyester", hybrid: "hybrid", glass: "glass" }
@@ -30,7 +31,17 @@ export function Types() {
         </motion.div>
       </div>
 
-      <Tabs value={sel} onValueChange={(v) => setSel(v as TypeId)} className="mt-10 items-center">
+      {/* no celular as cinco tabs não cabem: vira select da largura do container */}
+      <Select value={sel} onValueChange={(v) => setSel(v as TypeId)}>
+        <SelectTrigger className="mt-10 w-full rounded-[12px] data-[size=default]:h-10 sm:hidden" aria-label={t.feel.typesTitle}>
+          <SelectValue>{t.feel.types[sel].name}</SelectValue>
+        </SelectTrigger>
+        <SelectContent>
+          {TYPES.map((x) => <SelectItem key={x.id} value={x.id}>{t.feel.types[x.id].name}</SelectItem>)}
+        </SelectContent>
+      </Select>
+
+      <Tabs value={sel} onValueChange={(v) => setSel(v as TypeId)} className="mt-10 hidden items-center sm:flex">
         <TabsList size="lg">
           {TYPES.map((x) => <TabsTrigger key={x.id} value={x.id}>{t.feel.types[x.id].name}</TabsTrigger>)}
         </TabsList>
