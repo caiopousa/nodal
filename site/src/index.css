@@ -199,8 +199,14 @@ body { -webkit-font-smoothing: antialiased; overflow-x: clip; }   /* seções in
 .prose-101 { @apply text-base leading-6 text-muted-foreground; }
 .prose-101 strong { @apply text-foreground font-medium; }
 
-/* ---------- Pad procedural: texturas por material ---------- */
+/* ---------- Pad procedural: texturas por material ----------
+   Três camadas: a trama (gradientes repetidos, no fundo do próprio elemento),
+   o grão (ruído fractal em SVG, no ::before) e a luz (::after). O grão é o que
+   tira o ar de plástico liso; cada material regula a força dele. */
 .pad {
+    --grain: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%27160%27 height=%27160%27%3E%3Cfilter id=%27n%27%3E%3CfeTurbulence type=%27fractalNoise%27 baseFrequency=%270.9%27 numOctaves=%274%27 stitchTiles=%27stitch%27/%3E%3CfeColorMatrix type=%27saturate%27 values=%270%27/%3E%3C/filter%3E%3Crect width=%27160%27 height=%27160%27 filter=%27url(%23n)%27/%3E%3C/svg%3E");
+    --grain-coarse: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%27160%27 height=%27160%27%3E%3Cfilter id=%27n%27%3E%3CfeTurbulence type=%27fractalNoise%27 baseFrequency=%270.55%27 numOctaves=%273%27 stitchTiles=%27stitch%27/%3E%3CfeColorMatrix type=%27saturate%27 values=%270%27/%3E%3C/filter%3E%3Crect width=%27160%27 height=%27160%27 filter=%27url(%23n)%27/%3E%3C/svg%3E");
+    --grain-opacity: .16;
     position: relative;
     border-radius: 8px;
     background-color: var(--pad-color, #1c1c1f);
@@ -211,39 +217,67 @@ body { -webkit-font-smoothing: antialiased; overflow-x: clip; }   /* seções in
     overflow: hidden;
     isolation: isolate;
 }
-.pad::before {      /* trama */
+.pad::before {      /* grão */
     content: ""; position: absolute; inset: 0; z-index: 1;
-    mix-blend-mode: overlay; opacity: .9;
+    background-image: var(--grain);
+    background-size: 160px 160px;
+    opacity: var(--grain-opacity);
 }
 .pad::after {       /* luz */
     content: ""; position: absolute; inset: 0; z-index: 2;
     background: linear-gradient(115deg, rgb(255 255 255 / 10%) 0%, transparent 35%, transparent 70%, rgb(0 0 0 / 25%) 100%);
 }
-.pad-cloth::before {
+
+/* tecido macio: grão grosso e trama diagonal de baixo contraste */
+.pad-cloth {
+    --grain-opacity: .3;
     background-image:
-        repeating-linear-gradient(45deg, rgb(255 255 255 / 14%) 0 1px, transparent 1px 3px),
-        repeating-linear-gradient(-45deg, rgb(0 0 0 / 30%) 0 1px, transparent 1px 3px);
+        repeating-linear-gradient(45deg, rgb(255 255 255 / 5%) 0 1px, transparent 1px 3px),
+        repeating-linear-gradient(-45deg, rgb(0 0 0 / 20%) 0 1px, transparent 1px 3px);
 }
-.pad-polyester::before {
+.pad-cloth::before { background-image: var(--grain-coarse); }
+
+/* micro-trama: linhas finas e direcionais, quase escovadas */
+.pad-polyester {
+    --grain-opacity: .14;
     background-image:
-        repeating-linear-gradient(0deg, rgb(255 255 255 / 12%) 0 1px, transparent 1px 2px),
-        repeating-linear-gradient(90deg, rgb(0 0 0 / 25%) 0 1px, transparent 1px 2px);
+        repeating-linear-gradient(90deg, rgb(255 255 255 / 7%) 0 1px, rgb(0 0 0 / 16%) 1px 2px),
+        repeating-linear-gradient(0deg, rgb(255 255 255 / 4%) 0 1px, transparent 1px 3px);
 }
-.pad-hybrid::before {
-    background-image:
-        repeating-linear-gradient(45deg, rgb(255 255 255 / 8%) 0 1px, transparent 1px 4px),
-        repeating-linear-gradient(-45deg, rgb(255 255 255 / 8%) 0 1px, transparent 1px 4px);
+
+/* revestido: superfície fechada, grão fino e um brilho suave por cima */
+.pad-hybrid {
+    --grain-opacity: .12;
+    background-image: repeating-linear-gradient(45deg, rgb(255 255 255 / 4%) 0 1px, transparent 1px 5px);
 }
 .pad-hybrid::after {
-    background: linear-gradient(115deg, rgb(255 255 255 / 22%) 0%, transparent 30%, transparent 65%, rgb(0 0 0 / 30%) 100%);
+    background:
+        radial-gradient(90% 60% at 25% -10%, rgb(255 255 255 / 18%), transparent 60%),
+        linear-gradient(115deg, rgb(255 255 255 / 10%) 0%, transparent 30%, transparent 65%, rgb(0 0 0 / 30%) 100%);
 }
-.pad-glass { border-radius: 4px; }
-.pad-glass::before { background: none; }
+
+/* vidro: sem grão, reflexo especular e borda acesa */
+.pad-glass {
+    border-radius: 4px;
+    box-shadow:
+        0 0 0 1px rgb(255 255 255 / 14%) inset,
+        0 1px 0 rgb(255 255 255 / 35%) inset,
+        0 20px 40px -20px rgb(0 0 0 / 80%),
+        0 2px 6px rgb(0 0 0 / 50%);
+}
+.pad-glass::before {
+    opacity: 1;
+    background-image:
+        linear-gradient(100deg, transparent 30%, rgb(255 255 255 / 28%) 40%, rgb(255 255 255 / 6%) 46%, transparent 55%),
+        linear-gradient(100deg, transparent 62%, rgb(255 255 255 / 14%) 68%, transparent 74%);
+    background-size: auto;
+}
 .pad-glass::after {
     background:
-        linear-gradient(105deg, transparent 38%, rgb(255 255 255 / 35%) 42%, rgb(255 255 255 / 8%) 48%, transparent 52%),
-        linear-gradient(160deg, rgb(255 255 255 / 30%) 0%, transparent 40%, transparent 70%, rgb(0 0 0 / 20%) 100%);
+        radial-gradient(70% 50% at 20% 0%, rgb(255 255 255 / 26%), transparent 65%),
+        linear-gradient(160deg, rgb(255 255 255 / 12%) 0%, transparent 45%, transparent 70%, rgb(0 0 0 / 25%) 100%);
 }
+
 .pad-stitched { outline: 1.5px dashed rgb(255 255 255 / 28%); outline-offset: -6px; }
 .pad-label {
     position: absolute; z-index: 3; right: 8%; bottom: 8%;
