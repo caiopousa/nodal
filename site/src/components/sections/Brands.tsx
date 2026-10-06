@@ -5,6 +5,9 @@ import { useI18n } from "@/lib/i18n"
 
 const BRANDS = topBrands(24)
 
+/** Arredonda pra baixo na dezena, pra legenda envelhecer bem quando entrar marca nova. */
+const floor = (n: number) => Math.floor((n - 1) / 10) * 10
+
 const ITEM = {
   hidden: { opacity: 0, y: 16, filter: "blur(8px)" },
   show: { opacity: 1, y: 0, filter: "blur(0px)" },
@@ -38,7 +41,7 @@ export function Brands() {
       </motion.ul>
 
       <p className="mt-10 text-center text-sm text-muted-foreground">
-        {t.brands.note.replace("{brands}", num(new Set(catalog.map((m) => m.brand)).size)).replace("{models}", num(catalog.length))}
+        {t.brands.note.replace("{brands}", num(floor(new Set(catalog.map((m) => m.brand)).size))).replace("{models}", num(floor(catalog.length)))}
       </p>
     </Section>
   )
