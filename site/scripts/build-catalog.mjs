@@ -43,6 +43,8 @@ const items = lines.map(r => {
     glideDiff: num(g("Glide Difference X/Y (%)")), overallGlide: str(g("Overall Glide")),
     specsSource: g("specs_source"), tested: g("tested") === "true",
     testedSource: str(g("tested_source")), reviewUrl: str(g("review_url")),
+    image: str(g("image")),            // opcional: nome do arquivo em public/pads
+    imageCredit: str(g("image_credit")),
   }
 })
 writeFileSync(out, JSON.stringify(items))

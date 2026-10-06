@@ -6,10 +6,41 @@ import { Section } from "@/components/Section"
 import { Button } from "@/components/ui/button"
 import { StepPlayer } from "@/components/ui/step-player"
 import { Pad, brandColor, surfaceKind } from "@/components/Pad"
-import { brandSample } from "@/lib/catalog"
+import { brandSample, type Model } from "@/lib/catalog"
 import { useI18n } from "@/lib/i18n"
 
 const SAMPLE = brandSample(12)
+const SHOT = 4 / 3                               // moldura fixa: a foto manda, não o formato do pad
+
+/**
+ * Vitrine do card: a foto do produto quando existe, senão o render procedural
+ * dentro da mesma moldura. Trocar um pelo outro é só preencher a coluna image.
+ */
+function Shot({ m }: { m: Model }) {
+  if (m.image) {
+    return (
+      <img
+        src={`/pads/${m.image}`}
+        alt={`${m.brand} ${m.model}`}
+        loading="lazy"
+        className="size-full object-cover"
+        draggable={false}
+      />
+    )
+  }
+  return (
+    <div className="flex size-full items-center justify-center p-5">
+      <Pad
+        kind={surfaceKind(m.surface)}
+        color={brandColor(m.brand)}
+        stitched={m.edges === "Stitched"}
+        label={m.brand}
+        ratio={m.width && m.length ? Math.min(1.6, Math.max(1.02, m.width / m.length)) : 1.2}
+        className="w-full"
+      />
+    </div>
+  )
+}
 const GAP = 24                                   // px, múltiplo de 4
 const GAP_SM = 16                                // no celular, menos respiro pra caber dois pads
 const SPRING = { type: "spring", stiffness: 260, damping: 34 } as const
@@ -87,7 +118,7 @@ export function Brands() {
   }, [maxIndex, n])
   const page = pages.reduce((best, p, k) => (Math.abs(p - index) < Math.abs(pages[best] - index) ? k : best), 0)
 
-  const padBox = cardW   // caixa quadrada pro pad: legendas sempre na mesma linha
+  const shotH = cardW / SHOT   // altura da moldura: legendas sempre na mesma linha
   const arrow = "absolute z-10 size-10 rounded-full bg-card shadow-md transition-opacity dark:bg-card dark:hover:bg-muted disabled:pointer-events-none disabled:opacity-0"
 
   return (
@@ -113,15 +144,8 @@ export function Brands() {
                 viewport={{ once: true, margin: "-40px" }}
                 transition={{ duration: 0.5, delay: (i % 6) * 0.06, ease: "easeOut" }}
               >
-                <div className="flex items-end" style={{ height: padBox }}>
-                  <Pad
-                    kind={surfaceKind(m.surface)}
-                    color={brandColor(m.brand)}
-                    stitched={m.edges === "Stitched"}
-                    label={m.brand}
-                    ratio={m.width && m.length ? Math.min(1.6, Math.max(1.02, m.width / m.length)) : 1.2}
-                    className="pointer-events-none w-full"
-                  />
+                <div className="pointer-events-none overflow-hidden rounded-lg border bg-muted" style={{ aspectRatio: String(SHOT) }}>
+                  <Shot m={m} />
                 </div>
                 <figcaption className="mt-3">
                   <div className="truncate text-sm font-medium">{m.brand} {m.model}</div>
@@ -135,10 +159,10 @@ export function Brands() {
         </div>
 
         {/* setas fora da área dos cards (na margem da página); no celular, por cima da borda */}
-        <Button variant="outline" size="icon-lg" className={`${arrow} left-1 md:-left-16`} style={{ top: padBox / 2 - 20 }} onClick={() => goTo(index - n)} disabled={index <= 0} aria-label={t.brands.prev}>
+        <Button variant="outline" size="icon-lg" className={`${arrow} left-1 md:-left-16`} style={{ top: shotH / 2 - 20 }} onClick={() => goTo(index - n)} disabled={index <= 0} aria-label={t.brands.prev}>
           <HugeiconsIcon icon={ArrowLeft01Icon} size={20} strokeWidth={1.5} />
         </Button>
-        <Button variant="outline" size="icon-lg" className={`${arrow} right-1 md:-right-16`} style={{ top: padBox / 2 - 20 }} onClick={() => goTo(index + n)} disabled={index >= maxIndex} aria-label={t.brands.next}>
+        <Button variant="outline" size="icon-lg" className={`${arrow} right-1 md:-right-16`} style={{ top: shotH / 2 - 20 }} onClick={() => goTo(index + n)} disabled={index >= maxIndex} aria-label={t.brands.next}>
           <HugeiconsIcon icon={ArrowRight01Icon} size={20} strokeWidth={1.5} />
         </Button>
       </div>

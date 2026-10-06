@@ -8,6 +8,8 @@ export type Model = {
   staticFriction: string | null; dynamicFriction: string | null
   glideDiff: number | null; overallGlide: string | null
   specsSource: string; tested: boolean; testedSource: string | null; reviewUrl: string | null
+  /** foto do produto em public/pads; sem ela, o card cai no render procedural */
+  image: string | null; imageCredit: string | null
 }
 
 export const catalog = raw as Model[]
