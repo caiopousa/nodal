@@ -104,9 +104,8 @@ export const en = {
   brands: {
     eyebrow: "06",
     title: "Brands",
-    lede: "A decorative sample: one real model from each of the most active brands in the catalog, drawn from their declared specs.",
-    prev: "Previous",
-    next: "Next",
+    lede: "Who actually makes mousepads. The names below are the brands with the most models in the catalog, biggest first.",
+    note: "{brands} brands, {models} models in the catalog.",
   },
   market: {
     eyebrow: "07",

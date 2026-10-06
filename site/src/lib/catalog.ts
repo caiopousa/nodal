@@ -8,8 +8,6 @@ export type Model = {
   staticFriction: string | null; dynamicFriction: string | null
   glideDiff: number | null; overallGlide: string | null
   specsSource: string; tested: boolean; testedSource: string | null; reviewUrl: string | null
-  /** foto do produto em public/pads; sem ela, o card cai no render procedural */
-  image: string | null; imageCredit: string | null
 }
 
 export const catalog = raw as Model[]
@@ -23,6 +21,11 @@ export function count<K extends keyof Model>(key: K, map?: (v: Model[K]) => stri
     m.set(k, (m.get(k) ?? 0) + 1)
   }
   return [...m.entries()].sort((a, b) => b[1] - a[1]).map(([label, n]) => ({ label, n }))
+}
+
+/** As marcas com mais modelos no catálogo, da maior pra menor. */
+export function topBrands(limit = 24) {
+  return count("brand").filter((b) => !b.label.includes(" x ")).slice(0, limit)
 }
 
 /** Uma amostra por marca, das marcas com mais modelos. */

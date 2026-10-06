@@ -99,17 +99,3 @@ prefira deixar `tested = false` a inserir um dado ambíguo.
   análogo sensorial) discutida anteriormente — pode ser adicionada como
   extensão do schema quando o catálogo base estiver estável.
 
-## Fotos de produto (colunas opcionais)
-
-A vitrine de Marcas usa uma moldura fixa de 4:3. Se o modelo tiver foto,
-ela preenche a moldura; se não tiver, o card cai no render procedural.
-Duas colunas opcionais no CSV controlam isso:
-
-- `image` — nome do arquivo dentro de `site/public/pads/`, por exemplo
-  `artisan-fx-key-83.webp`. Vazio significa usar o render.
-- `image_credit` — a quem creditar, quando a marca exigir.
-
-Recomendações para as fotos: WebP, ~640px de largura (o card renderiza a
-224px em desktop), mesmo enquadramento entre todas e fundo neutro ou
-recortado. Use só imagens que você tenha permissão de publicar — press kit
-da marca com crédito, ou foto própria.
