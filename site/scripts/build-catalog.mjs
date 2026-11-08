@@ -1,5 +1,5 @@
 // CSV (fonte da verdade, editado à mão) -> src/data/catalog.json
-import { readFileSync, writeFileSync } from "node:fs"
+import { mkdirSync, readFileSync, writeFileSync } from "node:fs"
 import { resolve, dirname } from "node:path"
 import { fileURLToPath } from "node:url"
 
@@ -45,5 +45,6 @@ const items = lines.map(r => {
     testedSource: str(g("tested_source")), reviewUrl: str(g("review_url")),
   }
 })
+mkdirSync(dirname(out), { recursive: true })   // num clone novo a pasta não existe: o json é ignorado pelo git
 writeFileSync(out, JSON.stringify(items))
 console.log(`catalog.json: ${items.length} models`)
